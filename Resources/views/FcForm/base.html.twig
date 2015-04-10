@@ -1,0 +1,13 @@
+{% if form is defined and form is not empty %}
+    {% for type, flashes in app.session.flashbag.all %}
+        {% if type == 'fc_form.success' %}
+            {% for flash in flashes %}
+                <div class="alert alert-success">
+                    {{ flash | trans({}, 'FenrizbesFormConstructorBundle') }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endfor %}
+
+    {{ form(form) }}
+{% endif %}

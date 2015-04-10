@@ -1,0 +1,23 @@
+<tfoot>
+    <tr>
+        <td colspan="2" class="sonata-ba-list-field sonata-ba-list-field-text text-right">
+            {% if not object.fcFormEventListeners | length %}
+                {{ 'fc.message.admin.no_listeners' | trans({}, 'FenrizbesFormConstructorBundle') }}
+            {% endif %}
+        </td>
+        <td>
+            <a
+                href="#fc_modal"
+                data-toggle="modal"
+                data-title="{{ 'fc.title.admin.listener.modal.create' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                data-url="{{ admin.generateUrl('select_listener', { id: object.id }) }}"
+                data-scope="create"
+                class="btn btn-sm btn-default create_link"
+                title="{{ 'fc.title.admin.new_listener' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+            >
+                <i class="glyphicon glyphicon-plus-sign"></i>
+                {{ 'fc.title.admin.new_listener' | trans({}, 'FenrizbesFormConstructorBundle') }}
+            </a>
+        </td>
+    </tr>
+</tfoot>

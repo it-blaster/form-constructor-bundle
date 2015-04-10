@@ -1,0 +1,16 @@
+parameters:
+    fc.admin.constraints.not_blank.class: Fenrizbes\FormConstructorBundle\Form\Type\FcFieldConstraint\Admin\BaseType
+    fc.admin.constraints.length.class:    Fenrizbes\FormConstructorBundle\Form\Type\FcFieldConstraint\Admin\LengthType
+
+    fc.builder.constraints.not_blank.class: Fenrizbes\FormConstructorBundle\Builder\FcFieldConstraint\NotBlankBuilder
+    fc.builder.constraints.length.class:    Fenrizbes\FormConstructorBundle\Builder\FcFieldConstraint\LengthBuilder
+
+    fc.constraints:
+        not_blank:
+            label:   fc.label.constraints.not_blank
+            class:   %fc.admin.constraints.not_blank.class%
+            builder: %fc.builder.constraints.not_blank.class%
+        length:
+            label:   fc.label.constraints.length
+            class:   %fc.admin.constraints.length.class%
+            builder: %fc.builder.constraints.length.class%

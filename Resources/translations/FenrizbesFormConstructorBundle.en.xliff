@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <trans-unit id="Fc Form Delete">
+                <source>Fc Form Delete</source>
+                <target>Delete form</target>
+            </trans-unit>
+
+            <trans-unit id="Fc Form List">
+                <source>Fc Form List</source>
+                <target>Forms</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.form">
+                <source>fc.label.admin.form</source>
+                <target>Forms</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.actions">
+                <source>fc.label.admin.actions</source>
+                <target>Actions</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.tab.form">
+                <source>fc.label.admin.tab.form</source>
+                <target>Form</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.title">
+                <source>fc.label.admin.title</source>
+                <target>Title</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.is_active">
+                <source>fc.label.admin.is_active</source>
+                <target>Active</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.created_at">
+                <source>fc.label.admin.created_at</source>
+                <target>Created at</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.updated_at">
+                <source>fc.label.admin.updated_at</source>
+                <target>Updated at</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.alias">
+                <source>fc.label.admin.alias</source>
+                <target>Alias</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.method">
+                <source>fc.label.admin.method</source>
+                <target>Method</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.action">
+                <source>fc.label.admin.action</source>
+                <target>Send address</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.button">
+                <source>fc.label.admin.button</source>
+                <target>Submit button's name</target>
+            </trans-unit>
+
+            <trans-unit id="fc.help.admin.alias">
+                <source>fc.help.admin.alias</source>
+                <target>The unique form's name</target>
+            </trans-unit>
+
+            <trans-unit id="fc.help.admin.action">
+                <source>fc.help.admin.action</source>
+                <target>A route or an URL of a controller</target>
+            </trans-unit>
+
+            <trans-unit id="fc.help.admin.button">
+                <source>fc.help.admin.button</source>
+                <target>Default value: Submit</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.with.form_main">
+                <source>fc.label.admin.with.form_main</source>
+                <target>Main params</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.with.form_additional">
+                <source>fc.label.admin.with.form_additional</source>
+                <target>Additional params</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.tab.fields">
+                <source>fc.label.admin.tab.fields</source>
+                <target>Fields</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.tab.listeners">
+                <source>fc.label.admin.tab.listeners</source>
+                <target>Handlers</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.is_widget">
+                <source>fc.label.admin.is_widget</source>
+                <target>Use as a widget</target>
+            </trans-unit>
+
+            <trans-unit id="fc.help.admin.is_widget">
+                <source>fc.help.admin.is_widget</source>
+                <target>Allows to use this form as a widget for fields in other forms</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.move_down">
+                <source>fc.title.admin.move_down</source>
+                <target>Move down</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.move_up">
+                <source>fc.title.admin.move_up</source>
+                <target>Move up</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.widget">
+                <source>fc.label.admin.widget</source>
+                <target>Widget</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraints">
+                <source>fc.label.admin.constraints</source>
+                <target>Constraints</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.field.modal.create">
+                <source>fc.title.admin.field.modal.create</source>
+                <target>New field</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.field.modal.edit">
+                <source>fc.title.admin.field.modal.edit</source>
+                <target>Edit field</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.field.modal.delete">
+                <source>fc.title.admin.field.modal.delete</source>
+                <target>Delete field</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.modal.save">
+                <source>fc.label.admin.modal.save</source>
+                <target>Save</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.modal.cancel">
+                <source>fc.label.admin.modal.cancel</source>
+                <target>Cancel</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.type">
+                <source>fc.label.admin.field.type</source>
+                <target>Widget</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.label">
+                <source>fc.label.admin.field.label</source>
+                <target>Label</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.hint">
+                <source>fc.label.admin.field.hint</source>
+                <target>Hint</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.name">
+                <source>fc.label.admin.field.name</source>
+                <target>Name</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.is_active">
+                <source>fc.label.admin.field.is_active</source>
+                <target>Active</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.text">
+                <source>fc.label.field_type.text</source>
+                <target>One-line text input</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.textarea">
+                <source>fc.label.field_type.textarea</source>
+                <target>Multi-line text input</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.placeholder">
+                <source>fc.label.admin.field.placeholder</source>
+                <target>Placeholder</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_field">
+                <source>fc.title.admin.new_field</source>
+                <target>Add new field</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.no_fields">
+                <source>fc.message.admin.no_fields</source>
+                <target>There aren't fields yet</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.yes">
+                <source>fc.label.admin.yes</source>
+                <target>yes</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.no">
+                <source>fc.label.admin.no</source>
+                <target>no</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.modal.ok">
+                <source>fc.label.admin.modal.ok</source>
+                <target>Ok</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.field.delete_confirmation">
+                <source>fc.message.admin.field.delete_confirmation</source>
+                <target>Please confirm the deletion of the field "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.constraint.modal.create">
+                <source>fc.title.admin.constraint.modal.create</source>
+                <target>New constraint</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_constraint">
+                <source>fc.title.admin.new_constraint</source>
+                <target>Add constraint</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.constraint.modal.edit">
+                <source>fc.title.admin.constraint.modal.edit</source>
+                <target>Edit constraint</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.constraint.modal.delete">
+                <source>fc.title.admin.constraint.modal.delete</source>
+                <target>Delete constraint</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint">
+                <source>fc.label.admin.constraint</source>
+                <target>Constraint</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.not_blank">
+                <source>fc.label.constraints.not_blank</source>
+                <target>Not blank</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.length">
+                <source>fc.label.constraints.length</source>
+                <target>Length limits</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.message">
+                <source>fc.label.admin.constraint.message</source>
+                <target>Error message</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.min">
+                <source>fc.label.admin.constraint.min</source>
+                <target>Min value</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.max">
+                <source>fc.label.admin.constraint.max</source>
+                <target>Max value</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.constraint.delete_confirmation">
+                <source>fc.message.admin.constraint.delete_confirmation</source>
+                <target>Please confirm the deletion of the "%constraint%" constraint from "%field%" field</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.publish">
+                <source>fc.label.admin.publish</source>
+                <target>Enable</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.unpublish">
+                <source>fc.label.admin.unpublish</source>
+                <target>Disable</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.button">
+                <source>fc.label.button</source>
+                <target>Submit</target>
+            </trans-unit>
+
+            <trans-unit id="fc.massage.form.is_valid">
+                <source>fc.massage.form.is_valid</source>
+                <target>The form has been submitted successfully</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.widget.inbuilt">
+                <source>fc.label.admin.field.widget.inbuilt</source>
+                <target>Inbuilt</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.widget.custom">
+                <source>fc.label.admin.field.widget.custom</source>
+                <target>Custom</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.field.inherited_constraints">
+                <source>fc.message.admin.field.inherited_constraints</source>
+                <target>Inherited from the "%form%" form</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.form.is_used_as_widget">
+                <source>fc.message.admin.form.is_used_as_widget</source>
+                <target>Illegal action: this form is used as a field widget in other forms</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.no_listeners">
+                <source>fc.message.admin.no_listeners</source>
+                <target>There aren't handlers yet</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.listener.modal.create">
+                <source>fc.title.admin.listener.modal.create</source>
+                <target>New handler</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.listener.modal.edit">
+                <source>fc.title.admin.listener.modal.edit</source>
+                <target>Edit handler</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_listener">
+                <source>fc.title.admin.new_listener</source>
+                <target>Add handler</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.listener.modal.delete">
+                <source>fc.title.admin.listener.modal.delete</source>
+                <target>Delete handler</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener">
+                <source>fc.label.admin.listener</source>
+                <target>Handler</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.listeners.send_to_email">
+                <source>fc.label.listeners.send_to_email</source>
+                <target>Send to email</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener.email_subject">
+                <source>fc.label.admin.listener.email_subject</source>
+                <target>Subject</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener.email_from">
+                <source>fc.label.admin.listener.email_from</source>
+                <target>Sender</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener.email_to">
+                <source>fc.label.admin.listener.email_to</source>
+                <target>Recipient</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener.email_header">
+                <source>fc.label.admin.listener.email_header</source>
+                <target>Header's text</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener.email_footer">
+                <source>fc.label.admin.listener.email_footer</source>
+                <target>Signature's text</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.listener.delete_confirmation">
+                <source>fc.message.admin.listener.delete_confirmation</source>
+                <target>Please confirm the deletion of the handler "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.form.alias_conflicts">
+                <source>fc.message.admin.form.alias_conflicts</source>
+                <target>The alias is the same as one of widgets' aliases</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>

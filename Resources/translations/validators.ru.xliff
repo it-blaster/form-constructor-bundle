@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <trans-unit id="fc.constraint.admin.blank">
+                <source>fc.constraint.admin.blank</source>
+                <target>Данное поле обязательно для заполнения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.constraint.admin.not_alphanumeric">
+                <source>fc.constraint.admin.not_alphanumeric</source>
+                <target>Допустимы только цифры, латинские символы, нижнее подчеркивание и тире</target>
+            </trans-unit>
+
+            <trans-unit id="fc.constraint.admin.not_unique">
+                <source>fc.constraint.admin.not_unique</source>
+                <target>Указанное значение не уникально</target>
+            </trans-unit>
+
+            <trans-unit id="fc.constraint.admin.not_integer">
+                <source>fc.constraint.admin.not_integer</source>
+                <target>Некорректное число</target>
+            </trans-unit>
+
+            <trans-unit id="fc.constraint.admin.not_unique_field_name">
+                <source>fc.constraint.admin.not_unique_field_name</source>
+                <target>В форме/формах, содержащих данное поле, уже имеется поле с аналогичным именем</target>
+            </trans-unit>
+
+            <trans-unit id="fc.constraint.admin.invalid_email">
+                <source>fc.constraint.admin.invalid_email</source>
+                <target>Некорректный электронный адрес</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>

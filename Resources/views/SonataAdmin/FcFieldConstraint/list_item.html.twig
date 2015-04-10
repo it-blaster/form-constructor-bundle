@@ -1,0 +1,33 @@
+<div class="btn-group">
+    <a
+        href="#fc_modal"
+        data-toggle="modal"
+        data-title="{{ 'fc.title.admin.constraint.modal.edit' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ constraint.constraint | fc_constraint | trans({}, 'FenrizbesFormConstructorBundle') }}"
+        data-url="{{ admin.generateUrl('edit_constraint', { id: object.id, constraint_id: constraint.id }) }}"
+        data-scope="edit"
+        class="btn btn-sm btn-xs btn-{{ constraint.isActive ? 'success' : 'danger' }}"
+        title="{{ 'action_edit'|trans({}, 'SonataAdminBundle') }}"
+    >
+        {{ constraint.constraint | fc_constraint | trans({}, 'FenrizbesFormConstructorBundle') }}
+        <i class="glyphicon glyphicon-edit"></i>
+    </a>
+
+    {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:state_buttons.html.twig', {
+        item:  constraint,
+        route: 'set_constraint_state',
+        short: true
+    }) }}
+
+    <a
+        href="#fc_modal"
+        data-toggle="modal"
+        data-title="{{ 'fc.title.admin.constraint.modal.delete' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ constraint.constraint | fc_constraint | trans({}, 'FenrizbesFormConstructorBundle') }}"
+        data-url="{{ admin.generateUrl('delete_constraint', { id: object.id, constraint_id: constraint.id }) }}"
+        data-delete-url="{{ admin.generateUrl('do_delete_constraint', { id: object.id, constraint_id: constraint.id }) }}"
+        data-scope="delete"
+        class="btn btn-sm btn-xs btn-{{ constraint.isActive ? 'success' : 'danger' }}"
+        title="{{ 'action_delete'|trans({}, 'SonataAdminBundle') }}"
+    >
+        <i class="glyphicon glyphicon-remove"></i>
+    </a>
+</div>

@@ -1,0 +1,32 @@
+<div class="modal fade" id="fc_modal" role="dialog" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="fc_modal_content">
+                </div>
+
+                <div class="fc_modal_loader text-center">
+                    <img src="{{ asset('bundles/sonataadmin/ajax-loader.gif') }}" />
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary modal_ok_link hidden disabled">
+                    {{ admin.trans('fc.label.admin.modal.ok', {}, form_tab.translation_domain) }}
+                </button>
+
+                <button type="button" class="btn btn-primary modal_save_link hidden disabled">
+                    {{ admin.trans('fc.label.admin.modal.save', {}, form_tab.translation_domain) }}
+                </button>
+
+                <button type="button" class="btn btn-danger modal_cancel_link disabled" data-dismiss="modal">
+                    {{ admin.trans('fc.label.admin.modal.cancel', {}, form_tab.translation_domain) }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

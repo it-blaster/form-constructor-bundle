@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <trans-unit id="Fc Form List">
+                <source>Fc Form List</source>
+                <target>Формы</target>
+            </trans-unit>
+
+            <trans-unit id="Fc Form Delete">
+                <source>Fc Form Delete</source>
+                <target>Удаление формы</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.form">
+                <source>fc.label.admin.form</source>
+                <target>Формы</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.actions">
+                <source>fc.label.admin.actions</source>
+                <target>Действия</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.title">
+                <source>fc.label.admin.title</source>
+                <target>Название</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.tab.form">
+                <source>fc.label.admin.tab.form</source>
+                <target>Форма</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.is_active">
+                <source>fc.label.admin.is_active</source>
+                <target>Активно</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.created_at">
+                <source>fc.label.admin.created_at</source>
+                <target>Создано</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.updated_at">
+                <source>fc.label.admin.updated_at</source>
+                <target>Изменено</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.alias">
+                <source>fc.label.admin.alias</source>
+                <target>Алиас</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.method">
+                <source>fc.label.admin.method</source>
+                <target>Метод</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.action">
+                <source>fc.label.admin.action</source>
+                <target>Адрес отправки</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.button">
+                <source>fc.label.admin.button</source>
+                <target>Текст кнопки отправки</target>
+            </trans-unit>
+
+            <trans-unit id="fc.help.admin.alias">
+                <source>fc.help.admin.alias</source>
+                <target>Уникальное имя формы</target>
+            </trans-unit>
+
+            <trans-unit id="fc.help.admin.action">
+                <source>fc.help.admin.action</source>
+                <target>Роут или адрес контроллера</target>
+            </trans-unit>
+
+            <trans-unit id="fc.help.admin.button">
+                <source>fc.help.admin.button</source>
+                <target>Значение по умолчанию: "Отправить"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.with.form_main">
+                <source>fc.label.admin.with.form_main</source>
+                <target>Основные параметры</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.with.form_additional">
+                <source>fc.label.admin.with.form_additional</source>
+                <target>Дополнительные параметры</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.tab.fields">
+                <source>fc.label.admin.tab.fields</source>
+                <target>Поля</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.tab.listeners">
+                <source>fc.label.admin.tab.listeners</source>
+                <target>Обработчики</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.is_widget">
+                <source>fc.label.admin.is_widget</source>
+                <target>Использовать как виджет</target>
+            </trans-unit>
+
+            <trans-unit id="fc.help.admin.is_widget">
+                <source>fc.help.admin.is_widget</source>
+                <target>Позволяет использовать данную форму в качестве виджета для полей в других формах</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.move_down">
+                <source>fc.title.admin.move_down</source>
+                <target>Вниз</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.move_up">
+                <source>fc.title.admin.move_up</source>
+                <target>Вверх</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.widget">
+                <source>fc.label.admin.widget</source>
+                <target>Виджет</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraints">
+                <source>fc.label.admin.constraints</source>
+                <target>Валидаторы</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.field.modal.create">
+                <source>fc.title.admin.field.modal.create</source>
+                <target>Новое поле</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.field.modal.edit">
+                <source>fc.title.admin.field.modal.edit</source>
+                <target>Редактирование поля</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.field.modal.delete">
+                <source>fc.title.admin.field.modal.delete</source>
+                <target>Удаление поля</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.modal.save">
+                <source>fc.label.admin.modal.save</source>
+                <target>Сохранить</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.modal.cancel">
+                <source>fc.label.admin.modal.cancel</source>
+                <target>Отмена</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.type">
+                <source>fc.label.admin.field.type</source>
+                <target>Виджет</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.label">
+                <source>fc.label.admin.field.label</source>
+                <target>Название</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.hint">
+                <source>fc.label.admin.field.hint</source>
+                <target>Комментарий</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.name">
+                <source>fc.label.admin.field.name</source>
+                <target>Имя</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.is_active">
+                <source>fc.label.admin.field.is_active</source>
+                <target>Активно</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.text">
+                <source>fc.label.field_type.text</source>
+                <target>Однострочный текст</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.textarea">
+                <source>fc.label.field_type.textarea</source>
+                <target>Многострочный текст</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.placeholder">
+                <source>fc.label.admin.field.placeholder</source>
+                <target>Подсказка в поле</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_field">
+                <source>fc.title.admin.new_field</source>
+                <target>Добавить поле</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.no_fields">
+                <source>fc.message.admin.no_fields</source>
+                <target>У данной формы пока нет ни одного поля</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.yes">
+                <source>fc.label.admin.yes</source>
+                <target>да</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.no">
+                <source>fc.label.admin.no</source>
+                <target>нет</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.modal.ok">
+                <source>fc.label.admin.modal.ok</source>
+                <target>Ок</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.field.delete_confirmation">
+                <source>fc.message.admin.field.delete_confirmation</source>
+                <target>Пожалуйста, подтвердите удаление поля "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.constraint.modal.create">
+                <source>fc.title.admin.constraint.modal.create</source>
+                <target>Новый валидатор</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_constraint">
+                <source>fc.title.admin.new_constraint</source>
+                <target>Добавить валидатор</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.constraint.modal.edit">
+                <source>fc.title.admin.constraint.modal.edit</source>
+                <target>Редактирование валидатора</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.constraint.modal.delete">
+                <source>fc.title.admin.constraint.modal.delete</source>
+                <target>Удаление валидатора</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint">
+                <source>fc.label.admin.constraint</source>
+                <target>Валидатор</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.not_blank">
+                <source>fc.label.constraints.not_blank</source>
+                <target>Обязательно для заполнения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.length">
+                <source>fc.label.constraints.length</source>
+                <target>Ограничение длины</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.message">
+                <source>fc.label.admin.constraint.message</source>
+                <target>Сообщение об ошибке</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.min">
+                <source>fc.label.admin.constraint.min</source>
+                <target>Минимальное значение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.max">
+                <source>fc.label.admin.constraint.max</source>
+                <target>Максимальное значение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.constraint.delete_confirmation">
+                <source>fc.message.admin.constraint.delete_confirmation</source>
+                <target>Пожалуйста, подтвердите удаление валидатора "%constraint%" из поля "%field%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.publish">
+                <source>fc.label.admin.publish</source>
+                <target>Включить</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.unpublish">
+                <source>fc.label.admin.unpublish</source>
+                <target>Отключить</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.button">
+                <source>fc.label.button</source>
+                <target>Отправить</target>
+            </trans-unit>
+
+            <trans-unit id="fc.massage.form.is_valid">
+                <source>fc.massage.form.is_valid</source>
+                <target>Форма успешно отправлена</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.widget.inbuilt">
+                <source>fc.label.admin.field.widget.inbuilt</source>
+                <target>Встроенные</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.widget.custom">
+                <source>fc.label.admin.field.widget.custom</source>
+                <target>Пользовательские</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.field.inherited_constraints">
+                <source>fc.message.admin.field.inherited_constraints</source>
+                <target>Унаследовано от формы "%form%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.form.is_used_as_widget">
+                <source>fc.message.admin.form.is_used_as_widget</source>
+                <target>Действие недопустимо: данная форма используется в качестве виджета поля в других формах</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.no_listeners">
+                <source>fc.message.admin.no_listeners</source>
+                <target>У данной формы пока нет ни одного обработчика</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.listener.modal.create">
+                <source>fc.title.admin.listener.modal.create</source>
+                <target>Новый обработчик</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.listener.modal.edit">
+                <source>fc.title.admin.listener.modal.edit</source>
+                <target>Редактирование обработчика</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_listener">
+                <source>fc.title.admin.new_listener</source>
+                <target>Добавить обработчик</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.listener.modal.delete">
+                <source>fc.title.admin.listener.modal.delete</source>
+                <target>Удаление обработчика</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener">
+                <source>fc.label.admin.listener</source>
+                <target>Обработчик</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.listeners.send_to_email">
+                <source>fc.label.listeners.send_to_email</source>
+                <target>Отправить на электронную почту</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener.email_subject">
+                <source>fc.label.admin.listener.email_subject</source>
+                <target>Тема письма</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener.email_from">
+                <source>fc.label.admin.listener.email_from</source>
+                <target>Адрес отправителя</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener.email_to">
+                <source>fc.label.admin.listener.email_to</source>
+                <target>Адрес получателя</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener.email_header">
+                <source>fc.label.admin.listener.email_header</source>
+                <target>Шапка письма</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.listener.email_footer">
+                <source>fc.label.admin.listener.email_footer</source>
+                <target>Текст подписи</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.listener.delete_confirmation">
+                <source>fc.message.admin.listener.delete_confirmation</source>
+                <target>Пожалуйста, подтвердите удаление обработчика "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.form.alias_conflicts">
+                <source>fc.message.admin.form.alias_conflicts</source>
+                <target>Алиас формы совпадает с алиасом одного из виджетов полей</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>

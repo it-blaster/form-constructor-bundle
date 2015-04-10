@@ -1,0 +1,11 @@
+services:
+    twig.extension.fc:
+        class: Fenrizbes\FormConstructorBundle\Twig\FcTwigExtension
+        arguments:
+            - %fc.fields_types%
+            - %fc.constraints%
+            - %fc.listeners%
+        calls:
+            - [ setFormService, [ @fc.form ] ]
+        tags:
+            - { name: twig.extension }

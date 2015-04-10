@@ -1,0 +1,20 @@
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active">
+        <a href="#tab_form" data-toggle="tab">
+            <span class="glyphicon glyphicon-exclamation-sign has-errors hide"></span>
+            {{ admin.trans('fc.label.admin.tab.form', {}, form_tab.translation_domain) }}
+        </a>
+    </li>
+
+    <li>
+        <a href="#tab_fields" data-toggle="tab">
+            {{ admin.trans('fc.label.admin.tab.fields', {}, form_tab.translation_domain) }}
+        </a>
+    </li>
+
+    <li>
+        <a href="#tab_listeners" data-toggle="tab">
+            {{ admin.trans('fc.label.admin.tab.listeners', {}, form_tab.translation_domain) }}
+        </a>
+    </li>
+</ul>

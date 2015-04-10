@@ -1,0 +1,9 @@
+<div class="box-body container-fluid">
+    <div class="sonata-ba-collapsed-fields">
+        <div class="row">
+            {{ form_helper.render_groups(admin, form, form_tab.groups, false) }}
+        </div>
+    </div>
+</div>
+
+{{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_form_actions.html.twig') }}

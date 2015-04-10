@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <trans-unit id="fc.constraint.admin.blank">
+                <source>fc.constraint.admin.blank</source>
+                <target>This field is required</target>
+            </trans-unit>
+
+            <trans-unit id="fc.constraint.admin.not_alphanumeric">
+                <source>fc.constraint.admin.not_alphanumeric</source>
+                <target>Only digits, Latin characters, underscores and dashes are allowed</target>
+            </trans-unit>
+
+            <trans-unit id="fc.constraint.admin.not_unique">
+                <source>fc.constraint.admin.not_unique</source>
+                <target>This value isn't unique</target>
+            </trans-unit>
+
+            <trans-unit id="fc.constraint.admin.not_integer">
+                <source>fc.constraint.admin.not_integer</source>
+                <target>Incorrect number</target>
+            </trans-unit>
+
+            <trans-unit id="fc.constraint.admin.not_unique_field_name">
+                <source>fc.constraint.admin.not_unique_field_name</source>
+                <target>In the form/forms that contain this field, there is one with the same name</target>
+            </trans-unit>
+
+            <trans-unit id="fc.constraint.admin.invalid_email">
+                <source>fc.constraint.admin.invalid_email</source>
+                <target>Invalid email</target>
+            </trans-unit>
+
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,90 @@
+<tr>
+    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+        {{ item }}
+    </td>
+
+    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+        {% if item.isCustom %}
+            <a href="{{ admin.generateUrl('fenrizbes_form_constructor.admin.form.show', { id: item.customWidget.id }) }}" target="_blank">
+                <span class="label label-primary">
+                    {{ item.customWidget }}
+                    <i class="glyphicon glyphicon-new-window"></i>
+                </span>
+            </a>
+        {% else %}
+            <span class="label label-default">
+                {{ item.type | fc_type | trans({}, 'FenrizbesFormConstructorBundle') }}
+            </span>
+        {% endif %}
+    </td>
+
+    <td class="sonata-ba-list-field sonata-ba-list-field-boolean">
+        {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:state_buttons.html.twig', {
+            item:  item,
+            route: 'set_field_state'
+        }) }}
+    </td>
+
+    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+        {% if item.isCustom %}
+            <em>
+                {{ 'fc.message.admin.field.inherited_constraints' | trans({
+                    '%form%': item.customWidget
+                }, 'FenrizbesFormConstructorBundle') }}
+            </em>
+        {% else %}
+            {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFieldConstraint:list.html.twig', {
+                field: item
+            }) }}
+        {% endif %}
+    </td>
+
+    <td class="sonata-ba-list-field sonata-ba-list-field-actions">
+        <div class="btn-group">
+            <a
+                href="#fc_modal"
+                data-toggle="modal"
+                data-title="{{ 'fc.title.admin.field.modal.edit' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ item }}"
+                data-url="{{ admin.generateUrl('edit_field', { id: object.id, field_id: item.id }) }}"
+                data-scope="edit"
+                class="btn btn-sm btn-default edit_link"
+                title="{{ 'action_edit'|trans({}, 'SonataAdminBundle') }}"
+            >
+                <i class="glyphicon glyphicon-edit"></i>
+                {{ 'action_edit'|trans({}, 'SonataAdminBundle') }}
+            </a>
+
+            <a
+                href="#fc_modal"
+                data-toggle="modal"
+                data-title="{{ 'fc.title.admin.field.modal.delete' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ item }}"
+                data-url="{{ admin.generateUrl('delete_field', { id: object.id, field_id: item.id }) }}"
+                data-delete-url="{{ admin.generateUrl('do_delete_field', { id: object.id, field_id: item.id }) }}"
+                data-scope="delete"
+                class="btn btn-sm btn-default delete_link"
+                title="{{ 'action_delete'|trans({}, 'SonataAdminBundle') }}"
+            >
+                <i class="glyphicon glyphicon-remove"></i>
+                {{ 'action_delete'|trans({}, 'SonataAdminBundle') }}
+            </a>
+
+            {% if not item.isLast %}
+                <a
+                    href="#"
+                    data-url="{{ admin.generateUrl('move_field', { id: object.id, field_id: item.id, to: 'down' }) }}"
+                    class="btn btn-sm btn-default move_link"
+                    title="{{ 'fc.title.admin.move_down' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                >↓</a>
+            {% endif %}
+
+            {% if not item.isFirst %}
+                <a
+                    href="#"
+                    data-url="{{ admin.generateUrl('move_field', { id: object.id, field_id: item.id, to: 'up' }) }}"
+                    class="btn btn-sm btn-default move_link"
+                    title="{{ 'fc.title.admin.move_up' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                >↑</a>
+            {% endif %}
+        </div>
+    </td>
+</tr>

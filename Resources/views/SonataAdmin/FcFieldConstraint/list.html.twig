@@ -1,0 +1,15 @@
+{% for constraint in field.fcFieldConstraints %}
+    {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFieldConstraint:list_item.html.twig') }}
+{% endfor %}
+
+<a
+    href="#fc_modal"
+    data-toggle="modal"
+    data-title="{{ 'fc.title.admin.constraint.modal.create' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+    data-url="{{ admin.generateUrl('select_constraint', { id: object.id, field_id: field.id }) }}"
+    data-scope="create"
+    class="btn btn-sm btn-xs btn-default"
+    title="{{ 'fc.title.admin.new_constraint' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+>
+    <i class="glyphicon glyphicon-plus-sign"></i>
+</a>

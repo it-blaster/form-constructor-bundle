@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="default" namespace="Fenrizbes\FormConstructorBundle\Propel\Model\Field" defaultIdMethod="native">
+
+    <table name="fc_field">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="form_id" type="integer" required="true" />
+        <column name="type" type="varchar" size="255" required="true" />
+        <column name="name" type="varchar" size="255" />
+        <column name="label" type="varchar" size="255" />
+        <column name="hint" type="longvarchar" />
+        <column name="params" type="object" />
+        <column name="is_active" type="boolean" required="true" default="false" />
+
+        <foreign-key foreignTable="fc_form" onDelete="cascade" onUpdate="cascade">
+            <reference local="form_id" foreign="id" />
+        </foreign-key>
+
+        <unique>
+            <unique-column name="form_id" />
+            <unique-column name="name" />
+        </unique>
+
+        <behavior name="sortable">
+            <parameter name="use_scope" value="true" />
+            <parameter name="scope_column" value="form_id" />
+        </behavior>
+
+        <behavior name="timestampable" />
+    </table>
+
+    <table name="fc_field_constraint">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="field_id" type="integer" required="true" />
+        <column name="constraint" type="varchar" size="255" required="true" primaryString="true" />
+        <column name="message" type="longvarchar" />
+        <column name="params" type="object" />
+        <column name="is_active" type="boolean" required="true" default="false" />
+
+        <foreign-key foreignTable="fc_field" onDelete="cascade" onUpdate="cascade">
+            <reference local="field_id" foreign="id" />
+        </foreign-key>
+
+        <behavior name="timestampable" />
+    </table>
+
+</database>

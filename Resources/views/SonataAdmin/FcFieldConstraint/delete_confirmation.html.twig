@@ -1,0 +1,4 @@
+{{ 'fc.message.admin.constraint.delete_confirmation' | trans({
+    '%constraint%': item.constraint | fc_constraint | trans({}, 'FenrizbesFormConstructorBundle'),
+    '%field%':      item.fcField
+}, 'FenrizbesFormConstructorBundle') }}

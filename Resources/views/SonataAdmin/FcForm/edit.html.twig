@@ -1,0 +1,37 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/fenrizbesformconstructor/sonata_admin/js/modal.js') }}"></script>
+    <script src="{{ asset('bundles/fenrizbesformconstructor/sonata_admin/js/edit/fields.js') }}"></script>
+    <script src="{{ asset('bundles/fenrizbesformconstructor/sonata_admin/js/edit/listeners.js') }}"></script>
+{% endblock %}
+
+{% set form_tab = admin.formtabs['default'] %}
+
+{% block sonata_tab_content %}
+    {% if admin.id(object) is not null %}
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_tabs_nav.html.twig') }}
+
+                {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_tabs_content.html.twig') }}
+            </div>
+        </div>
+    {% else %}
+        {{ form_helper.render_groups(admin, form, form_tab.groups, false) }}
+    {% endif %}
+{% endblock %}
+
+{% block formactions %}
+    {% if admin.id(object) is null %}
+        {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:create_form_actions.html.twig') }}
+    {% endif %}
+{% endblock formactions %}
+
+{% block form %}
+    {{ parent() }}
+
+    {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:modal.html.twig') }}
+{% endblock %}

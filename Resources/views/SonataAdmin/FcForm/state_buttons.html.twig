@@ -1,0 +1,19 @@
+{% if item.isActive %}
+    <a
+        href="#"
+        data-url="{{ admin.generateUrl(route, { id: object.id, item_id: item.id, active: 0 }) }}"
+        class="btn btn-xs btn-success set_state_link"
+        title="{{ 'fc.label.admin.unpublish' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+    >
+        <i class="glyphicon glyphicon-ok"></i>{% if short is not defined or not short %}{{ 'fc.label.admin.yes' | trans({}, 'FenrizbesFormConstructorBundle') }}{% endif %}
+    </a>
+{% else %}
+    <a
+        href="#"
+        data-url="{{ admin.generateUrl(route, { id: object.id, item_id: item.id, active: 1 }) }}"
+        class="btn btn-xs btn-danger set_state_link"
+        title="{{ 'fc.label.admin.publish' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+    >
+        <i class="glyphicon glyphicon-ban-circle"></i>{% if short is not defined or not short %}{{ 'fc.label.admin.no' | trans({}, 'FenrizbesFormConstructorBundle') }}{% endif %}
+    </a>
+{% endif %}

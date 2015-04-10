@@ -1,0 +1,22 @@
+{% extends 'SonataAdminBundle:CRUD:show.html.twig' %}
+
+{% block show %}
+    <div class="sonata-ba-view">
+        {{ sonata_block_render_event('sonata.admin.show.top', { 'admin': admin, 'object': object }) }}
+
+        <div class="box box-success">
+            <div class="box-body container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ fc_form(object.alias, {
+                            is_admin: true,
+                            template: 'FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig'
+                        }) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{ sonata_block_render_event('sonata.admin.show.bottom', { 'admin': admin, 'object': object }) }}
+    </div>
+{% endblock %}

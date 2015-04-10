@@ -1,0 +1,13 @@
+<div class="tab-content" id="fc_form_tabs">
+    <div class="tab-pane fade in active" id="tab_form">
+        {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_tab_form.html.twig') }}
+    </div>
+
+    <div class="tab-pane fade" id="tab_fields" data-url="{{ admin.generateUrl('get_fields', { id: object.id }) }}">
+        {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_tab_fields.html.twig') }}
+    </div>
+
+    <div class="tab-pane fade" id="tab_listeners" data-url="{{ admin.generateUrl('get_listeners', { id: object.id }) }}">
+        {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_tab_listeners.html.twig') }}
+    </div>
+</div>

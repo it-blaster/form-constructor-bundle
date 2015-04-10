@@ -1,0 +1,13 @@
+services:
+    fc.form:
+        class:     Fenrizbes\FormConstructorBundle\Service\FormService
+        arguments: [ @service_container ]
+
+    fc.request_listener:
+        class: Fenrizbes\FormConstructorBundle\Listener\RequestListener
+        calls:
+            - [ setFormService,    [ @fc.form ] ]
+            - [ setSessionService, [ @session ] ]
+            - [ setRouter,         [ @router ] ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

@@ -1,0 +1,30 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+</head>
+<body>
+
+    {% if listener.params.header is not empty %}
+        <p>{{ listener.params.header | nl2br }}</p>
+    {% endif %}
+
+    {% for key, value in data %}
+        {% set options = form.get(key).config.options %}
+
+        {% if options.label is defined and options.label is not empty %}
+            {{ options.label }}:
+        {% else %}
+            {{ key }}:
+        {% endif %}
+
+        {{ value }}
+
+        <br />
+    {% endfor %}
+
+    {% if listener.params.footer is not empty %}
+        <p>{{ listener.params.footer | nl2br }}</p>
+    {% endif %}
+
+</body>
+</html>

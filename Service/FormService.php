@@ -43,7 +43,7 @@ class FormService
 
         if (!isset($this->forms[$alias])) {
             if (!$fc_form instanceof FcForm) {
-                $fc_form = $this->findFcForm($alias, $options['is_admin']);
+                $fc_form = $this->findFcForm($alias, (bool)$options['is_admin']);
             }
 
             if (!$fc_form instanceof FcForm) {

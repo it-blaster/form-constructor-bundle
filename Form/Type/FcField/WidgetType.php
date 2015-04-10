@@ -72,7 +72,7 @@ class WidgetType extends AbstractType
             }
         }
 
-        if ($custom_widgets) {
+        if (!empty($custom_widgets)) {
             return array(
                 'fc.label.admin.field.widget.inbuilt' => $inbuilt_types,
                 'fc.label.admin.field.widget.custom'  => $custom_widgets

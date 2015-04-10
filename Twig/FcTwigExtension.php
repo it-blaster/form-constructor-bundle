@@ -83,6 +83,10 @@ class FcTwigExtension extends \Twig_Extension
     {
         $options = $this->form_service->buildOptions($options);
 
+        if (!is_string($options['template'])) {
+            throw new \Exception('Invalid template\'s name');
+        }
+
         return $environment->render($options['template'], array(
             'form' => $this->getFcFormView($alias, $options)
         ));

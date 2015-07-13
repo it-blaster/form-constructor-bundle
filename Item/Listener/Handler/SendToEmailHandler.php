@@ -1,13 +1,13 @@
 <?php
 
-namespace Fenrizbes\FormConstructorBundle\Builder\FcFormListener\SendToEmail;
+namespace Fenrizbes\FormConstructorBundle\Item\Listener\Handler;
 
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormEventListener;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Templating\DelegatingEngine;
 
-class Handler
+class SendToEmailHandler
 {
     /**
      * @var \Swift_Mailer

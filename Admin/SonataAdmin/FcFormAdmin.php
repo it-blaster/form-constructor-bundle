@@ -2,6 +2,7 @@
 
 namespace Fenrizbes\FormConstructorBundle\Admin\SonataAdmin;
 
+use Fenrizbes\FormConstructorBundle\Chain\FieldChain;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormPeer;
 use Propel\PropelBundle\Validator\Constraints\UniqueObject;
@@ -17,17 +18,21 @@ class FcFormAdmin extends Admin
 {
     protected $baseRouteName    = 'fenrizbes_fc_form';
     protected $baseRoutePattern = '/fenrizbes/fc/form';
-    protected $fields_types;
     protected $fc_defaults;
+
+    /**
+     * @var FieldChain
+     */
+    protected $field_chain;
 
     public function setFcDefaults($fc_defaults)
     {
         $this->fc_defaults = $fc_defaults;
     }
 
-    public function setFieldsTypes($fields_types)
+    public function setFieldChain(FieldChain $field_chain)
     {
-        $this->fields_types = $fields_types;
+        $this->field_chain = $field_chain;
     }
 
     protected function configureRoutes(RouteCollection $collection)
@@ -168,9 +173,9 @@ class FcFormAdmin extends Admin
         )));
 
         /** @var FcForm $object */
-        if (isset($this->fields_types[ $object->getAlias() ])) {
+        if ($this->field_chain->hasField($object->getAlias())) {
             $errorElement->addViolation(
-                $this->trans('fc.message.admin.form.alias_conflicts', array(), 'FenrizbesFormConstructorBundle')
+                $this->trans('fc.message.admin.form.alias_conflicts', array(), $this->getTranslationDomain())
             );
         }
 
@@ -182,7 +187,7 @@ class FcFormAdmin extends Admin
             $object->isUsedAsWidget()
         ) {
             $errorElement->addViolation(
-                $this->trans('fc.message.admin.form.is_used_as_widget', array(), 'FenrizbesFormConstructorBundle')
+                $this->trans('fc.message.admin.form.is_used_as_widget', array(), $this->getTranslationDomain())
             );
         }
     }

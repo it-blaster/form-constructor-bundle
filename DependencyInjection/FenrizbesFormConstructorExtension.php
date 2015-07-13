@@ -33,26 +33,5 @@ class FenrizbesFormConstructorExtension extends Extension
         $loader->load('sonata_admin.yml');
 
         $container->setParameter('fc.defaults', $config['defaults']);
-
-        $fields_types = $container->getParameter('fc.fields_types');
-        $constrains   = $container->getParameter('fc.constraints');
-        $listeners    = $container->getParameter('fc.listeners');
-
-        foreach ($config['fields_types'] as $name => $field_type) {
-            $fields_types[$name] = $field_type;
-        }
-
-        foreach ($config['constraints'] as $name => $constraint) {
-            $constrains[$name] = $constraint;
-        }
-
-        foreach ($config['listeners'] as $name => $listener) {
-            $listeners[$name] = $listener;
-        }
-
-        $container->setParameter('fc.fields_types', $fields_types);
-        $container->setParameter('fc.constraints', $constrains);
-        $container->setParameter('fc.listeners', $listeners);
-        $container->setParameter('fc.listeners', $listeners);
     }
 }

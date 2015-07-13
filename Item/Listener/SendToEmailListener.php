@@ -1,13 +1,37 @@
 <?php
 
-namespace Fenrizbes\FormConstructorBundle\Form\Type\FcFormListener\Admin;
+namespace Fenrizbes\FormConstructorBundle\Item\Listener;
 
+use Fenrizbes\FormConstructorBundle\Item\Listener\Handler\SendToEmailHandler;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormEventListener;
+use Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class SendToEmailType extends BaseType
+class SendToEmailListener extends AbstractListener
 {
+    /**
+     * @var \Swift_Mailer
+     */
+    protected $mailer;
+
+    /**
+     * @var DelegatingEngine
+     */
+    protected $templating;
+
+    public function __construct(\Swift_Mailer $mailer, DelegatingEngine $templating)
+    {
+        $this->mailer     = $mailer;
+        $this->templating = $templating;
+    }
+
+    public function getName()
+    {
+        return 'fc.label.listeners.send_to_email';
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -53,5 +77,12 @@ class SendToEmailType extends BaseType
                 'required' => false
             ))
         ;
+    }
+
+    protected function buildEventHandler(FcFormEventListener $fc_listener)
+    {
+        $handler = new SendToEmailHandler($this->mailer, $this->templating, $fc_listener);
+
+        return array($handler, 'handle');
     }
 }

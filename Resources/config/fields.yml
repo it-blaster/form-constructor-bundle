@@ -1,16 +1,12 @@
 parameters:
-    fc.admin.fields_types.text.class:     Fenrizbes\FormConstructorBundle\Form\Type\FcField\Admin\TextType
-    fc.admin.fields_types.textarea.class: Fenrizbes\FormConstructorBundle\Form\Type\FcField\Admin\TextType
+    fc.field.text.class:     Fenrizbes\FormConstructorBundle\Item\Field\TextField
+    fc.field.textarea.class: Fenrizbes\FormConstructorBundle\Item\Field\TextareaField
 
-    fc.builder.fields_types.text.class:     Fenrizbes\FormConstructorBundle\Builder\FcField\TextBuilder
-    fc.builder.fields_types.textarea.class: Fenrizbes\FormConstructorBundle\Builder\FcField\TextBuilder
+services:
+    fc.field.text:
+        class: %fc.field.text.class%
+        tags:  [ { name: fc.field, alias: text } ]
 
-    fc.fields_types:
-        text:
-            label:   fc.label.field_type.text
-            class:   %fc.admin.fields_types.text.class%
-            builder: %fc.builder.fields_types.text.class%
-        textarea:
-            label:   fc.label.field_type.textarea
-            class:   %fc.admin.fields_types.textarea.class%
-            builder: %fc.builder.fields_types.textarea.class%
+    fc.field.textarea:
+        class: %fc.field.textarea.class%
+        tags:  [ { name: fc.field, alias: textarea } ]

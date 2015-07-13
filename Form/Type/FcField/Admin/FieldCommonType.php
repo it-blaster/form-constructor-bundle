@@ -2,6 +2,7 @@
 
 namespace Fenrizbes\FormConstructorBundle\Form\Type\FcField\Admin;
 
+use Fenrizbes\FormConstructorBundle\Item\ParamsBuilder;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 use Symfony\Component\Form\AbstractType;
@@ -17,18 +18,22 @@ use Symfony\Component\Validator\Constraints\Regex;
 class FieldCommonType extends AbstractType
 {
     protected $action;
-    protected $params_class;
+
+    /**
+     * @var ParamsBuilder
+     */
+    protected $params_builder;
 
     /**
      * @var TranslatorInterface
      */
     protected $translator;
 
-    public function __construct($action, TranslatorInterface $translator, $params_class = null)
+    public function __construct($action, TranslatorInterface $translator, ParamsBuilder $params_builder = null)
     {
-        $this->action       = $action;
-        $this->params_class = $params_class;
-        $this->translator   = $translator;
+        $this->action         = $action;
+        $this->translator     = $translator;
+        $this->params_builder = $params_builder;
     }
 
     public function getName()
@@ -76,7 +81,7 @@ class FieldCommonType extends AbstractType
                 'required' => false
             ))
 
-            ->add('params', new $this->params_class(), array(
+            ->add('params', $this->params_builder, array(
                 'label' => false
             ))
 

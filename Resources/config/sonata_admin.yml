@@ -13,7 +13,7 @@ services:
                 label:        fc.label.admin.form
         calls:
             - [ setFcDefaults,        [ %fc.defaults% ] ]
-            - [ setFieldsTypes,       [ %fc.fields_types% ] ]
+            - [ setFieldChain,        [ @fc.field.chain ] ]
             - [ setTranslationDomain, [ FenrizbesFormConstructorBundle ] ]
             - [ setTemplate,          [ edit, FenrizbesFormConstructorBundle:SonataAdmin\FcForm:edit.html.twig ] ]
             - [ setTemplate,          [ show, FenrizbesFormConstructorBundle:SonataAdmin\FcForm:show.html.twig ] ]

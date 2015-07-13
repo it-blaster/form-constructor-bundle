@@ -104,34 +104,6 @@ class FcFormAdminController extends CRUDController
     }
 
     /**
-     * Returns class' name for specific entity's type
-     *
-     * @param $entity_type
-     * @param $name
-     * @return mixed
-     * @throws \Sonata\CoreBundle\Exception\InvalidParameterException
-     */
-    protected function getClass($entity_type, $name)
-    {
-        $param_name = 'fc.'. $entity_type;
-        if (!$this->container->hasParameter($param_name)) {
-            throw new InvalidParameterException('Parameter '. $param_name .' not found');
-        }
-
-        $items = $this->container->getParameter($param_name);
-        if (!isset($items[$name]) || !isset($items[$name]['class'])) {
-            throw new InvalidParameterException('Parameter '. $param_name .'.'. $name .'.class not found');
-        }
-
-        $class_name = $items[$name]['class'];
-        if (!class_exists($class_name)) {
-            throw new InvalidParameterException('Class '. $class_name .' not found');
-        }
-
-        return $class_name;
-    }
-
-    /**
      * Renders field's widgets' choice
      *
      * @param Request $request
@@ -146,10 +118,8 @@ class FcFormAdminController extends CRUDController
         }
 
         $form = $this->createForm(new WidgetType(
-            $this->container->getParameter('fc.fields_types'),
-            $this->admin->generateUrl('create_field', array(
-                'id' => $id
-            )),
+            $this->container->get('fc.field.chain'),
+            $this->admin->generateUrl('create_field', array('id' => $id)),
             $id
         ));
 
@@ -168,18 +138,19 @@ class FcFormAdminController extends CRUDController
      */
     protected function getFieldFormType(FcField $field, $form_action)
     {
-        try {
-            $class_name = $this->getClass('fields_types', $field->getType());
+        $chain = $this->get('fc.field.chain');
+        $alias = $field->getType();
 
-            $type = new FieldCommonType($form_action, $this->get('translator'), $class_name);
-        } catch (\Exception $e) {
+        if ($chain->hasField($alias)) {
+            $type = new FieldCommonType($form_action, $this->get('translator'), $chain->getParamsBuilder($alias));
+        } else {
             $custom_widget = FcFormQuery::create()
-                ->filterByAlias($field->getType())
+                ->filterByAlias($alias)
                 ->filterByIsWidget(true)
                 ->findOne();
 
             if (!$custom_widget instanceof FcForm) {
-                throw $e;
+                throw new \Exception('Field "'. $alias .'" not found');
             }
 
             $type = new FieldCustomType($form_action, $this->get('translator'));
@@ -204,7 +175,7 @@ class FcFormAdminController extends CRUDController
             throw $this->createAccessDeniedException();
         }
 
-        $widget_form = $this->createForm(new WidgetType($this->container->getParameter('fc.fields_types')));
+        $widget_form = $this->createForm(new WidgetType($this->container->get('fc.field.chain')));
         $widget_form->handleRequest($request);
         $widget_data = $widget_form->getData();
         if (!is_array($widget_data) || !isset($widget_data['type'])) {
@@ -511,7 +482,7 @@ class FcFormAdminController extends CRUDController
         }
 
         $form = $this->createForm(new ConstraintType(
-            $this->container->getParameter('fc.constraints'),
+            $this->container->get('fc.constraint.chain'),
             $this->admin->generateUrl('create_constraint', array(
                 'id'       => $id,
                 'field_id' => $field_id
@@ -539,24 +510,30 @@ class FcFormAdminController extends CRUDController
             throw $this->createAccessDeniedException();
         }
 
-        $constraint_form = $this->createForm(new ConstraintType($this->container->getParameter('fc.constraints')));
+        $chain = $this->container->get('fc.constraint.chain');
+
+        $constraint_form = $this->createForm(new ConstraintType($chain));
         $constraint_form->handleRequest($request);
         $constraint_data = $constraint_form->getData();
         if (!is_array($constraint_data) || !isset($constraint_data['constraint'])) {
             throw new InvalidParameterException('Constraint\'s name not passed');
         }
 
-        $class_name  = $this->getClass('constraints', $constraint_data['constraint']);
+        $alias = $constraint_data['constraint'];
+
         $form_action = $this->admin->generateUrl('do_create_constraint', array(
             'id'         => $id,
             'field_id'   => $field_id,
-            'constraint' => $constraint_data['constraint']
+            'constraint' => $alias
         ));
 
         $field_constraint = new FcFieldConstraint();
-        $field_constraint->setConstraint($constraint_data['constraint']);
+        $field_constraint->setConstraint($alias);
 
-        $form = $this->createForm(new ConstraintCommonType($form_action, $class_name), $field_constraint);
+        $form = $this->createForm(
+            new ConstraintCommonType($form_action, $chain->getParamsBuilder($alias)),
+            $field_constraint
+        );
 
         return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
             'form' => $form->createView()
@@ -585,7 +562,6 @@ class FcFormAdminController extends CRUDController
                 throw $this->createNotFoundException();
             }
 
-            $class_name  = $this->getClass('constraints', $constraint);
             $form_action = $this->admin->generateUrl('do_create_constraint', array(
                 'id'         => $fc_field->getFormId(),
                 'field_id'   => $fc_field->getId(),
@@ -596,7 +572,13 @@ class FcFormAdminController extends CRUDController
             $field_constraint->setConstraint($constraint);
             $field_constraint->setFcField($fc_field);
 
-            $form = $this->createForm(new ConstraintCommonType($form_action, $class_name), $field_constraint);
+            $form = $this->createForm(
+                new ConstraintCommonType(
+                    $form_action,
+                    $this->container->get('fc.constraint.chain')->getParamsBuilder($constraint)
+                ),
+                $field_constraint
+            );
             $form->handleRequest($request);
 
             if ($form->isValid()) {
@@ -642,13 +624,18 @@ class FcFormAdminController extends CRUDController
             throw $this->createNotFoundException();
         }
 
-        $class_name  = $this->getClass('constraints', $fc_constraint->getConstraint());
         $form_action = $this->admin->generateUrl('do_edit_constraint', array(
             'id'            => $id,
             'constraint_id' => $fc_constraint->getId()
         ));
 
-        $form = $this->createForm(new ConstraintCommonType($form_action, $class_name), $fc_constraint);
+        $form = $this->createForm(
+            new ConstraintCommonType(
+                $form_action,
+                $this->container->get('fc.constraint.chain')->getParamsBuilder($fc_constraint->getConstraint())
+            ),
+            $fc_constraint
+        );
 
         return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
             'form' => $form->createView()
@@ -667,13 +654,18 @@ class FcFormAdminController extends CRUDController
                 throw $this->createNotFoundException();
             }
 
-            $class_name  = $this->getClass('constraints', $fc_constraint->getConstraint());
             $form_action = $this->admin->generateUrl('do_edit_constraint', array(
                 'id'            => $id,
                 'constraint_id' => $fc_constraint->getId()
             ));
 
-            $form = $this->createForm(new ConstraintCommonType($form_action, $class_name), $fc_constraint);
+            $form = $this->createForm(
+                new ConstraintCommonType(
+                    $form_action,
+                    $this->container->get('fc.constraint.chain')->getParamsBuilder($fc_constraint->getConstraint())
+                ),
+                $fc_constraint
+            );
             $form->handleRequest($request);
 
             if ($form->isValid()) {
@@ -828,10 +820,8 @@ class FcFormAdminController extends CRUDController
         }
 
         $form = $this->createForm(new ListenerType(
-            $this->container->getParameter('fc.listeners'),
-            $this->admin->generateUrl('create_listener', array(
-                'id' => $id
-            ))
+            $this->container->get('fc.listener.chain'),
+            $this->admin->generateUrl('create_listener', array('id' => $id))
         ));
 
         return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
@@ -854,24 +844,31 @@ class FcFormAdminController extends CRUDController
             throw $this->createAccessDeniedException();
         }
 
-        $listener_form = $this->createForm(new ListenerType($this->container->getParameter('fc.listeners')));
+        $chain = $this->container->get('fc.listener.chain');
+
+        $listener_form = $this->createForm(new ListenerType($chain));
         $listener_form->handleRequest($request);
         $listener_data = $listener_form->getData();
         if (!is_array($listener_data) || !isset($listener_data['listener'])) {
             throw new InvalidParameterException('Listener\'s name not passed');
         }
 
-        $fc_listener = new FcFormEventListener();
-        $fc_listener->setListener($listener_data['listener']);
+        $alias = $listener_data['listener'];
 
-        $class_name  = $this->getClass('listeners', $listener_data['listener']);
+        $fc_listener = new FcFormEventListener();
+        $fc_listener->setListener($alias);
+
         $form_action = $this->admin->generateUrl('do_create_listener', array(
             'id'       => $id,
-            'listener' => $listener_data['listener']
+            'listener' => $alias
         ));
 
         $form = $this->createForm(
-            new ListenerCommonType($form_action, $this->get('translator'), $class_name),
+            new ListenerCommonType(
+                $form_action,
+                $this->get('translator'),
+                $chain->getParamsBuilder($alias)
+            ),
             $fc_listener
         );
 
@@ -906,14 +903,17 @@ class FcFormAdminController extends CRUDController
             $fc_listener->setListener($listener);
             $fc_listener->setFcForm($fc_form);
 
-            $class_name  = $this->getClass('listeners', $listener);
             $form_action = $this->admin->generateUrl('do_create_listener', array(
                 'id'       => $id,
                 'listener' => $listener
             ));
 
             $form = $this->createForm(
-                new ListenerCommonType($form_action, $this->get('translator'), $class_name),
+                new ListenerCommonType(
+                    $form_action,
+                    $this->get('translator'),
+                    $this->container->get('fc.listener.chain')->getParamsBuilder($listener)
+                ),
                 $fc_listener
             );
             $form->handleRequest($request);
@@ -960,14 +960,17 @@ class FcFormAdminController extends CRUDController
             throw $this->createNotFoundException();
         }
 
-        $class_name  = $this->getClass('listeners', $fc_listener->getListener());
         $form_action = $this->admin->generateUrl('do_edit_listener', array(
             'id'          => $fc_listener->getFormId(),
             'listener_id' => $fc_listener->getId()
         ));
 
         $form = $this->createForm(
-            new ListenerCommonType($form_action, $this->get('translator'), $class_name),
+            new ListenerCommonType(
+                $form_action,
+                $this->get('translator'),
+                $this->container->get('fc.listener.chain')->getParamsBuilder($fc_listener->getListener())
+            ),
             $fc_listener
         );
 
@@ -997,14 +1000,17 @@ class FcFormAdminController extends CRUDController
                 throw $this->createNotFoundException();
             }
 
-            $class_name  = $this->getClass('listeners', $fc_listener->getListener());
             $form_action = $this->admin->generateUrl('do_edit_listener', array(
                 'id'          => $fc_listener->getFormId(),
                 'listener_id' => $fc_listener->getId()
             ));
 
             $form = $this->createForm(
-                new ListenerCommonType($form_action, $this->get('translator'), $class_name),
+                new ListenerCommonType(
+                    $form_action,
+                    $this->get('translator'),
+                    $this->container->get('fc.listener.chain')->getParamsBuilder($fc_listener->getListener())
+                ),
                 $fc_listener
             );
             $form->handleRequest($request);

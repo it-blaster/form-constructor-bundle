@@ -10,12 +10,12 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ConstraintCommonType extends AbstractType
 {
     protected $action;
-    protected $params_class;
+    protected $params_builder;
 
-    public function __construct($action, $params_class)
+    public function __construct($action, $params_builder)
     {
-        $this->action       = $action;
-        $this->params_class = $params_class;
+        $this->action         = $action;
+        $this->params_builder = $params_builder;
     }
 
     public function getName()
@@ -53,7 +53,7 @@ class ConstraintCommonType extends AbstractType
                 'required' => false
             ))
 
-            ->add('params', new $this->params_class(), array(
+            ->add('params', $this->params_builder, array(
                 'label' => false
             ))
         ;

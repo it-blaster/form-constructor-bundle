@@ -2,19 +2,24 @@
 
 namespace Fenrizbes\FormConstructorBundle\Form\Type\FcFormListener;
 
+use Fenrizbes\FormConstructorBundle\Chain\ListenerChain;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ListenerType extends AbstractType
 {
-    protected $listeners;
+    /**
+     * @var ListenerChain
+     */
+    protected $listener_chain;
+
     protected $action;
 
-    public function __construct(array $listeners, $action = null)
+    public function __construct(ListenerChain $listener_chain, $action = null)
     {
-        $this->listeners  = $listeners;
-        $this->action     = $action;
+        $this->listener_chain = $listener_chain;
+        $this->action         = $action;
     }
 
     public function getName()
@@ -50,8 +55,8 @@ class ListenerType extends AbstractType
     {
         $listeners = array();
 
-        foreach ($this->listeners as $name => $item) {
-            $listeners[$name] = $item['label'];
+        foreach ($this->listener_chain->getListeners() as $alias => $listener) {
+            $listeners[$alias] = $listener->getName();
         }
 
         return $listeners;

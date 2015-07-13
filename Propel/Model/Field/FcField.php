@@ -28,13 +28,17 @@ class FcField extends BaseFcField
         return is_null($this->getName()) && $this->getCustomWidget() instanceof FcForm;
     }
 
+    /**
+     * @return FcForm
+     */
     public function getCustomWidget()
     {
         if ($this->custom_widget === false) {
             $this->custom_widget = FcFormQuery::create()
                 ->filterByAlias($this->getType())
                 ->filterByIsWidget(true)
-                ->findOne();
+                ->findOne()
+            ;
         }
 
         return $this->custom_widget;
@@ -45,6 +49,7 @@ class FcField extends BaseFcField
         return FcFieldConstraintQuery::create()
             ->filterByFcField($this)
             ->filterByIsActive(true)
-            ->find();
+            ->find()
+        ;
     }
 }

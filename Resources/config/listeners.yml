@@ -1,14 +1,8 @@
 parameters:
-    fc.admin.listeners.send_to_email.class: Fenrizbes\FormConstructorBundle\Form\Type\FcFormListener\Admin\SendToEmailType
-
-    fc.builder.listeners.send_to_email.class: Fenrizbes\FormConstructorBundle\Builder\FcFormListener\SendToEmail\Builder
-
-    fc.listeners:
-        send_to_email:
-            label: fc.label.listeners.send_to_email
-            class: %fc.admin.listeners.send_to_email.class%
+    fc.listener.send_to_email.class: Fenrizbes\FormConstructorBundle\Item\Listener\SendToEmailListener
 
 services:
-    fc.listeners_builders.send_to_email:
-        class:     %fc.builder.listeners.send_to_email.class%
+    fc.listener.send_to_email:
+        class:     %fc.listener.send_to_email.class%
         arguments: [ @mailer, @templating ]
+        tags:      [ { name: fc.listener, alias: send_to_email } ]

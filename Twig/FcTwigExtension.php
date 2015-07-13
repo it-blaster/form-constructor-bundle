@@ -2,26 +2,33 @@
 
 namespace Fenrizbes\FormConstructorBundle\Twig;
 
+use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
+use Fenrizbes\FormConstructorBundle\Chain\FieldChain;
+use Fenrizbes\FormConstructorBundle\Chain\ListenerChain;
 use Fenrizbes\FormConstructorBundle\Service\FormService;
 use Symfony\Component\Form\FormInterface;
 
 class FcTwigExtension extends \Twig_Extension
 {
-    protected $types;
-    protected $constraints;
-    protected $listeners;
-
     /**
      * @var FormService
      */
     protected $form_service;
 
-    public function __construct($types, $constraints, $listeners)
-    {
-        $this->types       = $types;
-        $this->constraints = $constraints;
-        $this->listeners   = $listeners;
-    }
+    /**
+     * @var FieldChain
+     */
+    protected $field_chain;
+
+    /**
+     * @var ConstraintChain
+     */
+    protected $constraint_chain;
+
+    /**
+     * @var ListenerChain
+     */
+    protected $listener_chain;
 
     public function getName()
     {
@@ -33,10 +40,25 @@ class FcTwigExtension extends \Twig_Extension
         $this->form_service = $form_service;
     }
 
+    public function setFieldChain(FieldChain $field_chain)
+    {
+        $this->field_chain = $field_chain;
+    }
+
+    public function setConstraintChain(ConstraintChain $constraint_chain)
+    {
+        $this->constraint_chain = $constraint_chain;
+    }
+
+    public function setListenerChain(ListenerChain $listener_chain)
+    {
+        $this->listener_chain = $listener_chain;
+    }
+
     public function getFilters()
     {
         return array(
-            new \Twig_SimpleFilter('fc_type',       array($this, 'getFcType')),
+            new \Twig_SimpleFilter('fc_field',      array($this, 'getFcField')),
             new \Twig_SimpleFilter('fc_constraint', array($this, 'getFcConstraint')),
             new \Twig_SimpleFilter('fc_listener',   array($this, 'getFcListener'))
         );
@@ -53,19 +75,19 @@ class FcTwigExtension extends \Twig_Extension
         );
     }
 
-    public function getFcType($name)
+    public function getFcField($alias)
     {
-        return $this->types[$name]['label'];
+        return $this->field_chain->getField($alias)->getName();
     }
 
-    public function getFcConstraint($name)
+    public function getFcConstraint($alias)
     {
-        return $this->constraints[$name]['label'];
+        return $this->constraint_chain->getConstraint($alias)->getName();
     }
 
-    public function getFcListener($name)
+    public function getFcListener($alias)
     {
-        return $this->listeners[$name]['label'];
+        return $this->listener_chain->getListener($alias)->getName();
     }
 
     public function getFcFormView($alias, $options = array())

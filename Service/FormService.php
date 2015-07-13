@@ -2,24 +2,68 @@
 
 namespace Fenrizbes\FormConstructorBundle\Service;
 
+use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
+use Fenrizbes\FormConstructorBundle\Chain\FieldChain;
+use Fenrizbes\FormConstructorBundle\Chain\ListenerChain;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcForm\Builder\BaseType;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormQuery;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class FormService
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
     protected $forms = array();
 
-    public function __construct(ContainerInterface $container)
+    /**
+     * @var FormFactoryInterface
+     */
+    protected $form_factory;
+
+    /**
+     * @var Router
+     */
+    protected $router;
+
+    /**
+     * @var FieldChain
+     */
+    protected $field_chain;
+
+    /**
+     * @var ConstraintChain
+     */
+    protected $constraint_chain;
+
+    /**
+     * @var ListenerChain
+     */
+    protected $listener_chain;
+
+    public function setFormFactory(FormFactoryInterface $form_factory)
     {
-        $this->container = $container;
+        $this->form_factory = $form_factory;
+    }
+
+    public function setRouter(Router $router)
+    {
+        $this->router = $router;
+    }
+
+    public function setFieldChain(FieldChain $field_chain)
+    {
+        $this->field_chain = $field_chain;
+    }
+
+    public function setConstraintChain(ConstraintChain $constraint_chain)
+    {
+        $this->constraint_chain = $constraint_chain;
+    }
+
+    public function setListenerChain(ListenerChain $listener_chain)
+    {
+        $this->listener_chain = $listener_chain;
     }
 
     public function buildOptions($options)
@@ -54,10 +98,13 @@ class FormService
                 return null;
             }
 
-            $this->forms[$alias] = $this->container->get('form.factory')->create(
-                new BaseType($this->container, $fc_form),
-                $options['data']
-            );
+            $type = new BaseType($fc_form);
+            $type->setRouter($this->router);
+            $type->setFieldChain($this->field_chain);
+            $type->setConstraintChain($this->constraint_chain);
+            $type->setListenerChain($this->listener_chain);
+
+            $this->forms[$alias] = $this->form_factory->create($type, $options['data']);
         }
 
         return $this->forms[$alias];

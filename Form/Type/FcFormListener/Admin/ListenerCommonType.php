@@ -2,6 +2,7 @@
 
 namespace Fenrizbes\FormConstructorBundle\Form\Type\FcFormListener\Admin;
 
+use Fenrizbes\FormConstructorBundle\Item\ParamsBuilder;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -10,18 +11,22 @@ use Symfony\Component\Translation\TranslatorInterface;
 class ListenerCommonType extends AbstractType
 {
     protected $action;
-    protected $params_class;
+
+    /**
+     * @var ParamsBuilder
+     */
+    protected $params_builder;
 
     /**
      * @var TranslatorInterface
      */
     protected $translator;
 
-    public function __construct($action, TranslatorInterface $translator, $params_class = null)
+    public function __construct($action, TranslatorInterface $translator, ParamsBuilder $params_builder = null)
     {
-        $this->action       = $action;
-        $this->params_class = $params_class;
-        $this->translator   = $translator;
+        $this->action         = $action;
+        $this->params_builder = $params_builder;
+        $this->translator     = $translator;
     }
 
     public function getName()
@@ -50,7 +55,7 @@ class ListenerCommonType extends AbstractType
                 'required' => false
             ))
 
-            ->add('params', new $this->params_class(), array(
+            ->add('params', $this->params_builder, array(
                 'label' => false
             ))
         ;

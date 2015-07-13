@@ -1,7 +1,21 @@
 services:
+    fc.field.chain:
+        class: Fenrizbes\FormConstructorBundle\Chain\FieldChain
+
+    fc.constraint.chain:
+        class: Fenrizbes\FormConstructorBundle\Chain\ConstraintChain
+
+    fc.listener.chain:
+        class: Fenrizbes\FormConstructorBundle\Chain\ListenerChain
+
     fc.form:
-        class:     Fenrizbes\FormConstructorBundle\Service\FormService
-        arguments: [ @service_container ]
+        class: Fenrizbes\FormConstructorBundle\Service\FormService
+        calls:
+            - [ setFormFactory,     [ @form.factory ] ]
+            - [ setRouter,          [ @router ] ]
+            - [ setFieldChain,      [ @fc.field.chain ] ]
+            - [ setConstraintChain, [ @fc.constraint.chain ] ]
+            - [ setListenerChain,   [ @fc.listener.chain ] ]
 
     fc.request_listener:
         class: Fenrizbes\FormConstructorBundle\Listener\RequestListener

@@ -2,6 +2,7 @@
 
 namespace Fenrizbes\FormConstructorBundle\Form\Type\FcField;
 
+use Fenrizbes\FormConstructorBundle\Chain\FieldChain;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormQuery;
 use Symfony\Component\Form\AbstractType;
@@ -10,15 +11,19 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class WidgetType extends AbstractType
 {
-    protected $types;
+    /**
+     * @var FieldChain
+     */
+    protected $field_chain;
+
     protected $action;
     protected $fc_form_id;
 
-    public function __construct(array $types, $action = null, $fc_form_id = null)
+    public function __construct(FieldChain $field_chain, $action = null, $fc_form_id = null)
     {
-        $this->types      = $types;
-        $this->action     = $action;
-        $this->fc_form_id = $fc_form_id;
+        $this->field_chain = $field_chain;
+        $this->action      = $action;
+        $this->fc_form_id  = $fc_form_id;
     }
 
     public function getName()
@@ -52,33 +57,33 @@ class WidgetType extends AbstractType
 
     protected function buildTypeChoices()
     {
-        $inbuilt_types = array();
+        $inbuilt = array();
+        $custom  = array();
 
-        foreach ($this->types as $name => $type) {
-            $inbuilt_types[$name] = $type['label'];
+        foreach ($this->field_chain->getFields() as $alias => $field) {
+            $inbuilt[$alias] = $field->getName();
         }
 
-        $custom_widgets = array();
-
+        /** @var FcForm[] $fc_forms */
         $fc_forms = FcFormQuery::create()
             ->filterByIsWidget(true)
             ->orderByTitle()
-            ->find();
+            ->find()
+        ;
 
-        /** @var FcForm $fc_form */
         foreach ($fc_forms as $fc_form) {
             if ($fc_form->getId() != $this->fc_form_id) {
-                $custom_widgets[$fc_form->getAlias()] = $fc_form->getTitle();
+                $custom[$fc_form->getAlias()] = $fc_form->getTitle();
             }
         }
 
-        if (!empty($custom_widgets)) {
+        if (!empty($custom)) {
             return array(
-                'fc.label.admin.field.widget.inbuilt' => $inbuilt_types,
-                'fc.label.admin.field.widget.custom'  => $custom_widgets
+                'fc.label.admin.field.widget.inbuilt' => $inbuilt,
+                'fc.label.admin.field.widget.custom'  => $custom
             );
         } else {
-            return $inbuilt_types;
+            return $inbuilt;
         }
     }
 }

@@ -13,7 +13,7 @@
             </a>
         {% else %}
             <span class="label label-default">
-                {{ item.type | fc_type | trans({}, 'FenrizbesFormConstructorBundle') }}
+                {{ item.type | fc_field | trans({}, 'FenrizbesFormConstructorBundle') }}
             </span>
         {% endif %}
     </td>

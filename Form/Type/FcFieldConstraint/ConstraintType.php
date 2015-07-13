@@ -2,19 +2,24 @@
 
 namespace Fenrizbes\FormConstructorBundle\Form\Type\FcFieldConstraint;
 
+use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ConstraintType extends AbstractType
 {
-    protected $constraints;
+    /**
+     * @var ConstraintChain
+     */
+    protected $constraint_chain;
+
     protected $action;
 
-    public function __construct(array $constraints, $action = null)
+    public function __construct(ConstraintChain $constraint_chain, $action = null)
     {
-        $this->constraints = $constraints;
-        $this->action      = $action;
+        $this->constraint_chain = $constraint_chain;
+        $this->action           = $action;
     }
 
     public function getName()
@@ -50,8 +55,8 @@ class ConstraintType extends AbstractType
     {
         $constraints = array();
 
-        foreach ($this->constraints as $name => $item) {
-            $constraints[$name] = $item['label'];
+        foreach ($this->constraint_chain->getConstraints() as $alias => $constraint) {
+            $constraints[$alias] = $constraint->getName();
         }
 
         return $constraints;

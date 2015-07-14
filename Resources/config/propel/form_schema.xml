@@ -8,6 +8,8 @@
         <column name="method" type="varchar" size="15" required="true" default="POST" />
         <column name="action" type="varchar" size="255" />
         <column name="button" type="varchar" size="255" />
+        <column name="message" type="longvarchar" />
+        <column name="is_ajax" type="boolean" required="true" default="false" />
         <column name="is_active" type="boolean" required="true" default="false" />
         <column name="is_widget" type="boolean" required="true" default="false" />
 

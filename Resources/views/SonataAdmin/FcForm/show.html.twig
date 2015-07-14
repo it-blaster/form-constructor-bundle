@@ -1,5 +1,11 @@
 {% extends 'SonataAdminBundle:CRUD:show.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/fenrizbesformconstructor/js/fc_ajax_handler.js') }}"></script>
+{% endblock %}
+
 {% block show %}
     <div class="sonata-ba-view">
         {{ sonata_block_render_event('sonata.admin.show.top', { 'admin': admin, 'object': object }) }}

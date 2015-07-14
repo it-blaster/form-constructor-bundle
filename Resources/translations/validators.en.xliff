@@ -10,7 +10,7 @@
 
             <trans-unit id="fc.constraint.admin.not_alphanumeric">
                 <source>fc.constraint.admin.not_alphanumeric</source>
-                <target>Only digits, Latin characters, underscores and dashes are allowed</target>
+                <target>Only digits, Latin characters and underscores are allowed</target>
             </trans-unit>
 
             <trans-unit id="fc.constraint.admin.not_unique">

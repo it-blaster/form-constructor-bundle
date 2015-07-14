@@ -113,7 +113,7 @@ class FcFormAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('fc.label.admin.with.form_main', array('class' => 'col-md-6'))
+            ->with('fc.label.admin.with.form_main')
                 ->add('Title', null, array(
                     'label' => 'fc.label.admin.title'
                 ))
@@ -121,23 +121,29 @@ class FcFormAdmin extends Admin
                     'label'       => 'fc.label.admin.alias',
                     'constraints' => array(
                         new Regex(array(
-                            'pattern' => '/^[\w\-]+$/',
+                            'pattern' => '/^\w+$/',
                             'message' => 'fc.constraint.admin.not_alphanumeric'
                         ))
                     )
-                ));
+                ))
+                ->add('Message', $this->fc_defaults['text_editor'], array(
+                    'label'    => 'fc.label.admin.message',
+                    'required' => false
+                ))
+        ;
 
         if (!$this->getSubject()->isNew()) {
             $formMapper
                 ->add('IsActive', null, array(
                     'label'    => 'fc.label.admin.is_active',
                     'required' => false
-                ));
+                ))
+            ;
         }
 
         $formMapper
             ->end()
-            ->with('fc.label.admin.with.form_additional', array('class' => 'col-md-6'))
+            ->with('fc.label.admin.with.form_additional')
                 ->add('Method', 'choice', array(
                     'label'   => 'fc.label.admin.method',
                     'choices' => array(
@@ -151,6 +157,10 @@ class FcFormAdmin extends Admin
                 ->add('Button', null, array(
                     'label' => 'fc.label.admin.button'
                 ))
+                ->add('IsAjax', null, array(
+                    'label'    => 'fc.label.admin.is_ajax',
+                    'required' => false
+                ))
                 ->add('IsWidget', null, array(
                     'label'    => 'fc.label.admin.is_widget',
                     'required' => false
@@ -161,8 +171,10 @@ class FcFormAdmin extends Admin
                 'Alias'    => 'fc.help.admin.alias',
                 'Action'   => 'fc.help.admin.action',
                 'Button'   => 'fc.help.admin.button',
+                'IsAjax'   => 'fc.help.admin.is_ajax',
                 'IsWidget' => 'fc.help.admin.is_widget'
-            ));
+            ))
+        ;
     }
 
     public function validate(ErrorElement $errorElement, $object)

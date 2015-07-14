@@ -4,6 +4,7 @@ namespace Fenrizbes\FormConstructorBundle\Listener;
 
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 use Fenrizbes\FormConstructorBundle\Service\FormService;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -28,6 +29,11 @@ class RequestListener
      */
     protected $router;
 
+    /**
+     * @var Translator
+     */
+    protected $translator;
+
     public function setFormService(FormService $form_service)
     {
         $this->form_service = $form_service;
@@ -41,6 +47,11 @@ class RequestListener
     public function setRouter(Router $router)
     {
         $this->router = $router;
+    }
+
+    public function setTranslator(Translator $translator)
+    {
+        $this->translator = $translator;
     }
 
     public function onKernelRequest(GetResponseEvent $event)
@@ -65,13 +76,23 @@ class RequestListener
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $this->form_service->clear($fc_form);
+            $data = $form->getData();
+
+            $this->form_service->clear($fc_form, array(
+                'template' => $data['_template']
+            ));
 
             if ($request->isXmlHttpRequest()) {
                 return;
             }
 
-            $this->session->getFlashBag()->add('fc_form.success', 'fc.massage.form.is_valid');
+            if ($fc_form->getMessage()) {
+                $message = $fc_form->getMessage();
+            } else {
+                $message = $this->translator->trans('fc.message.form.is_valid', array(), 'FenrizbesFormConstructorBundle');
+            }
+
+            $this->session->getFlashBag()->add('fc_form.success', $message);
 
             $response = new RedirectResponse($this->router->generate(
                 $request->get('_route'),

@@ -1,0 +1,5 @@
+fc_from_ajax_handler:
+    path:     /handle_fc_form/{alias}
+    defaults: { _controller: FenrizbesFormConstructorBundle:FcForm:handleAjax }
+    requirements:
+        alias: \w+

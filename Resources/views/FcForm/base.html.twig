@@ -3,7 +3,7 @@
         {% if type == 'fc_form.success' %}
             {% for flash in flashes %}
                 <div class="alert alert-success">
-                    {{ flash | trans({}, 'FenrizbesFormConstructorBundle') }}
+                    {{ flash | raw }}
                 </div>
             {% endfor %}
         {% endif %}

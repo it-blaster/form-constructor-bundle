@@ -19,6 +19,8 @@ class FenrizbesFormConstructorExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $bundles = $container->getParameter('kernel.bundles');
+
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
@@ -31,6 +33,10 @@ class FenrizbesFormConstructorExtension extends Extension
         $loader->load('services.yml');
         $loader->load('twig.yml');
         $loader->load('sonata_admin.yml');
+
+        if (isset($bundles['IvoryCKEditorBundle'])) {
+            $config['defaults']['text_editor'] = 'ckeditor';
+        }
 
         $container->setParameter('fc.defaults', $config['defaults']);
     }

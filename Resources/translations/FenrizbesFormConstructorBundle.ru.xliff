@@ -298,8 +298,8 @@
                 <target>Отправить</target>
             </trans-unit>
 
-            <trans-unit id="fc.massage.form.is_valid">
-                <source>fc.massage.form.is_valid</source>
+            <trans-unit id="fc.message.form.is_valid">
+                <source>fc.message.form.is_valid</source>
                 <target>Форма успешно отправлена</target>
             </trans-unit>
 
@@ -391,6 +391,21 @@
             <trans-unit id="fc.message.admin.form.alias_conflicts">
                 <source>fc.message.admin.form.alias_conflicts</source>
                 <target>Алиас формы совпадает с алиасом одного из виджетов полей</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.is_ajax">
+                <source>fc.label.admin.is_ajax</source>
+                <target>Асинхронная отправка (AJAX)</target>
+            </trans-unit>
+
+            <trans-unit id="fc.help.admin.is_ajax">
+                <source>fc.help.admin.is_ajax</source>
+                <target>Форма будет отправлена асинхронно, без перезагрузки страницы</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.message">
+                <source>fc.label.admin.message</source>
+                <target>Сообщение об успешной отправке</target>
             </trans-unit>
 
         </body>

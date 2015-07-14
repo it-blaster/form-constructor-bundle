@@ -30,10 +30,17 @@ class Configuration implements ConfigurationInterface
                             ->isRequired()
                             ->defaultValue('d.m.Y')
                         ->end()
+
                         ->scalarNode('datetime_format')
                             ->cannotBeEmpty()
                             ->isRequired()
                             ->defaultValue('d.m.Y H:i')
+                        ->end()
+
+                        ->scalarNode('text_editor')
+                            ->cannotBeEmpty()
+                            ->isRequired()
+                            ->defaultValue('textarea')
                         ->end()
                     ->end()
                 ->end()

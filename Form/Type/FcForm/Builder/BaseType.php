@@ -40,9 +40,12 @@ class BaseType extends AbstractType
      */
     protected $listener_chain;
 
-    public function __construct(FcForm $fc_form)
+    protected $options;
+
+    public function __construct(FcForm $fc_form, $options)
     {
         $this->fc_form = $fc_form;
+        $this->options = $options;
     }
 
     public function setRouter(Router $router)
@@ -73,7 +76,10 @@ class BaseType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'translation_domain' => 'FenrizbesFormConstructorBundle'
+            'translation_domain' => 'FenrizbesFormConstructorBundle',
+            'attr'               => array(
+                'data-async' => $this->fc_form->getIsAjax()
+            )
         ));
     }
 
@@ -88,10 +94,19 @@ class BaseType extends AbstractType
             $action = $this->router->generate($action);
         }
 
+        if ($this->fc_form->getIsAjax()) {
+            if (empty($action)) {
+                $action = $this->router->generate('fc_from_ajax_handler', array(
+                    'alias' => $this->fc_form->getAlias()
+                ));
+            }
+        }
+
         $builder
             ->add('submit', 'submit', array(
                 'label' => ($this->fc_form->getButton() ? $this->fc_form->getButton() : 'fc.label.button')
             ))
+            ->add('_template', 'hidden')
             ->setMethod($this->fc_form->getMethod())
             ->setAction($action)
         ;

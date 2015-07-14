@@ -10,7 +10,7 @@
 
             <trans-unit id="fc.constraint.admin.not_alphanumeric">
                 <source>fc.constraint.admin.not_alphanumeric</source>
-                <target>Допустимы только цифры, латинские символы, нижнее подчеркивание и тире</target>
+                <target>Допустимы только цифры, латинские символы и нижнее подчеркивание</target>
             </trans-unit>
 
             <trans-unit id="fc.constraint.admin.not_unique">

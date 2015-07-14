@@ -10,6 +10,7 @@ use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormQuery;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class FormService
@@ -75,10 +76,14 @@ class FormService
         ), $options);
     }
 
+    /**
+     * @param $fc_form
+     * @param array $options
+     * @return FormInterface
+     * @throws \Exception
+     */
     public function create($fc_form, $options = array())
     {
-        $options = $this->buildOptions($options);
-
         if ($fc_form instanceof FcForm) {
             $alias = $fc_form->getAlias();
         } else {
@@ -86,6 +91,9 @@ class FormService
         }
 
         if (!isset($this->forms[$alias])) {
+            $options = $this->buildOptions($options);
+            $options['data']['_template'] = $options['template'];
+
             if (!$fc_form instanceof FcForm) {
                 $fc_form = $this->findFcForm($alias, (bool)$options['is_admin']);
             }
@@ -98,7 +106,7 @@ class FormService
                 return null;
             }
 
-            $type = new BaseType($fc_form);
+            $type = new BaseType($fc_form, $options);
             $type->setRouter($this->router);
             $type->setFieldChain($this->field_chain);
             $type->setConstraintChain($this->constraint_chain);
@@ -110,7 +118,7 @@ class FormService
         return $this->forms[$alias];
     }
 
-    protected function findFcForm($alias, $is_admin = false)
+    public function findFcForm($alias, $is_admin = false)
     {
         return FcFormQuery::create()
             ->filterByAlias($alias)
@@ -140,12 +148,12 @@ class FormService
         return null;
     }
 
-    public function clear(FcForm $fc_form)
+    public function clear(FcForm $fc_form, $options = array())
     {
         if (isset($this->forms[$fc_form->getAlias()])) {
             unset($this->forms[$fc_form->getAlias()]);
         }
 
-        $this->create($fc_form);
+        $this->create($fc_form, $options);
     }
 }

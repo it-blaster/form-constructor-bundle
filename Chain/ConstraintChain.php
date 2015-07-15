@@ -4,6 +4,7 @@ namespace Fenrizbes\FormConstructorBundle\Chain;
 
 use Fenrizbes\FormConstructorBundle\Item\Constraint\AbstractConstraint;
 use Fenrizbes\FormConstructorBundle\Item\ParamsBuilder;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 
 class ConstraintChain
 {
@@ -54,12 +55,14 @@ class ConstraintChain
 
     /**
      * @param string $alias
+     * @param FcForm $fc_form
      * @return ParamsBuilder
      */
-    public function getParamsBuilder($alias)
+    public function getParamsBuilder($alias, FcForm $fc_form)
     {
         return new ParamsBuilder(
-            $this->getConstraint($alias)
+            $this->getConstraint($alias),
+            $fc_form
         );
     }
 }

@@ -4,6 +4,7 @@ namespace Fenrizbes\FormConstructorBundle\Chain;
 
 use Fenrizbes\FormConstructorBundle\Item\Field\AbstractField;
 use Fenrizbes\FormConstructorBundle\Item\ParamsBuilder;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 
 class FieldChain
 {
@@ -54,12 +55,14 @@ class FieldChain
 
     /**
      * @param string $alias
+     * @param FcForm $fc_form
      * @return ParamsBuilder
      */
-    public function getParamsBuilder($alias)
+    public function getParamsBuilder($alias, FcForm $fc_form)
     {
         return new ParamsBuilder(
-            $this->getField($alias)
+            $this->getField($alias),
+            $fc_form
         );
     }
 }

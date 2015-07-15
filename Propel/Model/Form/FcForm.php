@@ -2,6 +2,7 @@
 
 namespace Fenrizbes\FormConstructorBundle\Propel\Model\Form;
 
+use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\om\BaseFcForm;
 
@@ -10,6 +11,10 @@ class FcForm extends BaseFcForm
     protected $entrances;
     protected $is_used_as_widget;
 
+    /**
+     * @param bool $all
+     * @return FcField[]
+     */
     public function getFields($all = false)
     {
         return FcFieldQuery::create()
@@ -18,7 +23,8 @@ class FcForm extends BaseFcForm
                 ->filterByIsActive(true)
             ->_endif()
             ->orderByRank()
-            ->find();
+            ->find()
+        ;
     }
 
     public function getEntrances()

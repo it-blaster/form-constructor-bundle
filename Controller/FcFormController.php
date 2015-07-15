@@ -15,6 +15,7 @@ class FcFormController extends Controller
             throw $this->createNotFoundException();
         }
 
+        // TODO: Проверять, из админки запрос или из фронта
         $fc_form = $this->get('fc.form')->findFcForm($alias);
         if (!$fc_form instanceof FcForm) {
             throw $this->createNotFoundException();

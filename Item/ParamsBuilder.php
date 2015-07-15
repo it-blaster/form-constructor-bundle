@@ -2,6 +2,7 @@
 
 namespace Fenrizbes\FormConstructorBundle\Item;
 
+use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -13,8 +14,10 @@ class ParamsBuilder extends AbstractType
      */
     protected $item;
 
-    public function __construct(ItemInterface $item)
+    public function __construct(ItemInterface $item, FcForm $fc_form)
     {
+        $item->setFcForm($fc_form);
+
         $this->item = $item;
     }
 

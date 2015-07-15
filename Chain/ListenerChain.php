@@ -4,6 +4,7 @@ namespace Fenrizbes\FormConstructorBundle\Chain;
 
 use Fenrizbes\FormConstructorBundle\Item\Listener\AbstractListener;
 use Fenrizbes\FormConstructorBundle\Item\ParamsBuilder;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 
 class ListenerChain
 {
@@ -54,12 +55,14 @@ class ListenerChain
 
     /**
      * @param string $alias
+     * @param FcForm $fc_form
      * @return ParamsBuilder
      */
-    public function getParamsBuilder($alias)
+    public function getParamsBuilder($alias, FcForm $fc_form)
     {
         return new ParamsBuilder(
-            $this->getListener($alias)
+            $this->getListener($alias),
+            $fc_form
         );
     }
 }

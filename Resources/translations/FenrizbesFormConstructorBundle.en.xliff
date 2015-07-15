@@ -408,6 +408,26 @@
                 <target>Success message</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.constraints.email">
+                <source>fc.label.constraints.email</source>
+                <target>Email</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.strict">
+                <source>fc.label.admin.constraint.strict</source>
+                <target>Strict</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.one_of_set">
+                <source>fc.label.constraints.one_of_set</source>
+                <target>One of a group is required</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.fields">
+                <source>fc.label.admin.constraint.fields</source>
+                <target>Group fields</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

@@ -1,6 +1,8 @@
 parameters:
-    fc.constraint.not_blank.class: Fenrizbes\FormConstructorBundle\Item\Constraint\NotBlankConstraint
-    fc.constraint.length.class:    Fenrizbes\FormConstructorBundle\Item\Constraint\LengthConstraint
+    fc.constraint.not_blank.class:  Fenrizbes\FormConstructorBundle\Item\Constraint\NotBlankConstraint
+    fc.constraint.length.class:     Fenrizbes\FormConstructorBundle\Item\Constraint\LengthConstraint
+    fc.constraint.email.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\EmailConstraint
+    fc.constraint.one_of_set.class: Fenrizbes\FormConstructorBundle\Item\Constraint\OneOfSetConstraint
 
 services:
     fc.constraint.not_blank:
@@ -10,3 +12,11 @@ services:
     fc.constraint.length:
         class: %fc.constraint.length.class%
         tags:  [ { name: fc.constraint, alias: length } ]
+
+    fc.constraint.email:
+        class: %fc.constraint.email.class%
+        tags:  [ { name: fc.constraint, alias: email } ]
+
+    fc.constraint.one_of_set:
+        class: %fc.constraint.one_of_set.class%
+        tags:  [ { name: fc.constraint, alias: one_of_set } ]

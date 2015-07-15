@@ -15,7 +15,8 @@
         "php": ">=5.3.2",
         "symfony/framework-bundle": "~2.1",
         "sonata-project/admin-bundle": "~2.3",
-        "sonata-project/propel-admin-bundle": "dev-master"
+        "sonata-project/propel-admin-bundle": "dev-master",
+        "egulias/email-validator": "~1.2"
     },
     "autoload": {
         "psr-0": {

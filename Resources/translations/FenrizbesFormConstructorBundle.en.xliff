@@ -60,7 +60,7 @@
 
             <trans-unit id="fc.label.admin.action">
                 <source>fc.label.admin.action</source>
-                <target>Send address</target>
+                <target>Form's action URL</target>
             </trans-unit>
 
             <trans-unit id="fc.label.admin.button">
@@ -426,6 +426,51 @@
             <trans-unit id="fc.label.admin.constraint.fields">
                 <source>fc.label.admin.constraint.fields</source>
                 <target>Group fields</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.checkbox">
+                <source>fc.label.field_type.checkbox</source>
+                <target>Checkbox</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.is_checked">
+                <source>fc.label.admin.field.is_checked</source>
+                <target>Checked by default</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.choice">
+                <source>fc.label.field_type.choice</source>
+                <target>Choice</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.choices">
+                <source>fc.label.admin.field.choices</source>
+                <target>Options</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.multiple">
+                <source>fc.label.admin.field.multiple</source>
+                <target>Multiple</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.collapsed">
+                <source>fc.label.admin.field.collapsed</source>
+                <target>Drop-down list</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.choice.value">
+                <source>fc.label.admin.choice.value</source>
+                <target>Value</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.choice.label">
+                <source>fc.label.admin.choice.label</source>
+                <target>Label</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.choice.is_selected">
+                <source>fc.label.admin.choice.is_selected</source>
+                <target>Selected by default</target>
             </trans-unit>
 
         </body>

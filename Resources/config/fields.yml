@@ -1,6 +1,8 @@
 parameters:
     fc.field.text.class:     Fenrizbes\FormConstructorBundle\Item\Field\TextField
     fc.field.textarea.class: Fenrizbes\FormConstructorBundle\Item\Field\TextareaField
+    fc.field.checkbox.class: Fenrizbes\FormConstructorBundle\Item\Field\CheckboxField
+    fc.field.choice.class:   Fenrizbes\FormConstructorBundle\Item\Field\ChoiceField
 
 services:
     fc.field.text:
@@ -10,3 +12,32 @@ services:
     fc.field.textarea:
         class: %fc.field.textarea.class%
         tags:  [ { name: fc.field, alias: textarea } ]
+
+    fc.field.checkbox:
+        class: %fc.field.checkbox.class%
+        tags:  [ { name: fc.field, alias: checkbox } ]
+
+    fc.field.choice:
+        class: %fc.field.choice.class%
+        tags:  [ { name: fc.field, alias: choice } ]
+
+# TODO:
+# Чойс из БД
+# Дата
+# Время
+# Дата и время
+# Файл
+# Скрытое
+# Флажок с принятием некоторых условий
+# Слайдер
+# Слайдер с диапазоном
+# Деньги с выбором валюты
+# КЛАДР
+# Пароль (с возможностью повтора)
+
+# Возможность добавления полей или групп полей (еще один телефон/еще контакнтные данные и т. п.)
+# Зависимость отображения полей от значения другого поля (есть дети - указывай, нет - не надо)
+# Чойс "Другое" с полем свободного ввода
+
+# ГЛОБАЛЬНО:
+# Разбивка формы на шаги

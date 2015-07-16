@@ -33,6 +33,11 @@
                 <target>Некорректный электронный адрес</target>
             </trans-unit>
 
+            <trans-unit id="fc.constraint.admin.choices_min">
+                <source>fc.constraint.admin.choices_min</source>
+                <target>Должен быть как минимум один вариант</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

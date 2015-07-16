@@ -1,0 +1,47 @@
+{% extends 'SonataAdminBundle:Form:form_admin_fields.html.twig' %}
+
+{% block fc_collection_widget %}
+    <div id="{{ form.vars.id }}_items">
+        {% for field in form %}
+            <div class="panel panel-default collection-item">
+                <button type="button" class="close"><span>&times;</span>&nbsp;</button>
+                <div class="panel-body">
+                    {{ form_widget(field) }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" class="btn btn-primary" id="{{ form.vars.id }}_add" data-prototype="{{ form_widget(form.vars.prototype) | e }}">
+        <i class="fa fa-plus-circle"></i>
+        Добавить
+    </button>
+
+    <script>
+        $(function() {
+            var $items = $('#{{ form.vars.id }}_items');
+            var index  = {{ form.count }};
+
+            $('#{{ form.vars.id }}_add').click(function(e) {
+                e.preventDefault();
+
+                var prototype =
+                    '<div class="panel panel-default collection-item">' +
+                        '<button type="button" class="close"><span>&times;</span>&nbsp;</button>' +
+                        '<div class="panel-body">' +
+                            $(this).data('prototype').replace(/__name__/g, index++) +
+                        '</div>' +
+                    '</div>'
+                ;
+
+                $items.append(prototype);
+            });
+
+            $items.on('click', 'button.close', function(e) {
+                e.preventDefault();
+
+                $(this).closest('.collection-item').remove();
+            });
+        });
+    </script>
+{% endblock %}

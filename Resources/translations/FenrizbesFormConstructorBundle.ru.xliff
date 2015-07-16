@@ -60,7 +60,7 @@
 
             <trans-unit id="fc.label.admin.action">
                 <source>fc.label.admin.action</source>
-                <target>Адрес отправки</target>
+                <target>URL обработчика</target>
             </trans-unit>
 
             <trans-unit id="fc.label.admin.button">
@@ -426,6 +426,51 @@
             <trans-unit id="fc.label.admin.constraint.fields">
                 <source>fc.label.admin.constraint.fields</source>
                 <target>Поля группы</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.checkbox">
+                <source>fc.label.field_type.checkbox</source>
+                <target>Флажок</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.is_checked">
+                <source>fc.label.admin.field.is_checked</source>
+                <target>Отмечен по умолчанию</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.choice">
+                <source>fc.label.field_type.choice</source>
+                <target>Выбор из вариантов</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.choices">
+                <source>fc.label.admin.field.choices</source>
+                <target>Варианты</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.multiple">
+                <source>fc.label.admin.field.multiple</source>
+                <target>Множественный выбор</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.collapsed">
+                <source>fc.label.admin.field.collapsed</source>
+                <target>Выпадающий список</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.choice.value">
+                <source>fc.label.admin.choice.value</source>
+                <target>Значение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.choice.label">
+                <source>fc.label.admin.choice.label</source>
+                <target>Текст</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.choice.is_selected">
+                <source>fc.label.admin.choice.is_selected</source>
+                <target>Выбрано по умолчанию</target>
             </trans-unit>
 
         </body>

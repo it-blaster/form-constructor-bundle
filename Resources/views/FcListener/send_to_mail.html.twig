@@ -9,17 +9,19 @@
     {% endif %}
 
     {% for key, value in data %}
-        {% set options = form.get(key).config.options %}
+        {% if key starts with '_' %}{% else %}
+            {% set options = form.get(key).config.options %}
 
-        {% if options.label is defined and options.label is not empty %}
-            {{ options.label }}:
-        {% else %}
-            {{ key }}:
+            {% if options.label is defined and options.label is not empty %}
+                {{ options.label }}:
+            {% else %}
+                {{ key }}:
+            {% endif %}
+
+            {{ value }}
+
+            <br />
         {% endif %}
-
-        {{ value }}
-
-        <br />
     {% endfor %}
 
     {% if listener.params.footer is not empty %}

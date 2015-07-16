@@ -33,6 +33,11 @@
                 <target>Invalid email</target>
             </trans-unit>
 
+            <trans-unit id="fc.constraint.admin.choices_min">
+                <source>fc.constraint.admin.choices_min</source>
+                <target>Add at least one option to the list</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

@@ -10,6 +10,8 @@ use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormEventListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
@@ -132,5 +134,10 @@ class BaseType extends AbstractType
     {
         $listener = $this->listener_chain->getListener($fc_listener->getListener());
         $listener->buildListener($builder, $fc_listener);
+    }
+
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars = array_merge($this->options, $view->vars);
     }
 }

@@ -19,8 +19,14 @@ class FcCollectionDataTransformer implements DataTransformerInterface
             foreach ($data as $row) {
                 $is_empty = true;
 
-                foreach ($row as $cell) {
-                    if (!empty($cell)) {
+                if (is_array($row)) {
+                    foreach ($row as $cell) {
+                        if (!empty($cell)) {
+                            $is_empty = false;
+                        }
+                    }
+                } else {
+                    if (!empty($row)) {
                         $is_empty = false;
                     }
                 }

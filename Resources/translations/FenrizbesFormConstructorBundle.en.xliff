@@ -593,6 +593,66 @@
                 <target>Count limitation</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.field_type.hidden">
+                <source>fc.label.field_type.hidden</source>
+                <target>Hidden</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.value">
+                <source>fc.label.admin.field.value</source>
+                <target>Value</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.file">
+                <source>fc.label.field_type.file</source>
+                <target>File</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.file">
+                <source>fc.label.constraints.file</source>
+                <target>File</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.max_size">
+                <source>fc.label.admin.constraint.max_size</source>
+                <target>Max size, bytes</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.mime_types">
+                <source>fc.label.admin.constraint.mime_types</source>
+                <target>MIME-types</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.image">
+                <source>fc.label.constraints.image</source>
+                <target>Image</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.min_width">
+                <source>fc.label.admin.constraint.min_width</source>
+                <target>Minimum width</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.max_width">
+                <source>fc.label.admin.constraint.max_width</source>
+                <target>Maximum width</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.min_height">
+                <source>fc.label.admin.constraint.min_height</source>
+                <target>Minimum height</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.max_height">
+                <source>fc.label.admin.constraint.max_height</source>
+                <target>Maximum height</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.ratio">
+                <source>fc.label.admin.constraint.ratio</source>
+                <target>Aspect ratio</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

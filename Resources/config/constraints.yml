@@ -9,6 +9,8 @@ parameters:
     fc.constraint.url.class:        Fenrizbes\FormConstructorBundle\Item\Constraint\UrlConstraint
     fc.constraint.characters.class: Fenrizbes\FormConstructorBundle\Item\Constraint\CharactersConstraint
     fc.constraint.count.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\CountConstraint
+    fc.constraint.file.class:       Fenrizbes\FormConstructorBundle\Item\Constraint\FileConstraint
+    fc.constraint.image.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\ImageConstraint
 
 services:
     fc.constraint.not_blank:
@@ -51,6 +53,14 @@ services:
         class: %fc.constraint.count.class%
         tags:  [ { name: fc.constraint, alias: count } ]
 
+    fc.constraint.file:
+        class: %fc.constraint.file.class%
+        tags:  [ { name: fc.constraint, alias: file } ]
+
+    fc.constraint.image:
+        class: %fc.constraint.image.class%
+        tags:  [ { name: fc.constraint, alias: image } ]
+
 # TODO:
 #
 # Дата
@@ -58,6 +68,3 @@ services:
 # Дата и время
 # Сравнение даты и/или времени
 # Сравнение даты с возрастом
-#
-# Изображение
-# Файл

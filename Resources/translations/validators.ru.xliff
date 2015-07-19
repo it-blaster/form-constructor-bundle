@@ -38,6 +38,11 @@
                 <target>Должен быть как минимум один вариант</target>
             </trans-unit>
 
+            <trans-unit id="fc.constraint.admin.not_float">
+                <source>fc.constraint.admin.not_float</source>
+                <target>Некорректное число</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

@@ -593,6 +593,66 @@
                 <target>Ограничение количества</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.field_type.hidden">
+                <source>fc.label.field_type.hidden</source>
+                <target>Скрытое</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.value">
+                <source>fc.label.admin.field.value</source>
+                <target>Значение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.file">
+                <source>fc.label.field_type.file</source>
+                <target>Файл</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.file">
+                <source>fc.label.constraints.file</source>
+                <target>Файл</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.max_size">
+                <source>fc.label.admin.constraint.max_size</source>
+                <target>Максимальный размер, байты</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.mime_types">
+                <source>fc.label.admin.constraint.mime_types</source>
+                <target>MIME-типы</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.image">
+                <source>fc.label.constraints.image</source>
+                <target>Изображение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.min_width">
+                <source>fc.label.admin.constraint.min_width</source>
+                <target>Минимальная ширина</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.max_width">
+                <source>fc.label.admin.constraint.max_width</source>
+                <target>Максимальная ширина</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.min_height">
+                <source>fc.label.admin.constraint.min_height</source>
+                <target>Минимальная высота</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.max_height">
+                <source>fc.label.admin.constraint.max_height</source>
+                <target>Максимальная высота</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.ratio">
+                <source>fc.label.admin.constraint.ratio</source>
+                <target>Соотношение сторон</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

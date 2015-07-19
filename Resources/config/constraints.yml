@@ -3,6 +3,12 @@ parameters:
     fc.constraint.length.class:     Fenrizbes\FormConstructorBundle\Item\Constraint\LengthConstraint
     fc.constraint.email.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\EmailConstraint
     fc.constraint.one_of_set.class: Fenrizbes\FormConstructorBundle\Item\Constraint\OneOfSetConstraint
+    fc.constraint.integer.class:    Fenrizbes\FormConstructorBundle\Item\Constraint\IntegerConstraint
+    fc.constraint.float.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\FloatConstraint
+    fc.constraint.comparison.class: Fenrizbes\FormConstructorBundle\Item\Constraint\ComparisonConstraint
+    fc.constraint.url.class:        Fenrizbes\FormConstructorBundle\Item\Constraint\UrlConstraint
+    fc.constraint.characters.class: Fenrizbes\FormConstructorBundle\Item\Constraint\CharactersConstraint
+    fc.constraint.count.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\CountConstraint
 
 services:
     fc.constraint.not_blank:
@@ -21,18 +27,31 @@ services:
         class: %fc.constraint.one_of_set.class%
         tags:  [ { name: fc.constraint, alias: one_of_set } ]
 
+    fc.constraint.integer:
+        class: %fc.constraint.integer.class%
+        tags:  [ { name: fc.constraint, alias: integer } ]
+
+    fc.constraint.float:
+        class: %fc.constraint.float.class%
+        tags:  [ { name: fc.constraint, alias: float } ]
+
+    fc.constraint.comparison:
+        class: %fc.constraint.comparison.class%
+        tags:  [ { name: fc.constraint, alias: comparison } ]
+
+    fc.constraint.url:
+        class: %fc.constraint.url.class%
+        tags:  [ { name: fc.constraint, alias: url } ]
+
+    fc.constraint.characters:
+        class: %fc.constraint.characters.class%
+        tags:  [ { name: fc.constraint, alias: characters } ]
+
+    fc.constraint.count:
+        class: %fc.constraint.count.class%
+        tags:  [ { name: fc.constraint, alias: count } ]
+
 # TODO:
-#
-# ЧИСЛА:
-# Целочисленное
-# Десятичное
-# Сравнение (больше/меньше/[и/или]равно)
-#
-# СТРОКИ:
-# Пароль с повтором
-# URL
-# Кириллица (+ цифры по желанию)
-# Латиница (+ цифры по желанию)
 #
 # Дата
 # Время
@@ -42,5 +61,3 @@ services:
 #
 # Изображение
 # Файл
-#
-# Count для чойсов

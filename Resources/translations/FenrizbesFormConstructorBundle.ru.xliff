@@ -473,6 +473,126 @@
                 <target>Выбрано по умолчанию</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.constraints.integer">
+                <source>fc.label.constraints.integer</source>
+                <target>Целое число</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.float">
+                <source>fc.label.constraints.float</source>
+                <target>Число с плавающей точкой</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.comparison">
+                <source>fc.label.constraints.comparison</source>
+                <target>Сравнение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.value">
+                <source>fc.label.admin.constraint.value</source>
+                <target>Значение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.comparison_type">
+                <source>fc.label.admin.constraint.comparison_type</source>
+                <target>Тип сравнения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.comparison_equal">
+                <source>fc.label.admin.constraint.comparison_equal</source>
+                <target>Равно</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.comparison_not_equal">
+                <source>fc.label.admin.constraint.comparison_not_equal</source>
+                <target>Не равно</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.comparison_greater">
+                <source>fc.label.admin.constraint.comparison_greater</source>
+                <target>Больше</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.comparison_greater_or_equal">
+                <source>fc.label.admin.constraint.comparison_greater_or_equal</source>
+                <target>Больше или равно</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.comparison_less">
+                <source>fc.label.admin.constraint.comparison_less</source>
+                <target>Меньше</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.constraint.comparison_less_or_equal">
+                <source>fc.label.admin.constraint.comparison_less_or_equal</source>
+                <target>Меньше или равно</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.url">
+                <source>fc.label.constraints.url</source>
+                <target>URL</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.characters">
+                <source>fc.label.constraints.characters</source>
+                <target>Ограничение символов</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.characters_sets">
+                <source>fc.label.constraints.characters_sets</source>
+                <target>Наборы символов</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.characters_sets_cyrillic">
+                <source>fc.label.constraints.characters_sets_cyrillic</source>
+                <target>Кириллица</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.characters_sets_latin">
+                <source>fc.label.constraints.characters_sets_latin</source>
+                <target>Латиница</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.characters_sets_digit">
+                <source>fc.label.constraints.characters_sets_digit</source>
+                <target>Цифры</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.characters_sets_space">
+                <source>fc.label.constraints.characters_sets_space</source>
+                <target>Пробел</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.characters_sets_dash">
+                <source>fc.label.constraints.characters_sets_dash</source>
+                <target>Тире</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.characters_sets_underscore">
+                <source>fc.label.constraints.characters_sets_underscore</source>
+                <target>Нижнее подчеркивание</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.characters_match">
+                <source>fc.label.constraints.characters_match</source>
+                <target>Ограничение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.characters_match_true">
+                <source>fc.label.constraints.characters_match_true</source>
+                <target>Разрешить выбранные наборы</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.characters_match_false">
+                <source>fc.label.constraints.characters_match_false</source>
+                <target>Запретить выбранные наборы</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.count">
+                <source>fc.label.constraints.count</source>
+                <target>Ограничение количества</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

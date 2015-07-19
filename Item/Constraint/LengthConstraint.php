@@ -42,6 +42,13 @@ class LengthConstraint extends AbstractConstraint
 
     public function buildConstraint(&$options, FcFieldConstraint $fc_constraint)
     {
+        $options['constraints'][] = new Length(
+            $this->buildConstraintOptions($fc_constraint)
+        );
+    }
+
+    protected function buildConstraintOptions(FcFieldConstraint $fc_constraint)
+    {
         $constraint_options = array(
             'minMessage'   => $fc_constraint->getMessage(),
             'maxMessage'   => $fc_constraint->getMessage(),
@@ -58,6 +65,6 @@ class LengthConstraint extends AbstractConstraint
             $constraint_options['max'] = $params['max'];
         }
 
-        $options['constraints'][] = new Length($constraint_options);
+        return $constraint_options;
     }
 }

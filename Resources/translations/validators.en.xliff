@@ -38,14 +38,14 @@
                 <target>Add at least one option to the list</target>
             </trans-unit>
 
-            <trans-unit id="fc.constraint.admin.invalid_ratio">
-                <source>fc.constraint.admin.invalid_ratio</source>
-                <target>Invalid aspect ratio</target>
-            </trans-unit>
-
             <trans-unit id="fc.constraint.admin.not_float">
                 <source>fc.constraint.admin.not_float</source>
                 <target>Incorrect float</target>
+            </trans-unit>
+
+            <trans-unit id="fc.constraint.admin.invalid_date">
+                <source>fc.constraint.admin.invalid_date</source>
+                <target>Invalid date</target>
             </trans-unit>
 
         </body>

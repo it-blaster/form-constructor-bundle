@@ -653,6 +653,66 @@
                 <target>Соотношение сторон</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.datetime">
+                <source>fc.label.datetime</source>
+                <target>Дата и время</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.date">
+                <source>fc.label.date</source>
+                <target>Дата</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.time">
+                <source>fc.label.time</source>
+                <target>Время</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.date_format">
+                <source>fc.label.date_format</source>
+                <target>Формат даты</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_d.m.Y">
+                <source>fc.label.datetime_format_d.m.Y</source>
+                <target>день.месяц.год</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_Y-m-d">
+                <source>fc.label.datetime_format_Y-m-d</source>
+                <target>год-месяц-день</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_Y/m/d">
+                <source>fc.label.datetime_format_Y/m/d</source>
+                <target>год/месяц/день</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_m/d/Y">
+                <source>fc.label.datetime_format_m/d/Y</source>
+                <target>месяц/день/год</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.time_format">
+                <source>fc.label.time_format</source>
+                <target>Формат времени</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_H:i">
+                <source>fc.label.datetime_format_H:i</source>
+                <target>24-часовой</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_g:i A">
+                <source>fc.label.datetime_format_g:i A</source>
+                <target>12-часовой</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.date_comparison">
+                <source>fc.label.constraints.date_comparison</source>
+                <target>Сравнение дат</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

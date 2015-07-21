@@ -24,34 +24,42 @@ class ComparisonConstraint extends AbstractConstraint
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('type', 'choice', array(
-                'label'    => 'fc.label.admin.constraint.comparison_type',
-                'required' => true,
-                'choices'  => array(
-                    'equal'            => 'fc.label.admin.constraint.comparison_equal',
-                    'not_equal'        => 'fc.label.admin.constraint.comparison_not_equal',
-                    'greater'          => 'fc.label.admin.constraint.comparison_greater',
-                    'greater_or_equal' => 'fc.label.admin.constraint.comparison_greater_or_equal',
-                    'less'             => 'fc.label.admin.constraint.comparison_less',
-                    'less_or_equal'    => 'fc.label.admin.constraint.comparison_less_or_equal'
-                ),
-                'constraints' => array(
-                    new NotBlank(array(
-                        'message' => 'fc.constraint.admin.blank'
-                    ))
-                )
-            ))
-            ->add('value', 'text', array(
-                'label'       => 'fc.label.admin.constraint.value',
-                'required'    => true,
-                'constraints' => array(
-                    new NotBlank(array(
-                        'message' => 'fc.constraint.admin.blank'
-                    ))
-                )
-            ))
-        ;
+        $this->buildFormTypeField($builder);
+        $this->buildFormValueField($builder);
+    }
+
+    public function buildFormTypeField(FormBuilderInterface $builder)
+    {
+        $builder->add('type', 'choice', array(
+            'label'    => 'fc.label.admin.constraint.comparison_type',
+            'required' => true,
+            'choices'  => array(
+                'equal'            => 'fc.label.admin.constraint.comparison_equal',
+                'not_equal'        => 'fc.label.admin.constraint.comparison_not_equal',
+                'greater'          => 'fc.label.admin.constraint.comparison_greater',
+                'greater_or_equal' => 'fc.label.admin.constraint.comparison_greater_or_equal',
+                'less'             => 'fc.label.admin.constraint.comparison_less',
+                'less_or_equal'    => 'fc.label.admin.constraint.comparison_less_or_equal'
+            ),
+            'constraints' => array(
+                new NotBlank(array(
+                    'message' => 'fc.constraint.admin.blank'
+                ))
+            )
+        ));
+    }
+
+    public function buildFormValueField(FormBuilderInterface $builder)
+    {
+        $builder->add('value', 'text', array(
+            'label'       => 'fc.label.admin.constraint.value',
+            'required'    => true,
+            'constraints' => array(
+                new NotBlank(array(
+                    'message' => 'fc.constraint.admin.blank'
+                ))
+            )
+        ));
     }
 
     public function buildConstraint(&$options, FcFieldConstraint $fc_constraint)

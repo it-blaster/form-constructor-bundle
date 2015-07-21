@@ -653,6 +653,66 @@
                 <target>Aspect ratio</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.datetime">
+                <source>fc.label.datetime</source>
+                <target>Date and time</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.date">
+                <source>fc.label.date</source>
+                <target>Date</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.time">
+                <source>fc.label.time</source>
+                <target>Time</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.date_format">
+                <source>fc.label.date_format</source>
+                <target>Date format</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_d.m.Y">
+                <source>fc.label.datetime_format_d.m.Y</source>
+                <target>day.month.year</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_Y-m-d">
+                <source>fc.label.datetime_format_Y-m-d</source>
+                <target>year-month-day</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_Y/m/d">
+                <source>fc.label.datetime_format_Y/m/d</source>
+                <target>year/month/day</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_m/d/Y">
+                <source>fc.label.datetime_format_m/d/Y</source>
+                <target>month/day/year</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.time_format">
+                <source>fc.label.time_format</source>
+                <target>Time format</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_H:i">
+                <source>fc.label.datetime_format_H:i</source>
+                <target>24-hour</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.datetime_format_g:i A">
+                <source>fc.label.datetime_format_g:i A</source>
+                <target>12-hour</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.constraints.date_comparison">
+                <source>fc.label.constraints.date_comparison</source>
+                <target>Dates comparison</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

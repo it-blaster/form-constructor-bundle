@@ -2,7 +2,6 @@
 
 namespace Fenrizbes\FormConstructorBundle\Item\Field;
 
-use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
 use Fenrizbes\FormConstructorBundle\Form\Type\ChoiceOptionType;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,9 +39,9 @@ class ChoiceField extends AbstractField
         ;
     }
 
-    protected function buildFieldOptions(ConstraintChain $constraint_chain, FcField $fc_field)
+    protected function buildFieldOptions(FcField $fc_field)
     {
-        $options = parent::buildFieldOptions($constraint_chain, $fc_field);
+        $options = parent::buildFieldOptions($fc_field);
         $params  = $fc_field->getParams();
 
         $options['choices']  = array();

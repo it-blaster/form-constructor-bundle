@@ -12,10 +12,16 @@ abstract class AbstractField extends AbstractItem
 {
     public function buildField(ConstraintChain $constraint_chain, FormBuilderInterface $builder, FcField $fc_field)
     {
+        $options = $this->buildFieldOptions($fc_field);
+
+        foreach ($fc_field->getConstraints() as $fc_constraint) {
+            $this->buildFieldConstraint($options, $fc_constraint, $constraint_chain);
+        }
+
         $builder->add(
             $this->buildFieldName($fc_field),
             $this->buildFieldType($fc_field),
-            $this->buildFieldOptions($constraint_chain, $fc_field)
+            $options
         );
     }
 
@@ -29,19 +35,16 @@ abstract class AbstractField extends AbstractItem
         return $fc_field->getType();
     }
 
-    protected function buildFieldOptions(ConstraintChain $constraint_chain, FcField $fc_field)
+    protected function buildFieldOptions(FcField $fc_field)
     {
-        $options = array(
+        return array(
             'label'       => $fc_field->getLabel(),
             'required'    => false,
-            'constraints' => array()
+            'constraints' => array(),
+            'attr'        => array(
+                'data-type' => $this->buildFieldType($fc_field)
+            )
         );
-
-        foreach ($fc_field->getConstraints() as $fc_constraint) {
-            $this->buildFieldConstraint($options, $fc_constraint, $constraint_chain);
-        }
-
-        return $options;
     }
 
     protected function buildFieldConstraint(&$options, FcFieldConstraint $fc_constraint, ConstraintChain $constraint_chain)

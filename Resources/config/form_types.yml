@@ -1,0 +1,20 @@
+services:
+    fc_collection:
+        class: Fenrizbes\FormConstructorBundle\Form\Type\FcCollectionType
+        tags:
+            - { name: form.type, alias: fc_collection }
+
+    fc_datetime:
+        class: Fenrizbes\FormConstructorBundle\Form\Type\FcDateTimeType
+        tags:
+            - { name: form.type, alias: fc_datetime }
+
+    fc_date:
+        class: Fenrizbes\FormConstructorBundle\Form\Type\FcDateType
+        tags:
+            - { name: form.type, alias: fc_date }
+
+    fc_time:
+        class: Fenrizbes\FormConstructorBundle\Form\Type\FcTimeType
+        tags:
+            - { name: form.type, alias: fc_time }

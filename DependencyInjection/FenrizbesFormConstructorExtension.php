@@ -30,6 +30,7 @@ class FenrizbesFormConstructorExtension extends Extension
         $loader->load('constraints.yml');
         $loader->load('listeners.yml');
 
+        $loader->load('form_types.yml');
         $loader->load('services.yml');
         $loader->load('twig.yml');
         $loader->load('sonata_admin.yml');

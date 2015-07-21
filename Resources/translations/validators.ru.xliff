@@ -43,6 +43,11 @@
                 <target>Некорректное число</target>
             </trans-unit>
 
+            <trans-unit id="fc.constraint.admin.invalid_date">
+                <source>fc.constraint.admin.invalid_date</source>
+                <target>Некорректная дата</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

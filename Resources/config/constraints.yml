@@ -1,16 +1,18 @@
 parameters:
-    fc.constraint.not_blank.class:  Fenrizbes\FormConstructorBundle\Item\Constraint\NotBlankConstraint
-    fc.constraint.length.class:     Fenrizbes\FormConstructorBundle\Item\Constraint\LengthConstraint
-    fc.constraint.email.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\EmailConstraint
-    fc.constraint.one_of_set.class: Fenrizbes\FormConstructorBundle\Item\Constraint\OneOfSetConstraint
-    fc.constraint.integer.class:    Fenrizbes\FormConstructorBundle\Item\Constraint\IntegerConstraint
-    fc.constraint.float.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\FloatConstraint
-    fc.constraint.comparison.class: Fenrizbes\FormConstructorBundle\Item\Constraint\ComparisonConstraint
-    fc.constraint.url.class:        Fenrizbes\FormConstructorBundle\Item\Constraint\UrlConstraint
-    fc.constraint.characters.class: Fenrizbes\FormConstructorBundle\Item\Constraint\CharactersConstraint
-    fc.constraint.count.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\CountConstraint
-    fc.constraint.file.class:       Fenrizbes\FormConstructorBundle\Item\Constraint\FileConstraint
-    fc.constraint.image.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\ImageConstraint
+    fc.constraint.not_blank.class:       Fenrizbes\FormConstructorBundle\Item\Constraint\NotBlankConstraint
+    fc.constraint.length.class:          Fenrizbes\FormConstructorBundle\Item\Constraint\LengthConstraint
+    fc.constraint.email.class:           Fenrizbes\FormConstructorBundle\Item\Constraint\EmailConstraint
+    fc.constraint.one_of_set.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\OneOfSetConstraint
+    fc.constraint.integer.class:         Fenrizbes\FormConstructorBundle\Item\Constraint\IntegerConstraint
+    fc.constraint.float.class:           Fenrizbes\FormConstructorBundle\Item\Constraint\FloatConstraint
+    fc.constraint.comparison.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\ComparisonConstraint
+    fc.constraint.url.class:             Fenrizbes\FormConstructorBundle\Item\Constraint\UrlConstraint
+    fc.constraint.characters.class:      Fenrizbes\FormConstructorBundle\Item\Constraint\CharactersConstraint
+    fc.constraint.count.class:           Fenrizbes\FormConstructorBundle\Item\Constraint\CountConstraint
+    fc.constraint.file.class:            Fenrizbes\FormConstructorBundle\Item\Constraint\FileConstraint
+    fc.constraint.image.class:           Fenrizbes\FormConstructorBundle\Item\Constraint\ImageConstraint
+    fc.constraint.datetime.class:        Fenrizbes\FormConstructorBundle\Item\Constraint\DateTimeConstraint
+    fc.constraint.date_comparison.class: Fenrizbes\FormConstructorBundle\Item\Constraint\DateComparisonConstraint
 
 services:
     fc.constraint.not_blank:
@@ -61,10 +63,14 @@ services:
         class: %fc.constraint.image.class%
         tags:  [ { name: fc.constraint, alias: image } ]
 
+    fc.constraint.datetime:
+        class: %fc.constraint.datetime.class%
+        tags:  [ { name: fc.constraint, alias: datetime } ]
+
+    fc.constraint.date_comparison:
+        class: %fc.constraint.date_comparison.class%
+        tags:  [ { name: fc.constraint, alias: date_comparison } ]
+
 # TODO:
-#
-# Дата
-# Время
-# Дата и время
-# Сравнение даты и/или времени
-# Сравнение даты с возрастом
+# Сравнение даты/времени с выражениями "today", "-18 years" и т. п.
+# Валидатор для диапазона?

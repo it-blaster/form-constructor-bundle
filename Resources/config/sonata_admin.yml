@@ -17,8 +17,3 @@ services:
             - [ setTranslationDomain, [ FenrizbesFormConstructorBundle ] ]
             - [ setTemplate,          [ edit, FenrizbesFormConstructorBundle:SonataAdmin\FcForm:edit.html.twig ] ]
             - [ setTemplate,          [ show, FenrizbesFormConstructorBundle:SonataAdmin\FcForm:show.html.twig ] ]
-
-    fc_collection:
-        class: Fenrizbes\FormConstructorBundle\Form\Type\FcCollectionType
-        tags:
-            - { name: form.type, alias: fc_collection }

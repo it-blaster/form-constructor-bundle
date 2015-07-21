@@ -2,7 +2,6 @@
 
 namespace Fenrizbes\FormConstructorBundle\Item\Field;
 
-use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -15,17 +14,20 @@ class TextField extends AbstractField
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('placeholder', 'text', array(
-                'label'    => 'fc.label.admin.field.placeholder',
-                'required' => false
-            ))
-        ;
+        $this->buildFormPlaceholderField($builder);
     }
 
-    protected function buildFieldOptions(ConstraintChain $constraint_chain, FcField $fc_field)
+    protected function buildFormPlaceholderField(FormBuilderInterface $builder)
     {
-        $options = parent::buildFieldOptions($constraint_chain, $fc_field);
+        $builder->add('placeholder', 'text', array(
+            'label'    => 'fc.label.admin.field.placeholder',
+            'required' => false
+        ));
+    }
+
+    protected function buildFieldOptions(FcField $fc_field)
+    {
+        $options = parent::buildFieldOptions($fc_field);
         $params  = $fc_field->getParams();
 
         if (!empty($params['placeholder'])) {

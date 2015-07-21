@@ -5,6 +5,9 @@ parameters:
     fc.field.choice.class:   Fenrizbes\FormConstructorBundle\Item\Field\ChoiceField
     fc.field.hidden.class:   Fenrizbes\FormConstructorBundle\Item\Field\HiddenField
     fc.field.file.class:     Fenrizbes\FormConstructorBundle\Item\Field\FileField
+    fc.field.datetime.class: Fenrizbes\FormConstructorBundle\Item\Field\DateTimeField
+    fc.field.date.class:     Fenrizbes\FormConstructorBundle\Item\Field\DateField
+    fc.field.time.class:     Fenrizbes\FormConstructorBundle\Item\Field\TimeField
 
 services:
     fc.field.text:
@@ -31,14 +34,22 @@ services:
         class: %fc.field.file.class%
         tags:  [ { name: fc.field, alias: file } ]
 
+    fc.field.datetime:
+        class: %fc.field.datetime.class%
+        tags:  [ { name: fc.field, alias: datetime } ]
+
+    fc.field.date:
+        class: %fc.field.date.class%
+        tags:  [ { name: fc.field, alias: date } ]
+
+    fc.field.time:
+        class: %fc.field.time.class%
+        tags:  [ { name: fc.field, alias: time } ]
+
 # TODO:
 #
 # Чойс из БД
 # Чойс "Другое" с полем свободного ввода
-#
-# Дата
-# Время
-# Дата и время
 #
 # Флажок с принятием некоторых условий
 #
@@ -48,7 +59,6 @@ services:
 # КЛАДР
 
 # ГЛОБАЛЬНО:
-# Разбивка формы на шаги
+# Разбивка формы на шаги - специальным полем-разделителем
+# Возможность добавления пользователем сайта полей или групп полей (еще один телефон/еще контакнтные данные и т. п.) - чекбокс "коллекция"
 # Программирование поведений
-# Зависимость отображения полей от значения другого поля (есть дети - указывай, нет - не надо)
-# Возможность добавления пользователем сайта полей или групп полей (еще один телефон/еще контакнтные данные и т. п.)

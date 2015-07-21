@@ -4,20 +4,19 @@ $(function() {
 
         var $form = $(this);
 
-        $.ajax({
-            url:    $form.attr('action'),
-            method: $form.attr('method'),
-            data:   $form.serialize(),
+        $form.ajaxSubmit({
+            dataType: 'json',
 
             beforeSend: function(jqXHR, settings) {
                 $form.trigger('fc.beforeSend', [jqXHR, settings]);
             },
 
             success: function(data, textStatus, jqXHR) {
-                $form
-                    .trigger('fc.success', [data, textStatus, jqXHR])
-                    .replaceWith(data.form)
-                ;
+                var $new_form = $(data.form);
+
+                $form.replaceWith($new_form);
+
+                $new_form.trigger('fc.success', [data, textStatus, jqXHR]);
             },
 
             error: function(jqXHR, textStatus, errorThrown) {

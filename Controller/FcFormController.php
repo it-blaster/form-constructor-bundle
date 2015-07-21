@@ -9,15 +9,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FcFormController extends Controller
 {
-    public function handleAjaxAction(Request $request, $alias)
+    public function handleAjaxAction($alias)
     {
-        if (!$request->isXmlHttpRequest()) {
-            throw $this->createNotFoundException();
-        }
-
         // TODO: Проверять, из админки запрос или из фронта
         $fc_form = $this->get('fc.form')->findFcForm($alias);
-        if (!$fc_form instanceof FcForm) {
+
+        if (!$fc_form instanceof FcForm || !$fc_form->getIsAjax()) {
             throw $this->createNotFoundException();
         }
 
@@ -36,6 +33,8 @@ class FcFormController extends Controller
             'form'    => $this->renderView($data['_template'], array(
                 'form' => $form->createView()
             ))
+        ), 200, array(
+            'Content-type' => 'text/html'
         ));
     }
 }

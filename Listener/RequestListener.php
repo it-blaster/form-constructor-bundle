@@ -82,7 +82,7 @@ class RequestListener
                 'template' => $data['_template']
             ));
 
-            if ($request->isXmlHttpRequest()) {
+            if ($fc_form->getIsAjax()) {
                 return;
             }
 
@@ -92,6 +92,7 @@ class RequestListener
                 $message = $this->translator->trans('fc.message.form.is_valid', array(), 'FenrizbesFormConstructorBundle');
             }
 
+            // TODO: Связывать сообщение с конкретной формой и подчищать старые
             $this->session->getFlashBag()->add('fc_form.success', $message);
 
             $response = new RedirectResponse($this->router->generate(

@@ -18,7 +18,19 @@
                 {{ key }}:
             {% endif %}
 
-            {{ value }}
+            {% if value is iterable and options.choices is defined %}
+                {% set values = [] %}
+
+                {% for choice in value %}
+                    {% if options.choices[choice] is defined %}
+                        {% set values = values | merge([ options.choices[choice] ]) %}
+                    {% endif %}
+                {% endfor %}
+
+                {{ values | join(', ') }}
+            {% else %}
+                {{ value }}
+            {% endif %}
 
             <br />
         {% endif %}

@@ -16,27 +16,40 @@ class ChoiceField extends AbstractField
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('choices', 'fc_collection', array(
-                'label'       => 'fc.label.admin.field.choices',
-                'required'    => true,
-                'type'        => new ChoiceOptionType(),
-                'constraints' => array(
-                    new Count(array(
-                        'min'        => 1,
-                        'minMessage' => 'fc.constraint.admin.choices_min'
-                    ))
-                )
-            ))
-            ->add('multiple', 'checkbox', array(
-                'label'    => 'fc.label.admin.field.multiple',
-                'required' => false
-            ))
-            ->add('collapsed', 'checkbox', array(
-                'label'    => 'fc.label.admin.field.collapsed',
-                'required' => false
-            ))
-        ;
+        $this->buildFormChoicesField($builder);
+        $this->buildFormMultipleField($builder);
+        $this->buildFormCollapsedField($builder);
+    }
+
+    protected function buildFormChoicesField(FormBuilderInterface $builder)
+    {
+        $builder->add('choices', 'fc_collection', array(
+            'label'       => 'fc.label.admin.field.choices',
+            'required'    => true,
+            'type'        => new ChoiceOptionType(),
+            'constraints' => array(
+                new Count(array(
+                    'min'        => 1,
+                    'minMessage' => 'fc.constraint.admin.choices_min'
+                ))
+            )
+        ));
+    }
+
+    protected function buildFormMultipleField(FormBuilderInterface $builder)
+    {
+        $builder->add('multiple', 'checkbox', array(
+            'label'    => 'fc.label.admin.field.multiple',
+            'required' => false
+        ));
+    }
+
+    protected function buildFormCollapsedField(FormBuilderInterface $builder)
+    {
+        $builder->add('collapsed', 'checkbox', array(
+            'label'    => 'fc.label.admin.field.collapsed',
+            'required' => false
+        ));
     }
 
     protected function buildFieldOptions(FcField $fc_field)

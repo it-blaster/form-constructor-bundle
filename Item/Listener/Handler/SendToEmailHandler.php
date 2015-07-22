@@ -77,7 +77,6 @@ class SendToEmailHandler
 
     protected function handleData($data)
     {
-        // TODO Обработка масивов и, возможно, чего-нибудь еще
         foreach ($data as $key => $value) {
             if (preg_match('/^_[^_]/', $key)) {
                 unset($data[$key]);

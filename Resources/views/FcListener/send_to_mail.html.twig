@@ -9,7 +9,7 @@
     {% endif %}
 
     {% for key, value in data %}
-        {% if key starts with '_' %}{% else %}
+        {% if value is not empty %}
             {% set options = form.get(key).config.options %}
 
             {% if options.label is defined and options.label is not empty %}

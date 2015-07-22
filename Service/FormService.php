@@ -95,7 +95,7 @@ class FormService
             $options['data']['_template'] = $options['template'];
 
             if (!$fc_form instanceof FcForm) {
-                $fc_form = $this->findFcForm($alias, (bool)$options['is_admin']);
+                $fc_form = $this->findFcForm($alias, (bool) $options['is_admin']);
             }
 
             if (!$fc_form instanceof FcForm) {
@@ -155,5 +155,20 @@ class FormService
         }
 
         $this->create($fc_form, $options);
+    }
+
+    public function initData($data = null)
+    {
+        if (!is_array($data)) {
+            return null;
+        }
+
+        foreach ($data as $key => $value) {
+            if (!preg_match('/^__/', $key)) {
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
     }
 }

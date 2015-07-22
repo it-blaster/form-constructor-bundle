@@ -37,8 +37,13 @@ abstract class AbstractField extends AbstractItem
 
     protected function buildFieldOptions(FcField $fc_field)
     {
+        $label = $fc_field->getLabel();
+        if (empty($label)) {
+            $label = false;
+        }
+
         return array(
-            'label'       => $fc_field->getLabel(),
+            'label'       => $label,
             'required'    => false,
             'constraints' => array(),
             'attr'        => array(

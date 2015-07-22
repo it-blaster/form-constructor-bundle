@@ -24,6 +24,11 @@ class SendToEmailHandler
      */
     protected $fc_listener;
 
+    /**
+     * @var FormEvent
+     */
+    protected $event;
+
     public function __construct(\Swift_Mailer $mailer, DelegatingEngine $templating, FcFormEventListener $fc_listener)
     {
         $this->mailer      = $mailer;
@@ -33,19 +38,26 @@ class SendToEmailHandler
 
     public function handle(FormEvent $event)
     {
-        // TODO Обработка масивов, дат и, возможно, чего-нибудь еще
         if (!$event->getForm()->isValid()) {
             return;
         }
 
-        $params = $this->fc_listener->getParams();
-        $data   = $event->getData();
+        $this->event = $event;
+
+        $this->mailer->send($this->makeMessage());
+    }
+
+    protected function makeMessage()
+    {
+        $data   = $this->handleData($this->event->getData());
+        $params = $this->handleParams($this->fc_listener->getParams());
 
         $message = $this->mailer
             ->createMessage()
             ->setSubject($params['subject'])
             ->setFrom($params['email_from'])
-            ->setTo($params['email_to']);
+            ->setTo($params['email_to'])
+        ;
 
         foreach ($data as $key => $value) {
             if ($value instanceof UploadedFile) {
@@ -58,15 +70,34 @@ class SendToEmailHandler
             }
         }
 
-        $message->setBody(
-            $this->templating->render('FenrizbesFormConstructorBundle:FcListener:send_to_mail.html.twig', array(
-                'listener' => $this->fc_listener,
-                'form'     => $event->getForm(),
-                'data'     => $data
-            )),
-            'text/html'
-        );
+        $message->setBody($this->makeBody($data), 'text/html');
 
-        $this->mailer->send($message);
+        return $message;
+    }
+
+    protected function handleData($data)
+    {
+        // TODO Обработка масивов и, возможно, чего-нибудь еще
+        foreach ($data as $key => $value) {
+            if (preg_match('/^_[^_]/', $key)) {
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
+    }
+
+    protected function handleParams($params)
+    {
+        return $params;
+    }
+
+    protected function makeBody($data)
+    {
+        return $this->templating->render('FenrizbesFormConstructorBundle:FcListener:send_to_mail.html.twig', array(
+            'listener' => $this->fc_listener,
+            'form'     => $this->event->getForm(),
+            'data'     => $data
+        ));
     }
 }

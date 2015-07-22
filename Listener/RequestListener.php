@@ -79,7 +79,8 @@ class RequestListener
             $data = $form->getData();
 
             $this->form_service->clear($fc_form, array(
-                'template' => $data['_template']
+                'template' => $data['_template'],
+                'data'     => $this->form_service->initData($data)
             ));
 
             if ($fc_form->getIsAjax()) {

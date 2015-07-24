@@ -47,7 +47,7 @@ abstract class AbstractField extends AbstractItem
             'required'    => false,
             'constraints' => array(),
             'attr'        => array(
-                'data-type' => $this->buildFieldType($fc_field)
+                'data-type' => $fc_field->getType()
             )
         );
     }

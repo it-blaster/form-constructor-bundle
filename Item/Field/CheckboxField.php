@@ -37,4 +37,9 @@ class CheckboxField extends AbstractField
 
         return $options;
     }
+
+    public function verboseValue($value, FcField $fc_field)
+    {
+        return ($value ? 'fc.label.admin.yes' : 'fc.label.admin.no');
+    }
 }

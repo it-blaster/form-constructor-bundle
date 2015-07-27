@@ -1,0 +1,11 @@
+{% if field.isCustom %}
+    {% for field in field.customWidget.fields %}
+        {{ include('FenrizbesFormConstructorBundle:FcListener/SendToEmail:field.html.twig') }}
+    {% endfor %}
+{% else %}
+    {% if data[field.name] is defined and data[field.name] is not empty %}
+        {{ field }}:
+        {{ data[field.name] | fc_value(field) | trans({}, 'FenrizbesFormConstructorBundle') | raw }}
+        <br />
+    {% endif %}
+{% endif %}

@@ -93,9 +93,8 @@ class SendToEmailHandler
 
     protected function makeBody($data)
     {
-        return $this->templating->render('FenrizbesFormConstructorBundle:FcListener:send_to_mail.html.twig', array(
+        return $this->templating->render('FenrizbesFormConstructorBundle:FcListener/SendToEmail:send_to_mail.html.twig', array(
             'listener' => $this->fc_listener,
-            'form'     => $this->event->getForm(),
             'data'     => $data
         ));
     }

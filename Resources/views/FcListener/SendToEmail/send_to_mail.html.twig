@@ -1,0 +1,20 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+</head>
+<body>
+
+    {% if listener.params.header is not empty %}
+        <p>{{ listener.params.header | nl2br }}</p>
+    {% endif %}
+
+    {% for field in listener.fcForm.fields %}
+        {{ include('FenrizbesFormConstructorBundle:FcListener/SendToEmail:field.html.twig') }}
+    {% endfor %}
+
+    {% if listener.params.footer is not empty %}
+        <p>{{ listener.params.footer | nl2br }}</p>
+    {% endif %}
+
+</body>
+</html>

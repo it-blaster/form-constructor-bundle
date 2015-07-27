@@ -5,6 +5,7 @@ namespace Fenrizbes\FormConstructorBundle\Twig;
 use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
 use Fenrizbes\FormConstructorBundle\Chain\FieldChain;
 use Fenrizbes\FormConstructorBundle\Chain\ListenerChain;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Service\FormService;
 use Symfony\Component\Form\FormInterface;
 
@@ -60,7 +61,8 @@ class FcTwigExtension extends \Twig_Extension
         return array(
             new \Twig_SimpleFilter('fc_field',      array($this, 'getFcField')),
             new \Twig_SimpleFilter('fc_constraint', array($this, 'getFcConstraint')),
-            new \Twig_SimpleFilter('fc_listener',   array($this, 'getFcListener'))
+            new \Twig_SimpleFilter('fc_listener',   array($this, 'getFcListener')),
+            new \Twig_SimpleFilter('fc_value',      array($this, 'getFcValue'))
         );
     }
 
@@ -88,6 +90,18 @@ class FcTwigExtension extends \Twig_Extension
     public function getFcListener($alias)
     {
         return $this->listener_chain->getListener($alias)->getName();
+    }
+
+    public function getFcValue($value, FcField $fc_field)
+    {
+        if (is_null($value) || empty($value)) {
+            return $value;
+        }
+
+        return $this->field_chain
+            ->getField($fc_field->getType())
+            ->verboseValue($value, $fc_field)
+        ;
     }
 
     public function getFcFormView($alias, $options = array())

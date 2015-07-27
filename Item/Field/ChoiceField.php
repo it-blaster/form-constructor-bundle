@@ -80,4 +80,22 @@ class ChoiceField extends AbstractField
 
         return $options;
     }
+
+    public function verboseValue($value, FcField $fc_field)
+    {
+        $verbose = array();
+        $params  = $fc_field->getParams();
+
+        if (!is_array($value)) {
+            $value = array($value);
+        }
+
+        foreach ($params['choices'] as $choice) {
+            if (in_array($choice['value'], $value)) {
+                $verbose[] = $choice['label'];
+            }
+        }
+
+        return implode(', ', $verbose);
+    }
 }

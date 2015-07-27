@@ -57,4 +57,9 @@ abstract class AbstractField extends AbstractItem
         $constraint = $constraint_chain->getConstraint($fc_constraint->getConstraint());
         $constraint->buildConstraint($options, $fc_constraint);
     }
+
+    public function verboseValue($value, FcField $fc_field)
+    {
+        return $value;
+    }
 }

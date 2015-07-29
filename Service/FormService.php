@@ -154,7 +154,7 @@ class FormService
             unset($this->forms[$fc_form->getAlias()]);
         }
 
-        $this->create($fc_form, $options);
+        return $this->create($fc_form, $options);
     }
 
     public function initData($data = null)

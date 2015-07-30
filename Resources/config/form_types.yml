@@ -18,3 +18,13 @@ services:
         class: Fenrizbes\FormConstructorBundle\Form\Type\FcTimeType
         tags:
             - { name: form.type, alias: fc_time }
+
+    step:
+        class: Fenrizbes\FormConstructorBundle\Form\Type\StepType
+        tags:
+            - { name: form.type, alias: step }
+
+    other_option:
+        class: Fenrizbes\FormConstructorBundle\Form\Type\OtherOptionType
+        tags:
+            - { name: form.type, alias: other_option }

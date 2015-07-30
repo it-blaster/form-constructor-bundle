@@ -1,0 +1,71 @@
+{% block other_option_row %}
+    {% if linked_field.params.collapsed %}
+        {{ block('hidden_row') }}
+    {% else %}
+        {{ form_row(form) }}
+    {% endif %}
+{% endblock %}
+
+{% block other_option_label %}
+    {{ form_label(form, label, {
+        in_list_checkbox: true,
+        widget: block('other_option_checker_widget')
+    }) }}
+{% endblock %}
+
+{% block other_option_checker_widget %}
+    {% set required = false %}
+    {% set type = linked_field.params.multiple ? 'checkbox' : 'radio' %}
+    <input type="{{ type }}" id="{{ id }}" {{ block('just_attributes') }} />
+{% endblock %}
+
+{% block other_option_widget %}
+    {% set type = linked_field.params.collapsed ? 'hidden' : 'text' %}
+    <input type="{{ type }}" name="{{ full_name }}" {{ block('just_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    {% if form.parent[linked_field.name].vars.full_name is defined %}
+        {{ block('other_option_widget_radio_script') }}
+    {% endif %}
+{% endblock %}
+
+{% block other_option_widget_radio_script %}
+    <script>
+        $(function() {
+            var $checker = $('#{{ id }}');
+            var $other   = $('input[name="{{ full_name }}"]');
+            var $linked  = $('input[name="{{ form.parent[linked_field.name].vars.full_name }}"]');
+
+            if (!$linked.filter(':checked').length && $other.val().length) {
+                $checker.iCheck('check');
+            } else {
+                $other.prop('disabled', true);
+            }
+
+            $checker.on('ifChecked', function() {
+                $linked.iCheck('uncheck');
+                $other.prop('disabled', false);
+            });
+
+            $linked.on('ifChecked', function() {
+                $checker.iCheck('uncheck');
+                $other.val('').prop('disabled', true);
+            });
+        });
+    </script>
+{% endblock %}
+
+{%- block just_attributes -%}
+    {% set attr = attr | merge({ 'class': attr.class | default('') ~' form-control' }) %}
+    {%- if read_only %} readonly="readonly"{% endif -%}
+    {%- if disabled %} disabled="disabled"{% endif -%}
+    {%- if required %} required="required"{% endif -%}
+    {%- for attrname, attrvalue in attr -%}
+        {{- " " -}}
+        {%- if attrname in ['placeholder', 'title'] -%}
+            {{- attrname }}="{{ attrvalue|trans({}, translation_domain) }}"
+        {%- elseif attrvalue is sameas(true) -%}
+            {{- attrname }}="{{ attrname }}"
+        {%- elseif attrvalue is not sameas(false) -%}
+            {{- attrname }}="{{ attrvalue }}"
+        {%- endif -%}
+    {%- endfor -%}
+{%- endblock just_attributes -%}

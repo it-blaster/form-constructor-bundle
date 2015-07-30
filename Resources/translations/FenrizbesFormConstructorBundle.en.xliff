@@ -713,6 +713,41 @@
                 <target>Dates comparison</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.field_type.step">
+                <source>fc.label.field_type.step</source>
+                <target>Change step</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.step.prev">
+                <source>fc.label.admin.field.step.prev</source>
+                <target>Prev-button's text</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.step.next">
+                <source>fc.label.admin.field.step.next</source>
+                <target>Next-button's text</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.step.prev_default">
+                <source>fc.label.admin.field.step.prev_default</source>
+                <target>Prev</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.step.next_default">
+                <source>fc.label.admin.field.step.next_default</source>
+                <target>Next</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.other_option">
+                <source>fc.label.field_type.other_option</source>
+                <target>Checkbox "Other"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.linked_field">
+                <source>fc.label.admin.field.linked_field</source>
+                <target>Linked field</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

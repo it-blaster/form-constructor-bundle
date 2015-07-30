@@ -40,5 +40,19 @@ class FenrizbesFormConstructorExtension extends Extension
         }
 
         $container->setParameter('fc.defaults', $config['defaults']);
+
+        $this->registerResources($container);
+    }
+
+    protected function registerResources(ContainerBuilder $container)
+    {
+        $templatingEngines = $container->getParameter('templating.engines');
+
+        if (in_array('twig', $templatingEngines)) {
+            $container->setParameter('twig.form.resources', array_merge(
+                array('FenrizbesFormConstructorBundle:Form:fields.html.twig'),
+                $container->getParameter('twig.form.resources')
+            ));
+        }
     }
 }

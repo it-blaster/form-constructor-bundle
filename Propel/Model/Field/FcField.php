@@ -9,6 +9,7 @@ use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormQuery;
 class FcField extends BaseFcField
 {
     protected $custom_widget = false;
+    protected $step = 1;
 
     public function __toString()
     {
@@ -51,5 +52,15 @@ class FcField extends BaseFcField
             ->filterByIsActive(true)
             ->find()
         ;
+    }
+
+    public function setStep($step)
+    {
+        $this->step = $step;
+    }
+
+    public function getStep()
+    {
+        return $this->step;
     }
 }

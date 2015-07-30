@@ -87,7 +87,7 @@ class BaseType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        foreach ($this->fc_form->getFields() as $fc_field) {
+        foreach ($this->fc_form->getFieldsRecursively() as $fc_field) {
             $this->addField($builder, $fc_field);
         }
 
@@ -120,14 +120,8 @@ class BaseType extends AbstractType
 
     protected function addField(FormBuilderInterface $builder, FcField $fc_field)
     {
-        if ($fc_field->isCustom()) {
-            foreach ($fc_field->getCustomWidget()->getFields() as $field) {
-                $this->addField($builder, $field);
-            }
-        } else {
-            $field = $this->field_chain->getField($fc_field->getType());
-            $field->buildField($this->constraint_chain, $builder, $fc_field);
-        }
+        $field = $this->field_chain->getField($fc_field->getType());
+        $field->buildField($this->constraint_chain, $builder, $fc_field);
     }
 
     protected function addListener(FormBuilderInterface $builder, FcFormEventListener $fc_listener)
@@ -139,5 +133,7 @@ class BaseType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars = array_merge($this->options, $view->vars);
+
+        $view->vars['fc_form'] = $this->fc_form;
     }
 }

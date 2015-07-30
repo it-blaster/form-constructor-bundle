@@ -1,13 +1,15 @@
 parameters:
-    fc.field.text.class:     Fenrizbes\FormConstructorBundle\Item\Field\TextField
-    fc.field.textarea.class: Fenrizbes\FormConstructorBundle\Item\Field\TextareaField
-    fc.field.checkbox.class: Fenrizbes\FormConstructorBundle\Item\Field\CheckboxField
-    fc.field.choice.class:   Fenrizbes\FormConstructorBundle\Item\Field\ChoiceField
-    fc.field.hidden.class:   Fenrizbes\FormConstructorBundle\Item\Field\HiddenField
-    fc.field.file.class:     Fenrizbes\FormConstructorBundle\Item\Field\FileField
-    fc.field.datetime.class: Fenrizbes\FormConstructorBundle\Item\Field\DateTimeField
-    fc.field.date.class:     Fenrizbes\FormConstructorBundle\Item\Field\DateField
-    fc.field.time.class:     Fenrizbes\FormConstructorBundle\Item\Field\TimeField
+    fc.field.text.class:         Fenrizbes\FormConstructorBundle\Item\Field\TextField
+    fc.field.textarea.class:     Fenrizbes\FormConstructorBundle\Item\Field\TextareaField
+    fc.field.checkbox.class:     Fenrizbes\FormConstructorBundle\Item\Field\CheckboxField
+    fc.field.choice.class:       Fenrizbes\FormConstructorBundle\Item\Field\ChoiceField
+    fc.field.hidden.class:       Fenrizbes\FormConstructorBundle\Item\Field\HiddenField
+    fc.field.file.class:         Fenrizbes\FormConstructorBundle\Item\Field\FileField
+    fc.field.datetime.class:     Fenrizbes\FormConstructorBundle\Item\Field\DateTimeField
+    fc.field.date.class:         Fenrizbes\FormConstructorBundle\Item\Field\DateField
+    fc.field.time.class:         Fenrizbes\FormConstructorBundle\Item\Field\TimeField
+    fc.field.step.class:         Fenrizbes\FormConstructorBundle\Item\Field\StepField
+    fc.field.other_option.class: Fenrizbes\FormConstructorBundle\Item\Field\OtherOptionField
 
 services:
     fc.field.text:
@@ -46,18 +48,15 @@ services:
         class: %fc.field.time.class%
         tags:  [ { name: fc.field, alias: time } ]
 
+    fc.field.step:
+        class: %fc.field.step.class%
+        tags:  [ { name: fc.field, alias: step } ]
+
+    fc.field.other_option:
+        class: %fc.field.other_option.class%
+        tags:  [ { name: fc.field, alias: other_option } ]
+
 # TODO:
 #
-# Чойс "Другое" с полем свободного ввода
-#
-# Флажок с принятием некоторых условий
-#
-# Слайдер
-# Слайдер с диапазоном
-#
-# КЛАДР
-
-# ГЛОБАЛЬНО:
-# Разбивка формы на шаги - специальным полем-разделителем
 # Возможность добавления пользователем сайта полей или групп полей (еще один телефон/еще контакнтные данные и т. п.) - чекбокс "коллекция"
 # Программирование поведений

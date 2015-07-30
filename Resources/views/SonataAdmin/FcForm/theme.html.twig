@@ -26,15 +26,22 @@
                 e.preventDefault();
 
                 var prototype =
-                    '<div class="panel panel-default collection-item">' +
+                    '<div class="panel panel-default collection-item" data-index="'+ index +'">' +
                         '<button type="button" class="close"><span>&times;</span>&nbsp;</button>' +
                         '<div class="panel-body">' +
-                            $(this).data('prototype').replace(/__name__/g, index++) +
+                            $(this).data('prototype').replace(/__name__/g, index) +
                         '</div>' +
                     '</div>'
                 ;
 
                 $items.append(prototype);
+
+                var $item = $items.find('div.collection-item[data-index="'+ index +'"]');
+
+                Admin.setup_select2($item);
+                Admin.setup_icheck($item);
+
+                index++;
             });
 
             $items.on('click', 'button.close', function(e) {
@@ -45,3 +52,76 @@
         });
     </script>
 {% endblock %}
+
+{%- block form_widget_compound -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- if form.parent is empty -%}
+            {{ block('steps') }}
+            {{ form_errors(form) }}
+            <div class="step-wrapper current-step" data-step="1">
+        {%- endif -%}
+        {{- block('form_rows') -}}
+        {{- form_rest(form) -}}
+        {%- if form.parent is empty -%}
+            </div>
+        {%- endif -%}
+    </div>
+{%- endblock form_widget_compound -%}
+
+{% block step_row %}
+    {{ form_row(form, { label: false }) }}
+    </div>
+    <div class="step-wrapper hidden" data-step="{{ form.parent.vars.fc_form.stepNumber(name) + 1 }}">
+{% endblock %}
+
+{% block step_widget %}
+    {% if form.parent.vars.fc_form.stepNumber(name) > 1 %}
+        <button type="button" class="change-step" data-step="{{ form.parent.vars.fc_form.stepNumber(name) }}">
+            {{ button_prev | default('fc.label.admin.field.step.prev_default') | trans({}, translation_domain) }}
+        </button>
+    {% endif %}
+
+    <button type="button" class="change-step" data-step="{{ form.parent.vars.fc_form.stepNumber(name) + 1 }}">
+        {{ button_next | default('fc.label.admin.field.step.next_default') | trans({}, translation_domain) }}
+    </button>
+{% endblock %}
+
+{%- block submit_row -%}
+    <div>
+        {% if form.parent.vars.fc_form.stepsCount > 1 %}
+            {% set button_prev = form.parent.vars.fc_form.stepField(1).params.prev %}
+            <button type="button" class="change-step" data-step="{{ form.parent.vars.fc_form.stepNumber(name) }}">
+                {{ button_prev | default('fc.label.admin.field.step.prev_default') | trans({}, translation_domain) }}
+            </button>
+        {% endif %}
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock submit_row -%}
+
+{% block steps %}
+    {% if fc_form is defined and fc_form.stepsCount > 1 %}
+        <div class="form-group">
+            <nav>{{ block('steps_list') }}</nav>
+        </div>
+    {% endif %}
+{% endblock steps %}
+
+{% block steps_list %}
+    <ul class="pagination steps-list">
+        {% for item in 1..fc_form.stepsCount %}
+            {{ block('steps_list_item') }}
+        {% endfor %}
+    </ul>
+{% endblock steps_list %}
+
+{% block steps_list_item %}
+    <li{{ not loop.index0 ? ' class="active"' }} data-step="{{ item }}">
+        <a href="#" class="change-step" data-step="{{ item }}">
+            {{ block('steps_list_item_label') }}
+        </a>
+    </li>
+{% endblock steps_list_item %}
+
+{% block steps_list_item_label %}
+    {{ item }}
+{% endblock steps_list_item_label %}

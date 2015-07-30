@@ -713,6 +713,41 @@
                 <target>Сравнение дат</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.field_type.step">
+                <source>fc.label.field_type.step</source>
+                <target>Смена шага</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.step.prev">
+                <source>fc.label.admin.field.step.prev</source>
+                <target>Текст кнопки возврата на предыдущий шаг</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.step.next">
+                <source>fc.label.admin.field.step.next</source>
+                <target>Текст кнопки перехода на следующий шаг</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.step.prev_default">
+                <source>fc.label.admin.field.step.prev_default</source>
+                <target>Назад</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.step.next_default">
+                <source>fc.label.admin.field.step.next_default</source>
+                <target>Далее</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.field_type.other_option">
+                <source>fc.label.field_type.other_option</source>
+                <target>Флажок "Другое"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.field.linked_field">
+                <source>fc.label.admin.field.linked_field</source>
+                <target>Связанное поле</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

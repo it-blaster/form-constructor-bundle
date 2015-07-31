@@ -748,6 +748,86 @@
                 <target>Связанное поле</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.admin.tab.templates">
+                <source>fc.label.admin.tab.templates</source>
+                <target>Отображения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.tab.behaviors">
+                <source>fc.label.admin.tab.behaviors</source>
+                <target>Поведения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.template.delete_confirmation">
+                <source>fc.message.admin.template.delete_confirmation</source>
+                <target>Пожалуйста, подтвердите удаление отображения "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.behavior.delete_confirmation">
+                <source>fc.message.admin.behavior.delete_confirmation</source>
+                <target>Пожалуйста, подтвердите удаление поведения "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.template">
+                <source>fc.label.admin.template</source>
+                <target>Отображение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior">
+                <source>fc.label.admin.behavior</source>
+                <target>Поведение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.no_templates">
+                <source>fc.message.admin.no_templates</source>
+                <target>У данной формы пока нет ни одного отображения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.no_behaviors">
+                <source>fc.message.admin.no_behaviors</source>
+                <target>У данной формы пока нет ни одного поведения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.template.modal.create">
+                <source>fc.title.admin.template.modal.create</source>
+                <target>Новое отображение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_template">
+                <source>fc.title.admin.new_template</source>
+                <target>Добавить отображение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.template.modal.edit">
+                <source>fc.title.admin.template.modal.edit</source>
+                <target>Редактирование отображения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.template.modal.delete">
+                <source>fc.title.admin.template.modal.delete</source>
+                <target>Удаление отображения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.behavior.modal.create">
+                <source>fc.title.admin.behavior.modal.create</source>
+                <target>Новое поведение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_behavior">
+                <source>fc.title.admin.new_behavior</source>
+                <target>Добавить поведение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.behavior.modal.edit">
+                <source>fc.title.admin.behavior.modal.edit</source>
+                <target>Редактирование поведения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.behavior.modal.delete">
+                <source>fc.title.admin.behavior.modal.delete</source>
+                <target>Удаление поведения</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

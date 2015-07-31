@@ -1,0 +1,43 @@
+<tr>
+    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+        {{ item.behavior | fc_behavior | trans({}, 'FenrizbesFormConstructorBundle') }}
+    </td>
+
+    <td class="sonata-ba-list-field sonata-ba-list-field-boolean">
+        {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:state_buttons.html.twig', {
+            item:  item,
+            route: 'set_behavior_state'
+        }) }}
+    </td>
+
+    <td class="sonata-ba-list-field sonata-ba-list-field-actions">
+        <div class="btn-group">
+            <a
+                href="#fc_modal"
+                data-toggle="modal"
+                data-title="{{ 'fc.title.admin.behavior.modal.edit' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ item.behavior | fc_behavior | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                data-url="{{ admin.generateUrl('edit_behavior', { id: object.id, behavior_id: item.id }) }}"
+                data-scope="edit"
+                class="btn btn-sm btn-default edit_link"
+                title="{{ 'action_edit'|trans({}, 'SonataAdminBundle') }}"
+            >
+                <i class="glyphicon glyphicon-edit"></i>
+                {{ 'action_edit'|trans({}, 'SonataAdminBundle') }}
+            </a>
+
+            <a
+                href="#fc_modal"
+                data-toggle="modal"
+                data-title="{{ 'fc.title.admin.behavior.modal.delete' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ item.behavior | fc_behavior | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                data-url="{{ admin.generateUrl('delete_behavior', { id: object.id, behavior_id: item.id }) }}"
+                data-delete-url="{{ admin.generateUrl('do_delete_behavior', { id: object.id, behavior_id: item.id }) }}"
+                data-scope="delete"
+                class="btn btn-sm btn-default delete_link"
+                title="{{ 'action_delete'|trans({}, 'SonataAdminBundle') }}"
+            >
+                <i class="glyphicon glyphicon-remove"></i>
+                {{ 'action_delete'|trans({}, 'SonataAdminBundle') }}
+            </a>
+        </div>
+    </td>
+</tr>

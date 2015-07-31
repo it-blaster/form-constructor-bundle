@@ -748,6 +748,86 @@
                 <target>Linked field</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.admin.tab.templates">
+                <source>fc.label.admin.tab.templates</source>
+                <target>Templates</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.tab.behaviors">
+                <source>fc.label.admin.tab.behaviors</source>
+                <target>Behaviors</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.template.delete_confirmation">
+                <source>fc.message.admin.template.delete_confirmation</source>
+                <target>Please confirm the deletion of the template "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.behavior.delete_confirmation">
+                <source>fc.message.admin.behavior.delete_confirmation</source>
+                <target>Please confirm the deletion of the behavior "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.template">
+                <source>fc.label.admin.template</source>
+                <target>Template</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior">
+                <source>fc.label.admin.behavior</source>
+                <target>Behavior</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.no_templates">
+                <source>fc.message.admin.no_templates</source>
+                <target>There aren't templates yet</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.no_behaviors">
+                <source>fc.message.admin.no_behaviors</source>
+                <target>There aren't behaviors yet</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.template.modal.create">
+                <source>fc.title.admin.template.modal.create</source>
+                <target>New template</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_template">
+                <source>fc.title.admin.new_template</source>
+                <target>Add template</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.template.modal.edit">
+                <source>fc.title.admin.template.modal.edit</source>
+                <target>Edit template</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.template.modal.delete">
+                <source>fc.title.admin.template.modal.delete</source>
+                <target>Delete template</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.behavior.modal.create">
+                <source>fc.title.admin.behavior.modal.create</source>
+                <target>New behavior</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_behavior">
+                <source>fc.title.admin.new_behavior</source>
+                <target>Add behavior</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.behavior.modal.edit">
+                <source>fc.title.admin.behavior.modal.edit</source>
+                <target>Edit behavior</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.behavior.modal.delete">
+                <source>fc.title.admin.behavior.modal.delete</source>
+                <target>Delete behavior</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

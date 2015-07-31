@@ -69,6 +69,26 @@ class FcFormAdmin extends Admin
             ->add('delete_listener',      $this->getRouterIdParameter() .'/delete_listener/{listener_id}')
             ->add('do_delete_listener',   $this->getRouterIdParameter() .'/do_delete_listener/{listener_id}')
             ->add('set_listener_state',   $this->getRouterIdParameter() .'/set_listener_state/{item_id}/{active}')
+
+            ->add('get_templates',        $this->getRouterIdParameter() .'/get_templates')
+            ->add('select_template',      $this->getRouterIdParameter() .'/select_template')
+            ->add('create_template',      $this->getRouterIdParameter() .'/create_template')
+            ->add('do_create_template',   $this->getRouterIdParameter() .'/do_create_template/{template}')
+            ->add('edit_template',        $this->getRouterIdParameter() .'/edit_template/{template_id}')
+            ->add('do_edit_template',     $this->getRouterIdParameter() .'/do_edit_template/{template_id}')
+            ->add('delete_template',      $this->getRouterIdParameter() .'/delete_template/{template_id}')
+            ->add('do_delete_template',   $this->getRouterIdParameter() .'/do_delete_template/{template_id}')
+            ->add('set_template_state',   $this->getRouterIdParameter() .'/set_template_state/{item_id}/{active}')
+
+            ->add('get_behaviors',        $this->getRouterIdParameter() .'/get_behaviors')
+            ->add('select_behavior',      $this->getRouterIdParameter() .'/select_behavior')
+            ->add('create_behavior',      $this->getRouterIdParameter() .'/create_behavior')
+            ->add('do_create_behavior',   $this->getRouterIdParameter() .'/do_create_behavior/{behavior}')
+            ->add('edit_behavior',        $this->getRouterIdParameter() .'/edit_behavior/{behavior_id}')
+            ->add('do_edit_behavior',     $this->getRouterIdParameter() .'/do_edit_behavior/{behavior_id}')
+            ->add('delete_behavior',      $this->getRouterIdParameter() .'/delete_behavior/{behavior_id}')
+            ->add('do_delete_behavior',   $this->getRouterIdParameter() .'/do_delete_behavior/{behavior_id}')
+            ->add('set_behavior_state',   $this->getRouterIdParameter() .'/set_behavior_state/{item_id}/{active}')
         ;
     }
 

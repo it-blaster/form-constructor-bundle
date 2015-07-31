@@ -8,6 +8,12 @@ services:
     fc.listener.chain:
         class: Fenrizbes\FormConstructorBundle\Chain\ListenerChain
 
+    fc.template.chain:
+        class: Fenrizbes\FormConstructorBundle\Chain\TemplateChain
+
+    fc.behavior.chain:
+        class: Fenrizbes\FormConstructorBundle\Chain\BehaviorChain
+
     fc.form:
         class: Fenrizbes\FormConstructorBundle\Service\FormService
         calls:
@@ -16,6 +22,8 @@ services:
             - [ setFieldChain,      [ @fc.field.chain ] ]
             - [ setConstraintChain, [ @fc.constraint.chain ] ]
             - [ setListenerChain,   [ @fc.listener.chain ] ]
+            - [ setTemplateChain,   [ @fc.template.chain ] ]
+            - [ setBehaviorChain,   [ @fc.behavior.chain ] ]
 
     fc.request_listener:
         class: Fenrizbes\FormConstructorBundle\Listener\RequestListener

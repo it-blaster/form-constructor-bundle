@@ -6,5 +6,7 @@ services:
             - [ setFieldChain,      [ @fc.field.chain ] ]
             - [ setConstraintChain, [ @fc.constraint.chain ] ]
             - [ setListenerChain,   [ @fc.listener.chain ] ]
+            - [ setTemplateChain,   [ @fc.template.chain ] ]
+            - [ setBehaviorChain,   [ @fc.behavior.chain ] ]
         tags:
             - { name: twig.extension }

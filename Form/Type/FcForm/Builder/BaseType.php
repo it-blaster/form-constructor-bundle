@@ -2,9 +2,11 @@
 
 namespace Fenrizbes\FormConstructorBundle\Form\Type\FcForm\Builder;
 
+use Fenrizbes\FormConstructorBundle\Chain\BehaviorChain;
 use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
 use Fenrizbes\FormConstructorBundle\Chain\FieldChain;
 use Fenrizbes\FormConstructorBundle\Chain\ListenerChain;
+use Fenrizbes\FormConstructorBundle\Chain\TemplateChain;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormEventListener;
@@ -42,6 +44,16 @@ class BaseType extends AbstractType
      */
     protected $listener_chain;
 
+    /**
+     * @var TemplateChain
+     */
+    protected $template_chain;
+
+    /**
+     * @var BehaviorChain
+     */
+    protected $behavior_chain;
+
     protected $options;
 
     public function __construct(FcForm $fc_form, $options)
@@ -68,6 +80,16 @@ class BaseType extends AbstractType
     public function setListenerChain(ListenerChain $listener_chain)
     {
         $this->listener_chain = $listener_chain;
+    }
+
+    public function setTemplateChain(TemplateChain $template_chain)
+    {
+        $this->template_chain = $template_chain;
+    }
+
+    public function setBehaviorChain(BehaviorChain $behavior_chain)
+    {
+        $this->behavior_chain = $behavior_chain;
     }
 
     public function getName()

@@ -1,0 +1,17 @@
+<div class="box box-success table-responsive">
+    <table class="table table-hover fc_form_tab_content">
+        {% if object.fcFormTemplates | length %}
+            {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormTemplate:list_header.html.twig') }}
+
+            <tbody>
+            {% for item in object.fcFormTemplates %}
+                {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormTemplate:list_item.html.twig') }}
+            {% endfor %}
+            </tbody>
+        {% endif %}
+
+        {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormTemplate:list_footer.html.twig') }}
+    </table>
+
+    {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:tab_loader.html.twig') }}
+</div>

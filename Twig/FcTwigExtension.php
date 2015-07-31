@@ -2,9 +2,11 @@
 
 namespace Fenrizbes\FormConstructorBundle\Twig;
 
+use Fenrizbes\FormConstructorBundle\Chain\BehaviorChain;
 use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
 use Fenrizbes\FormConstructorBundle\Chain\FieldChain;
 use Fenrizbes\FormConstructorBundle\Chain\ListenerChain;
+use Fenrizbes\FormConstructorBundle\Chain\TemplateChain;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Service\FormService;
 use Symfony\Component\Form\FormInterface;
@@ -31,6 +33,16 @@ class FcTwigExtension extends \Twig_Extension
      */
     protected $listener_chain;
 
+    /**
+     * @var TemplateChain
+     */
+    protected $template_chain;
+
+    /**
+     * @var BehaviorChain
+     */
+    protected $behavior_chain;
+
     public function getName()
     {
         return 'FcTwigExtension';
@@ -56,12 +68,24 @@ class FcTwigExtension extends \Twig_Extension
         $this->listener_chain = $listener_chain;
     }
 
+    public function setTemplateChain(TemplateChain $template_chain)
+    {
+        $this->template_chain = $template_chain;
+    }
+
+    public function setBehaviorChain(BehaviorChain $behavior_chain)
+    {
+        $this->behavior_chain = $behavior_chain;
+    }
+
     public function getFilters()
     {
         return array(
             new \Twig_SimpleFilter('fc_field',      array($this, 'getFcField')),
             new \Twig_SimpleFilter('fc_constraint', array($this, 'getFcConstraint')),
             new \Twig_SimpleFilter('fc_listener',   array($this, 'getFcListener')),
+            new \Twig_SimpleFilter('fc_template',   array($this, 'getFcTemplate')),
+            new \Twig_SimpleFilter('fc_behavior',   array($this, 'getFcBehavior')),
             new \Twig_SimpleFilter('fc_value',      array($this, 'getFcValue'))
         );
     }
@@ -90,6 +114,16 @@ class FcTwigExtension extends \Twig_Extension
     public function getFcListener($alias)
     {
         return $this->listener_chain->getListener($alias)->getName();
+    }
+
+    public function getFcTemplate($alias)
+    {
+        return $this->template_chain->getTemplate($alias)->getName();
+    }
+
+    public function getFcBehavior($alias)
+    {
+        return $this->behavior_chain->getBehavior($alias)->getName();
     }
 
     public function getFcValue($value, FcField $fc_field)

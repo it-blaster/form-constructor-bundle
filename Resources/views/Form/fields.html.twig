@@ -34,21 +34,37 @@
             var $other   = $('input[name="{{ full_name }}"]');
             var $linked  = $('input[name="{{ form.parent[linked_field.name].vars.full_name }}"]');
 
-            if (!$linked.filter(':checked').length && $other.val().length) {
-                $checker.iCheck('check');
-            } else {
-                $other.prop('disabled', true);
-            }
+            {% if linked_field.params.multiple %}
+                if ($other.val().length) {
+                    $checker.iCheck('check');
+                } else {
+                    $other.prop('disabled', true);
+                }
 
-            $checker.on('ifChecked', function() {
-                $linked.iCheck('uncheck');
-                $other.prop('disabled', false);
-            });
+                $checker.on('ifChecked', function() {
+                    $other.prop('disabled', false);
+                });
 
-            $linked.on('ifChecked', function() {
-                $checker.iCheck('uncheck');
-                $other.val('').prop('disabled', true);
-            });
+                $checker.on('ifUnchecked', function() {
+                    $other.val('').prop('disabled', true);
+                });
+            {% else %}
+                if (!$linked.filter(':checked').length && $other.val().length) {
+                    $checker.iCheck('check');
+                } else {
+                    $other.prop('disabled', true);
+                }
+
+                $checker.on('ifChecked', function() {
+                    $linked.iCheck('uncheck');
+                    $other.prop('disabled', false);
+                });
+
+                $linked.on('ifChecked', function() {
+                    $checker.iCheck('uncheck');
+                    $other.val('').prop('disabled', true);
+                });
+            {% endif %}
         });
     </script>
 {% endblock %}

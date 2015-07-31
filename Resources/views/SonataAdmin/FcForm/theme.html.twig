@@ -1,5 +1,11 @@
 {% extends 'SonataAdminBundle:Form:form_admin_fields.html.twig' %}
 
+{% block form_start %}
+    {% set attr = attr | merge({ novalidate: 'novalidate' }) %}
+
+    {{ parent() }}
+{% endblock form_start %}
+
 {% block fc_collection_widget %}
     <div id="{{ form.vars.id }}_items">
         {% for field in form %}
@@ -76,7 +82,7 @@
 
 {% block step_widget %}
     {% if form.parent.vars.fc_form.stepNumber(name) > 1 %}
-        <button type="button" class="change-step" data-step="{{ form.parent.vars.fc_form.stepNumber(name) }}">
+        <button type="button" class="change-step" data-step="{{ form.parent.vars.fc_form.stepNumber(name) - 1 }}">
             {{ button_prev | default('fc.label.admin.field.step.prev_default') | trans({}, translation_domain) }}
         </button>
     {% endif %}
@@ -90,7 +96,7 @@
     <div>
         {% if form.parent.vars.fc_form.stepsCount > 1 %}
             {% set button_prev = form.parent.vars.fc_form.stepField(1).params.prev %}
-            <button type="button" class="change-step" data-step="{{ form.parent.vars.fc_form.stepNumber(name) }}">
+            <button type="button" class="change-step" data-step="{{ form.parent.vars.fc_form.stepsCount - 1 }}">
                 {{ button_prev | default('fc.label.admin.field.step.prev_default') | trans({}, translation_domain) }}
             </button>
         {% endif %}

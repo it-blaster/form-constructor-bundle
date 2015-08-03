@@ -157,7 +157,7 @@ class FcForm extends BaseFcForm
             ;
 
             foreach ($templates as $template) {
-                $this->templates[$template->getTemplate()] = $template;
+                $this->templates[$template->getId()] = $template;
             }
         }
 
@@ -172,31 +172,42 @@ class FcForm extends BaseFcForm
             $params = $fc_template->getParams();
 
             if (in_array($field_name, $params['fields'])) {
-                $templates[] = $fc_template->getTemplate();
+                $templates[$fc_template->getId()] = $fc_template->getTemplate();
             }
         }
 
         return $templates;
     }
 
-    protected function calcTemplatePositions($template)
+    protected function getFieldTemplateId($template, $field_name)
     {
-        if (isset($this->positions[$template])) {
+        foreach ($this->getFieldTemplates($field_name) as $id => $name) {
+            if ($name == $template) {
+                return $id;
+            }
+        }
+
+        return null;
+    }
+
+    protected function calcTemplatePositions($id)
+    {
+        if (isset($this->positions[$id])) {
             return;
         }
 
-        $this->positions[$template] = array();
+        $this->positions[$id] = array();
 
-        if (!isset($this->templates[$template])) {
+        if (!isset($this->templates[$id])) {
             return;
         }
 
-        $params = $this->templates[$template]->getParams();
+        $params = $this->templates[$id]->getParams();
         $index  = 1;
         $prev   = null;
 
         foreach ($this->getFieldsRecursively() as $name => $fc_field) {
-            $this->positions[$template][$name] = array(
+            $this->positions[$id][$name] = array(
                 'position' => 0,
                 'is_first' => false,
                 'is_last'  => false
@@ -204,13 +215,13 @@ class FcForm extends BaseFcForm
 
             if (in_array($name, $params['fields'])) {
                 if (1 == $index) {
-                    $this->positions[$template][$name]['is_first'] = true;
+                    $this->positions[$id][$name]['is_first'] = true;
                 }
 
-                $this->positions[$template][$name]['position'] = $index++;
+                $this->positions[$id][$name]['position'] = $index++;
             } else {
                 if (null !== $prev) {
-                    $this->positions[$template][$prev]['is_last'] = true;
+                    $this->positions[$id][$prev]['is_last'] = true;
                 }
 
                 $index = 1;
@@ -222,34 +233,40 @@ class FcForm extends BaseFcForm
 
     public function getInTemplatePosition($template, $field_name)
     {
-        $this->calcTemplatePositions($template);
+        $id = $this->getFieldTemplateId($template, $field_name);
 
-        if (!isset($this->positions[$template][$field_name])) {
+        $this->calcTemplatePositions($id);
+
+        if (!isset($this->positions[$id][$field_name])) {
             return false;
         }
 
-        return $this->positions[$template][$field_name]['position'];
+        return $this->positions[$id][$field_name]['position'];
     }
 
     public function getIsFirstInTemplate($template, $field_name)
     {
-        $this->calcTemplatePositions($template);
+        $id = $this->getFieldTemplateId($template, $field_name);
 
-        if (!isset($this->positions[$template][$field_name])) {
+        $this->calcTemplatePositions($id);
+
+        if (!isset($this->positions[$id][$field_name])) {
             return null;
         }
 
-        return $this->positions[$template][$field_name]['is_first'];
+        return $this->positions[$id][$field_name]['is_first'];
     }
 
     public function getIsLastInTemplate($template, $field_name)
     {
-        $this->calcTemplatePositions($template);
+        $id = $this->getFieldTemplateId($template, $field_name);
 
-        if (!isset($this->positions[$template][$field_name])) {
+        $this->calcTemplatePositions($id);
+
+        if (!isset($this->positions[$id][$field_name])) {
             return null;
         }
 
-        return $this->positions[$template][$field_name]['is_last'];
+        return $this->positions[$id][$field_name]['is_last'];
     }
 }

@@ -190,6 +190,17 @@ class FcForm extends BaseFcForm
         return null;
     }
 
+    public function getFieldTemplate($template, $field_name)
+    {
+        foreach ($this->getFieldTemplates($field_name) as $id => $name) {
+            if ($name == $template) {
+                return $this->templates[$id];
+            }
+        }
+
+        return null;
+    }
+
     protected function calcTemplatePositions($id)
     {
         if (isset($this->positions[$id])) {

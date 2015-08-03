@@ -155,7 +155,19 @@ class BaseType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
         $view->vars = array_merge($this->options, $view->vars);
+    }
 
+    public function finishView(FormView $view, FormInterface $form, array $options)
+    {
+        $this->injectFcForm($view);
+    }
+
+    protected function injectFcForm(FormView $view)
+    {
         $view->vars['fc_form'] = $this->fc_form;
+
+        foreach ($view->children as $child) {
+            $this->injectFcForm($child);
+        }
     }
 }

@@ -29,6 +29,8 @@ class FenrizbesFormConstructorExtension extends Extension
         $loader->load('fields.yml');
         $loader->load('constraints.yml');
         $loader->load('listeners.yml');
+        $loader->load('templates.yml');
+        $loader->load('behaviors.yml');
 
         $loader->load('form_types.yml');
         $loader->load('services.yml');

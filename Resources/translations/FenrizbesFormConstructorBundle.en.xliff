@@ -828,6 +828,21 @@
                 <target>Delete behavior</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.templates.inline">
+                <source>fc.label.templates.inline</source>
+                <target>Horizontal rendering</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.template.fields">
+                <source>fc.label.admin.template.fields</source>
+                <target>Apply to fields</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.template.info">
+                <source>fc.label.admin.template.info</source>
+                <target>Targets</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

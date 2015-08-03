@@ -1,0 +1,9 @@
+{% if item.params.fields is defined %}
+    {% for name in item.params.fields %}
+        {% set label = object.fieldByName(name) %}
+
+        {% if label is not empty %}
+            <span class="label label-primary">{{ object.fieldByName(name) }}</span>
+        {% endif %}
+    {% endfor %}
+{% endif %}

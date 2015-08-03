@@ -828,6 +828,21 @@
                 <target>Удаление поведения</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.templates.inline">
+                <source>fc.label.templates.inline</source>
+                <target>Горизонтальный вывод</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.template.fields">
+                <source>fc.label.admin.template.fields</source>
+                <target>Применить к полям</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.template.info">
+                <source>fc.label.admin.template.info</source>
+                <target>Цели</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

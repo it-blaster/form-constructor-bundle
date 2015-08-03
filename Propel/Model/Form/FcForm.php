@@ -10,8 +10,18 @@ class FcForm extends BaseFcForm
 {
     protected $entrances;
     protected $is_used_as_widget;
-    protected $fields;
     protected $steps_count;
+    protected $positions = array();
+
+    /**
+     * @var FcField[]
+     */
+    protected $fields;
+
+    /**
+     * @var FcFormTemplate[]
+     */
+    protected $templates;
 
     /**
      * @param bool $all
@@ -62,7 +72,7 @@ class FcForm extends BaseFcForm
     public function getStepsCount()
     {
         if (is_null($this->steps_count)) {
-            $this->handleFields($this);
+            $this->getFieldsRecursively();
         }
 
         return $this->steps_count;
@@ -91,7 +101,7 @@ class FcForm extends BaseFcForm
                 $this->handleFields($fc_field->getCustomWidget());
             } else {
                 $fc_field->setStep($this->steps_count);
-                $this->fields[] = $fc_field;
+                $this->fields[$fc_field->getName()] = $fc_field;
 
                 if ('step' == $fc_field->getType()) {
                     $this->steps_count++;
@@ -102,10 +112,9 @@ class FcForm extends BaseFcForm
 
     public function getStepNumber($field_name)
     {
-        foreach ($this->getFieldsRecursively() as $fc_field) {
-            if ($fc_field->getName() == $field_name) {
-                return $fc_field->getStep();
-            }
+        $fc_field = $this->getFieldByName($field_name);
+        if (!is_null($fc_field)) {
+            return $fc_field->getStep();
         }
 
         return 1;
@@ -120,5 +129,127 @@ class FcForm extends BaseFcForm
         }
 
         return 1;
+    }
+
+    public function getFieldByName($name)
+    {
+        $this->getFieldsRecursively();
+
+        if (isset($this->fields[$name])) {
+            return $this->fields[$name];
+        }
+
+        return null;
+    }
+
+    public function getTemplates($all = false)
+    {
+        if (is_null($this->templates)) {
+            $this->templates = array();
+
+            /** @var FcFormTemplate[] $templates */
+            $templates = FcFormTemplateQuery::create()
+                ->filterByFcForm($this)
+                ->_if(!$all)
+                    ->filterByIsActive(true)
+                ->_endif()
+                ->find()
+            ;
+
+            foreach ($templates as $template) {
+                $this->templates[$template->getTemplate()] = $template;
+            }
+        }
+
+        return $this->templates;
+    }
+
+    public function getFieldTemplates($field_name)
+    {
+        $templates = array();
+
+        foreach ($this->getTemplates() as $fc_template) {
+            $params = $fc_template->getParams();
+
+            if (in_array($field_name, $params['fields'])) {
+                $templates[] = $fc_template->getTemplate();
+            }
+        }
+
+        return $templates;
+    }
+
+    protected function calcTemplatePositions($template)
+    {
+        if (isset($this->positions[$template])) {
+            return;
+        }
+
+        $this->positions[$template] = array();
+
+        if (!isset($this->templates[$template])) {
+            return;
+        }
+
+        $params = $this->templates[$template]->getParams();
+        $index  = 1;
+        $prev   = null;
+
+        foreach ($this->getFieldsRecursively() as $name => $fc_field) {
+            $this->positions[$template][$name] = array(
+                'position' => 0,
+                'is_first' => false,
+                'is_last'  => false
+            );
+
+            if (in_array($name, $params['fields'])) {
+                if (1 == $index) {
+                    $this->positions[$template][$name]['is_first'] = true;
+                }
+
+                $this->positions[$template][$name]['position'] = $index++;
+            } else {
+                if (null !== $prev) {
+                    $this->positions[$template][$prev]['is_last'] = true;
+                }
+
+                $index = 1;
+            }
+
+            $prev = $name;
+        }
+    }
+
+    public function getInTemplatePosition($template, $field_name)
+    {
+        $this->calcTemplatePositions($template);
+
+        if (!isset($this->positions[$template][$field_name])) {
+            return false;
+        }
+
+        return $this->positions[$template][$field_name]['position'];
+    }
+
+    public function getIsFirstInTemplate($template, $field_name)
+    {
+        $this->calcTemplatePositions($template);
+
+        if (!isset($this->positions[$template][$field_name])) {
+            return null;
+        }
+
+        return $this->positions[$template][$field_name]['is_first'];
+    }
+
+    public function getIsLastInTemplate($template, $field_name)
+    {
+        $this->calcTemplatePositions($template);
+
+        if (!isset($this->positions[$template][$field_name])) {
+            return null;
+        }
+
+        return $this->positions[$template][$field_name]['is_last'];
     }
 }

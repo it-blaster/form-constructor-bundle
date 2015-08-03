@@ -3,6 +3,13 @@
         {{ item.template | fc_template | trans({}, 'FenrizbesFormConstructorBundle') }}
     </td>
 
+    <td class="sonata-ba-list-field sonata-ba-list-field-text">
+        {{ include([
+            'FenrizbesFormConstructorBundle:SonataAdmin/FcFormTemplate:list_item_info_'~ item.template ~'.html.twig',
+            'FenrizbesFormConstructorBundle:SonataAdmin/FcFormTemplate:list_item_info_default.html.twig'
+        ]) }}
+    </td>
+
     <td class="sonata-ba-list-field sonata-ba-list-field-boolean">
         {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:state_buttons.html.twig', {
             item:  item,

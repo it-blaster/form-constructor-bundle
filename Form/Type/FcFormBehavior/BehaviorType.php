@@ -1,30 +1,30 @@
 <?php
 
-namespace Fenrizbes\FormConstructorBundle\Form\Type\FcFormListener;
+namespace Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior;
 
-use Fenrizbes\FormConstructorBundle\Chain\ListenerChain;
+use Fenrizbes\FormConstructorBundle\Chain\BehaviorChain;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ListenerType extends AbstractType
+class BehaviorType extends AbstractType
 {
     /**
-     * @var ListenerChain
+     * @var BehaviorChain
      */
-    protected $listener_chain;
+    protected $behavior_chain;
 
     protected $action;
 
-    public function __construct(ListenerChain $listener_chain, $action = null)
+    public function __construct(BehaviorChain $behavior_chain, $action = null)
     {
-        $this->listener_chain = $listener_chain;
+        $this->behavior_chain = $behavior_chain;
         $this->action         = $action;
     }
 
     public function getName()
     {
-        return 'fc_field_listener';
+        return 'fc_field_behavior';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -38,9 +38,9 @@ class ListenerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('listener', 'choice', array(
-                'label'       => 'fc.label.admin.listener',
-                'choices'     => $this->buildListenerChoices(),
+            ->add('behavior', 'choice', array(
+                'label'       => 'fc.label.admin.behavior',
+                'choices'     => $this->buildBehaviorChoices(),
                 'empty_value' => '',
                 'attr'        => array(
                     'class' => 'fc_type_choice'
@@ -51,14 +51,14 @@ class ListenerType extends AbstractType
         ;
     }
 
-    protected function buildListenerChoices()
+    protected function buildBehaviorChoices()
     {
-        $listeners = array();
+        $behaviors = array();
 
-        foreach ($this->listener_chain->getListeners() as $alias => $listener) {
-            $listeners[$alias] = $listener->getName();
+        foreach ($this->behavior_chain->getBehaviors() as $alias => $behavior) {
+            $behaviors[$alias] = $behavior->getName();
         }
 
-        return $listeners;
+        return $behaviors;
     }
 }

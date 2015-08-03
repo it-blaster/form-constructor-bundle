@@ -7,16 +7,24 @@ use Fenrizbes\FormConstructorBundle\Form\Type\FcField\Admin\FieldCustomType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcFieldConstraint\Admin\ConstraintCommonType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcFieldConstraint\ConstraintType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcField\WidgetType;
+use Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior\Admin\BehaviorCommonType;
+use Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior\BehaviorType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcFormListener\Admin\ListenerCommonType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcFormListener\ListenerType;
+use Fenrizbes\FormConstructorBundle\Form\Type\FcFormTemplate\Admin\TemplateCommonType;
+use Fenrizbes\FormConstructorBundle\Form\Type\FcFormTemplate\TemplateType;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldConstraint;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldConstraintQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormBehavior;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormBehaviorQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormEventListener;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormEventListenerQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormQuery;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormTemplate;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormTemplateQuery;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\CoreBundle\Exception\InvalidParameterException;
@@ -1134,6 +1142,704 @@ class FcFormAdminController extends CRUDController
 
         $fc_listener->setIsActive($active);
         $fc_listener->save();
+
+        return new JsonResponse(array(
+            'success' => true
+        ));
+    }
+
+    /**
+     * Renders templates' tab
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function getTemplatesAction(Request $request, $id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_form = FcFormQuery::create()->findPk($id);
+        if (!$fc_form instanceof FcForm) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_tab_templates.html.twig', array(
+            'object' => $fc_form
+        ));
+    }
+
+    /**
+     * Renders template's choice
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function selectTemplateAction(Request $request, $id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $form = $this->createForm(new TemplateType(
+            $this->container->get('fc.template.chain'),
+            $this->admin->generateUrl('create_template', array('id' => $id))
+        ));
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Renders template's create form
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Sonata\CoreBundle\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function createTemplateAction(Request $request, $id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $chain = $this->container->get('fc.template.chain');
+
+        $template_form = $this->createForm(new TemplateType($chain));
+        $template_form->handleRequest($request);
+        $template_data = $template_form->getData();
+        if (!is_array($template_data) || !isset($template_data['template'])) {
+            throw new InvalidParameterException('Template\'s name not passed');
+        }
+
+        $alias = $template_data['template'];
+
+        $fc_template = new FcFormTemplate();
+        $fc_template->setTemplate($alias);
+
+        $form_action = $this->admin->generateUrl('do_create_template', array(
+            'id'       => $id,
+            'template' => $alias
+        ));
+
+        $form = $this->createForm(
+            new TemplateCommonType(
+                $form_action,
+                $this->get('translator'),
+                $chain->getParamsBuilder($alias, $this->admin->getSubject())
+            ),
+            $fc_template
+        );
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Creates and saves a template
+     *
+     * @param Request $request
+     * @param $id
+     * @param $template
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doCreateTemplateAction(Request $request, $id, $template)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_form = FcFormQuery::create()->findPk($id);
+            if (!$fc_form instanceof FcForm) {
+                throw $this->createNotFoundException();
+            }
+
+            $fc_template = new FcFormTemplate();
+            $fc_template->setTemplate($template);
+            $fc_template->setFcForm($fc_form);
+
+            $form_action = $this->admin->generateUrl('do_create_template', array(
+                'id'       => $id,
+                'template' => $template
+            ));
+
+            $form = $this->createForm(
+                new TemplateCommonType(
+                    $form_action,
+                    $this->get('translator'),
+                    $this->container->get('fc.template.chain')
+                        ->getParamsBuilder($template, $this->admin->getSubject())
+                ),
+                $fc_template
+            );
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $fc_template->save();
+
+                return new JsonResponse(array(
+                    'success' => true
+                ));
+            }
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => false,
+            'view'    => $this->renderView('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+                'form' => $form->createView()
+            ))
+        ));
+    }
+
+    /**
+     * Renders template's edit form
+     *
+     * @param Request $request
+     * @param $template_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function editTemplateAction(Request $request, $template_id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_template = FcFormTemplateQuery::create()->findPk($template_id);
+        if (!$fc_template instanceof FcFormTemplate) {
+            throw $this->createNotFoundException();
+        }
+
+        $form_action = $this->admin->generateUrl('do_edit_template', array(
+            'id'          => $fc_template->getFormId(),
+            'template_id' => $fc_template->getId()
+        ));
+
+        $form = $this->createForm(
+            new TemplateCommonType(
+                $form_action,
+                $this->get('translator'),
+                $this->container->get('fc.template.chain')
+                    ->getParamsBuilder($fc_template->getTemplate(), $this->admin->getSubject())
+            ),
+            $fc_template
+        );
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Saves template's changes
+     *
+     * @param Request $request
+     * @param $template_id
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doEditTemplateAction(Request $request, $template_id)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_template = FcFormTemplateQuery::create()->findPk($template_id);
+            if (!$fc_template instanceof FcFormTemplate) {
+                throw $this->createNotFoundException();
+            }
+
+            $form_action = $this->admin->generateUrl('do_edit_template', array(
+                'id'          => $fc_template->getFormId(),
+                'template_id' => $fc_template->getId()
+            ));
+
+            $form = $this->createForm(
+                new TemplateCommonType(
+                    $form_action,
+                    $this->get('translator'),
+                    $this->container->get('fc.template.chain')
+                        ->getParamsBuilder($fc_template->getTemplate(), $this->admin->getSubject())
+                ),
+                $fc_template
+            );
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $fc_template = $form->getData();
+                $fc_template->save();
+
+                return new JsonResponse(array(
+                    'success' => true
+                ));
+            }
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => false,
+            'view'    => $this->renderView('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+                'form' => $form->createView()
+            ))
+        ));
+    }
+
+    /**
+     * Renders template's delete confirmation
+     *
+     * @param Request $request
+     * @param $template_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function deleteTemplateAction(Request $request, $template_id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_template = FcFormTemplateQuery::create()->findPk($template_id);
+        if (!$fc_template instanceof FcFormTemplate) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcFormTemplate:delete_confirmation.html.twig', array(
+            'item' => $fc_template
+        ));
+    }
+
+    /**
+     * Deletes a template
+     *
+     * @param Request $request
+     * @param $template_id
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doDeleteTemplateAction(Request $request, $template_id)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_template = FcFormTemplateQuery::create()->findPk($template_id);
+            if (!$fc_template instanceof FcFormTemplate) {
+                throw $this->createNotFoundException();
+            }
+
+            $fc_template->delete();
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => true
+        ));
+    }
+
+    /**
+     * Sets template's active state
+     *
+     * @param Request $request
+     * @param $item_id
+     * @param $active
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function setTemplateStateAction(Request $request, $item_id, $active)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_template = FcFormTemplateQuery::create()->findPk($item_id);
+        if (!$fc_template instanceof FcFormTemplate) {
+            throw $this->createNotFoundException();
+        }
+
+        $fc_template->setIsActive($active);
+        $fc_template->save();
+
+        return new JsonResponse(array(
+            'success' => true
+        ));
+    }
+
+    /**
+     * Renders behaviors' tab
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function getBehaviorsAction(Request $request, $id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_form = FcFormQuery::create()->findPk($id);
+        if (!$fc_form instanceof FcForm) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_tab_behaviors.html.twig', array(
+            'object' => $fc_form
+        ));
+    }
+
+    /**
+     * Renders behavior's choice
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function selectBehaviorAction(Request $request, $id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $form = $this->createForm(new BehaviorType(
+            $this->container->get('fc.behavior.chain'),
+            $this->admin->generateUrl('create_behavior', array('id' => $id))
+        ));
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Renders behavior's create form
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Sonata\CoreBundle\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function createBehaviorAction(Request $request, $id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $chain = $this->container->get('fc.behavior.chain');
+
+        $behavior_form = $this->createForm(new BehaviorType($chain));
+        $behavior_form->handleRequest($request);
+        $behavior_data = $behavior_form->getData();
+        if (!is_array($behavior_data) || !isset($behavior_data['behavior'])) {
+            throw new InvalidParameterException('Behavior\'s name not passed');
+        }
+
+        $alias = $behavior_data['behavior'];
+
+        $fc_behavior = new FcFormBehavior();
+        $fc_behavior->setBehavior($alias);
+
+        $form_action = $this->admin->generateUrl('do_create_behavior', array(
+            'id'       => $id,
+            'behavior' => $alias
+        ));
+
+        $form = $this->createForm(
+            new BehaviorCommonType(
+                $form_action,
+                $this->get('translator'),
+                $chain->getParamsBuilder($alias, $this->admin->getSubject())
+            ),
+            $fc_behavior
+        );
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Creates and saves a behavior
+     *
+     * @param Request $request
+     * @param $id
+     * @param $behavior
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doCreateBehaviorAction(Request $request, $id, $behavior)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_form = FcFormQuery::create()->findPk($id);
+            if (!$fc_form instanceof FcForm) {
+                throw $this->createNotFoundException();
+            }
+
+            $fc_behavior = new FcFormBehavior();
+            $fc_behavior->setBehavior($behavior);
+            $fc_behavior->setFcForm($fc_form);
+
+            $form_action = $this->admin->generateUrl('do_create_behavior', array(
+                'id'       => $id,
+                'behavior' => $behavior
+            ));
+
+            $form = $this->createForm(
+                new BehaviorCommonType(
+                    $form_action,
+                    $this->get('translator'),
+                    $this->container->get('fc.behavior.chain')
+                        ->getParamsBuilder($behavior, $this->admin->getSubject())
+                ),
+                $fc_behavior
+            );
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $fc_behavior->save();
+
+                return new JsonResponse(array(
+                    'success' => true
+                ));
+            }
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => false,
+            'view'    => $this->renderView('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+                'form' => $form->createView()
+            ))
+        ));
+    }
+
+    /**
+     * Renders behavior's edit form
+     *
+     * @param Request $request
+     * @param $behavior_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function editBehaviorAction(Request $request, $behavior_id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_behavior = FcFormBehaviorQuery::create()->findPk($behavior_id);
+        if (!$fc_behavior instanceof FcFormBehavior) {
+            throw $this->createNotFoundException();
+        }
+
+        $form_action = $this->admin->generateUrl('do_edit_behavior', array(
+            'id'          => $fc_behavior->getFormId(),
+            'behavior_id' => $fc_behavior->getId()
+        ));
+
+        $form = $this->createForm(
+            new BehaviorCommonType(
+                $form_action,
+                $this->get('translator'),
+                $this->container->get('fc.behavior.chain')
+                    ->getParamsBuilder($fc_behavior->getBehavior(), $this->admin->getSubject())
+            ),
+            $fc_behavior
+        );
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Saves behavior's changes
+     *
+     * @param Request $request
+     * @param $behavior_id
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doEditBehaviorAction(Request $request, $behavior_id)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_behavior = FcFormBehaviorQuery::create()->findPk($behavior_id);
+            if (!$fc_behavior instanceof FcFormBehavior) {
+                throw $this->createNotFoundException();
+            }
+
+            $form_action = $this->admin->generateUrl('do_edit_behavior', array(
+                'id'          => $fc_behavior->getFormId(),
+                'behavior_id' => $fc_behavior->getId()
+            ));
+
+            $form = $this->createForm(
+                new BehaviorCommonType(
+                    $form_action,
+                    $this->get('translator'),
+                    $this->container->get('fc.behavior.chain')
+                        ->getParamsBuilder($fc_behavior->getBehavior(), $this->admin->getSubject())
+                ),
+                $fc_behavior
+            );
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $fc_behavior = $form->getData();
+                $fc_behavior->save();
+
+                return new JsonResponse(array(
+                    'success' => true
+                ));
+            }
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => false,
+            'view'    => $this->renderView('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+                'form' => $form->createView()
+            ))
+        ));
+    }
+
+    /**
+     * Renders behavior's delete confirmation
+     *
+     * @param Request $request
+     * @param $behavior_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function deleteBehaviorAction(Request $request, $behavior_id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_behavior = FcFormBehaviorQuery::create()->findPk($behavior_id);
+        if (!$fc_behavior instanceof FcFormBehavior) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:delete_confirmation.html.twig', array(
+            'item' => $fc_behavior
+        ));
+    }
+
+    /**
+     * Deletes a behavior
+     *
+     * @param Request $request
+     * @param $behavior_id
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doDeleteBehaviorAction(Request $request, $behavior_id)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_behavior = FcFormBehaviorQuery::create()->findPk($behavior_id);
+            if (!$fc_behavior instanceof FcFormBehavior) {
+                throw $this->createNotFoundException();
+            }
+
+            $fc_behavior->delete();
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => true
+        ));
+    }
+
+    /**
+     * Sets behavior's active state
+     *
+     * @param Request $request
+     * @param $item_id
+     * @param $active
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function setBehaviorStateAction(Request $request, $item_id, $active)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_behavior = FcFormBehaviorQuery::create()->findPk($item_id);
+        if (!$fc_behavior instanceof FcFormBehavior) {
+            throw $this->createNotFoundException();
+        }
+
+        $fc_behavior->setIsActive($active);
+        $fc_behavior->save();
 
         return new JsonResponse(array(
             'success' => true

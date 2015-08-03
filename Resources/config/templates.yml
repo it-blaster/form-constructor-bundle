@@ -1,0 +1,7 @@
+parameters:
+    fc.template.inline.class: Fenrizbes\FormConstructorBundle\Item\Template\InlineTemplate
+
+services:
+    fc.template.inline:
+        class: %fc.template.inline.class%
+        tags:  [ { name: fc.template, alias: inline } ]

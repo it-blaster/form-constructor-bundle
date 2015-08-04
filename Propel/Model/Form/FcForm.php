@@ -12,6 +12,7 @@ class FcForm extends BaseFcForm
     protected $is_used_as_widget;
     protected $steps_count;
     protected $positions = array();
+    protected $fields_templates = array();
 
     /**
      * @var FcField[]
@@ -166,17 +167,19 @@ class FcForm extends BaseFcForm
 
     public function getFieldTemplates($field_name)
     {
-        $templates = array();
+        if (!isset($this->fields_templates[$field_name])) {
+            $this->fields_templates[$field_name] = array();
 
-        foreach ($this->getTemplates() as $fc_template) {
-            $params = $fc_template->getParams();
+            foreach ($this->getTemplates() as $fc_template) {
+                $params = $fc_template->getParams();
 
-            if (in_array($field_name, $params['fields'])) {
-                $templates[$fc_template->getId()] = $fc_template->getTemplate();
+                if (in_array($field_name, $params['fields'])) {
+                    $this->fields_templates[$field_name][$fc_template->getId()] = $fc_template->getTemplate();
+                }
             }
         }
 
-        return $templates;
+        return $this->fields_templates[$field_name];
     }
 
     protected function getFieldTemplateId($template, $field_name)

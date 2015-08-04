@@ -1,0 +1,5 @@
+{% if data[field.name] is defined and data[field.name] is not empty %}
+    {{ include('FenrizbesFormConstructorBundle:FcListener/SendToEmail:row.html.twig', {
+        value: data[field.name]
+    }) }}
+{% endif %}

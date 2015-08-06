@@ -93,6 +93,8 @@ class FcForm extends BaseFcForm
 
     protected function handleFields(FcForm $fc_form)
     {
+        $this->fields = array();
+
         if (is_null($this->steps_count)) {
             $this->steps_count = 1;
         }
@@ -221,47 +223,75 @@ class FcForm extends BaseFcForm
         $prev   = null;
 
         foreach ($this->getFieldsRecursively() as $name => $fc_field) {
-            $this->positions[$id][$name] = array(
-                'position' => 0,
-                'is_first' => false,
-                'is_last'  => false
-            );
-
             if (in_array($name, $params['fields'])) {
+                $this->positions[$id][$name] = array(
+                    'position' => 0,
+                    'is_first' => false,
+                    'is_last'  => false
+                );
+
                 if (1 == $index) {
                     $this->positions[$id][$name]['is_first'] = true;
                 }
 
                 $this->positions[$id][$name]['position'] = $index++;
+
+                $prev = $name;
             } else {
                 if (null !== $prev) {
                     $this->positions[$id][$prev]['is_last'] = true;
+                    $prev = null;
                 }
 
                 $index = 1;
             }
-
-            $prev = $name;
         }
     }
 
     public function getInTemplatePosition($template, $field_name)
     {
         $id = $this->getFieldTemplateId($template, $field_name);
-
         $this->calcTemplatePositions($id);
 
         if (!isset($this->positions[$id][$field_name])) {
-            return false;
+            return null;
         }
 
         return $this->positions[$id][$field_name]['position'];
     }
 
+    public function increaseInTemplatePosition($template, $field_name)
+    {
+        $id       = $this->getFieldTemplateId($template, $field_name);
+        $position = $this->getInTemplatePosition($template, $field_name);
+        $skip     = true;
+
+        if (null === $id || null === $position) {
+            return;
+        }
+
+        foreach ($this->positions[$id] as $name => &$data) {
+            if ($name == $field_name) {
+                $skip = false;
+            }
+
+            if ($skip) {
+                continue;
+            }
+
+            if ($data['position'] >= $position) {
+                $data['position']++;
+            }
+
+            if ($data['is_last']) {
+                return;
+            }
+        }
+    }
+
     public function getIsFirstInTemplate($template, $field_name)
     {
         $id = $this->getFieldTemplateId($template, $field_name);
-
         $this->calcTemplatePositions($id);
 
         if (!isset($this->positions[$id][$field_name])) {
@@ -274,7 +304,6 @@ class FcForm extends BaseFcForm
     public function getIsLastInTemplate($template, $field_name)
     {
         $id = $this->getFieldTemplateId($template, $field_name);
-
         $this->calcTemplatePositions($id);
 
         if (!isset($this->positions[$id][$field_name])) {

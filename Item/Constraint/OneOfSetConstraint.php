@@ -34,10 +34,8 @@ class OneOfSetConstraint extends AbstractConstraint
     {
         $choices = array();
 
-        foreach ($this->getFcForm()->getFields() as $field) {
-            if (!$field->isCustom()) {
-                $choices[$field->getName()] = (string) $field;
-            }
+        foreach ($this->getFcForm()->getFieldsRecursively(true) as $field) {
+            $choices[$field->getName()] = (string) $field;
         }
 
         return $choices;

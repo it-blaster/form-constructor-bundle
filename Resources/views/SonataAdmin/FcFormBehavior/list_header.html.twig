@@ -1,13 +1,14 @@
-<thead>
-    <tr class="sonata-ba-list-field-header">
-        <th class="sonata-ba-list-field-header-text">
-            {{ 'fc.label.admin.behavior' | trans({}, 'FenrizbesFormConstructorBundle') }}
-        </th>
-        <th class="sonata-ba-list-field-header-boolean">
-            {{ 'fc.label.admin.is_active' | trans({}, 'FenrizbesFormConstructorBundle') }}
-        </th>
-        <th class="sonata-ba-list-field-header-actions">
-            {{ 'fc.label.admin.actions' | trans({}, 'FenrizbesFormConstructorBundle') }}
-        </th>
-    </tr>
-</thead>
+<div class="panel-heading">
+    <div class="row">
+        <div class="col-xs-4">
+            <h4>{{ 'fc.label.admin.behavior.if' | trans({}, 'FenrizbesFormConstructorBundle') }}</h4>
+        </div>
+        <div class="col-xs-3">
+            <h4>{{ 'fc.label.admin.behavior.then' | trans({}, 'FenrizbesFormConstructorBundle') }}</h4>
+        </div>
+        <div class="col-xs-3">
+            <h4>{{ 'fc.label.admin.behavior.else' | trans({}, 'FenrizbesFormConstructorBundle') }}</h4>
+        </div>
+        <div class="col-xs-2"></div>
+    </div>
+</div>

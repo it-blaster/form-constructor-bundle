@@ -1,0 +1,23 @@
+{% extends 'FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior/ActionInfo:default.html.twig' %}
+
+{% block info %}
+    {% set value = object.fieldByName(action.params.value) | trim %}
+
+    {% set class = 'success' %}
+    {% set label = 'fc.label.behavior.action_action.'~ (value is empty ? 'clear' : 'set_to') %}
+    {{ block('item') }}
+
+    {% set class = 'primary' %}
+    {% set label = object.fieldByName(action.params.field) %}
+    {{ block('item') }}
+
+    {% if value is not empty %}
+        {% set class = 'success' %}
+        {% set label = 'fc.label.behavior.action_action.set_value' %}
+        {{ block('item') }}
+
+        {% set class = 'primary' %}
+        {% set label = value %}
+        {{ block('item') }}
+    {% endif %}
+{% endblock %}

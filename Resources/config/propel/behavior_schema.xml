@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="default" namespace="Fenrizbes\FormConstructorBundle\Propel\Model\Behavior" defaultIdMethod="native">
+
+    <table name="fc_form_behavior">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="form_id" type="integer" required="true" />
+        <column name="is_active" type="boolean" required="true" default="false" />
+
+        <foreign-key foreignTable="fc_form" onDelete="cascade" onUpdate="cascade">
+            <reference local="form_id" foreign="id" />
+        </foreign-key>
+
+        <behavior name="timestampable" />
+    </table>
+
+    <table name="fc_form_behavior_condition">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="behavior_id" type="integer" required="true" />
+        <column name="condition" type="varchar" size="255" required="true" />
+        <column name="params" type="object" />
+        <column name="operator" type="boolean" required="true" default="true" />
+        <column name="is_active" type="boolean" required="true" default="false" />
+
+        <foreign-key foreignTable="fc_form_behavior" onDelete="cascade" onUpdate="cascade">
+            <reference local="behavior_id" foreign="id" />
+        </foreign-key>
+
+        <behavior name="timestampable" />
+    </table>
+
+    <table name="fc_form_behavior_action">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="behavior_id" type="integer" required="true" />
+        <column name="action" type="varchar" size="255" required="true" />
+        <column name="params" type="object" />
+        <column name="check" type="boolean" required="true" default="true" />
+        <column name="is_active" type="boolean" required="true" default="false" />
+
+        <foreign-key foreignTable="fc_form_behavior" onDelete="cascade" onUpdate="cascade">
+            <reference local="behavior_id" foreign="id" />
+        </foreign-key>
+
+        <behavior name="timestampable" />
+    </table>
+
+</database>

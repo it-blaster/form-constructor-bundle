@@ -2,13 +2,15 @@
 
 namespace Fenrizbes\FormConstructorBundle\Twig;
 
-use Fenrizbes\FormConstructorBundle\Chain\BehaviorChain;
+use Fenrizbes\FormConstructorBundle\Chain\BehaviorActionChain;
+use Fenrizbes\FormConstructorBundle\Chain\BehaviorConditionChain;
 use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
 use Fenrizbes\FormConstructorBundle\Chain\FieldChain;
 use Fenrizbes\FormConstructorBundle\Chain\ListenerChain;
 use Fenrizbes\FormConstructorBundle\Chain\TemplateChain;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Service\FormService;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Form\FormInterface;
 
 class FcTwigExtension extends \Twig_Extension
@@ -39,9 +41,14 @@ class FcTwigExtension extends \Twig_Extension
     protected $template_chain;
 
     /**
-     * @var BehaviorChain
+     * @var BehaviorConditionChain
      */
-    protected $behavior_chain;
+    protected $condition_chain;
+
+    /**
+     * @var BehaviorActionChain
+     */
+    protected $action_chain;
 
     public function getName()
     {
@@ -73,9 +80,14 @@ class FcTwigExtension extends \Twig_Extension
         $this->template_chain = $template_chain;
     }
 
-    public function setBehaviorChain(BehaviorChain $behavior_chain)
+    public function setBehaviorConditionChain(BehaviorConditionChain $behavior_condition_chain)
     {
-        $this->behavior_chain = $behavior_chain;
+        $this->condition_chain = $behavior_condition_chain;
+    }
+
+    public function setBehaviorActionChain(BehaviorActionChain $behavior_action_chain)
+    {
+        $this->action_chain = $behavior_action_chain;
     }
 
     public function getFilters()
@@ -85,7 +97,8 @@ class FcTwigExtension extends \Twig_Extension
             new \Twig_SimpleFilter('fc_constraint', array($this, 'getFcConstraint')),
             new \Twig_SimpleFilter('fc_listener',   array($this, 'getFcListener')),
             new \Twig_SimpleFilter('fc_template',   array($this, 'getFcTemplate')),
-            new \Twig_SimpleFilter('fc_behavior',   array($this, 'getFcBehavior')),
+            new \Twig_SimpleFilter('fc_condition',  array($this, 'getFcBehaviorCondition')),
+            new \Twig_SimpleFilter('fc_action',     array($this, 'getFcBehaviorAction')),
             new \Twig_SimpleFilter('fc_value',      array($this, 'getFcValue'))
         );
     }
@@ -93,6 +106,7 @@ class FcTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
+            new \Twig_SimpleFunction('fc_item', array($this, 'getFcItem')),
             new \Twig_SimpleFunction('fc_view', array($this, 'getFcFormView')),
             new \Twig_SimpleFunction('fc_form', array($this, 'renderFcForm'), array(
                 'needs_environment' => TRUE,
@@ -121,9 +135,14 @@ class FcTwigExtension extends \Twig_Extension
         return $this->template_chain->getTemplate($alias)->getName();
     }
 
-    public function getFcBehavior($alias)
+    public function getFcBehaviorCondition($alias)
     {
-        return $this->behavior_chain->getBehavior($alias)->getName();
+        return $this->condition_chain->getCondition($alias)->getName();
+    }
+
+    public function getFcBehaviorAction($alias)
+    {
+        return $this->action_chain->getAction($alias)->getName();
     }
 
     public function getFcValue($value, FcField $fc_field)
@@ -136,6 +155,18 @@ class FcTwigExtension extends \Twig_Extension
             ->getField($fc_field->getType())
             ->verboseValue($value, $fc_field)
         ;
+    }
+
+    public function getFcItem($type, $alias)
+    {
+        $chain = $type .'_chain';
+        if (!property_exists($this, $chain)) {
+            throw new \Exception('Type "'. $type .'" does not exist');
+        }
+
+        $method = 'get'. Container::camelize($type);
+
+        return $this->$chain->$method($alias);
     }
 
     public function getFcFormView($alias, $options = array())

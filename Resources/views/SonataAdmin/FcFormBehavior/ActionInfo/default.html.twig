@@ -1,0 +1,29 @@
+{% extends 'FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior/ActionInfo:base.html.twig' %}
+
+{% block root %}
+    {{ block('info') }}
+{% endblock %}
+
+{% block info %}
+    {{ block('action') }}
+{% endblock %}
+
+{% block action %}
+    {% set class = 'success' %}
+    {% set label = action.action | fc_action %}
+    {{ block('item') }}
+{% endblock %}
+
+{% block item %}
+    <a
+        href="#fc_modal"
+        data-toggle="modal"
+        data-title="{{ 'fc.title.admin.action.modal.edit' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ action.action | fc_action | trans({}, 'FenrizbesFormConstructorBundle') }}"
+        data-url="{{ admin.generateUrl('edit_behavior_action', { id: object.id, action_id: action.id }) }}"
+        data-scope="edit"
+        class="btn btn-xs btn-{{ class }} edit_link"
+        title="{{ 'action_edit' | trans({}, 'SonataAdminBundle') }}"
+    >
+        {{ label | trans({}, 'FenrizbesFormConstructorBundle') }}
+    </a>
+{% endblock %}

@@ -1,8 +1,48 @@
 parameters:
-#    fc.listener.send_to_email.class: Fenrizbes\FormConstructorBundle\Item\Listener\SendToEmailListener
+    fc.behavior.condition.state.class: Fenrizbes\FormConstructorBundle\Item\Behavior\Condition\StateBehaviorCondition
+    fc.behavior.condition.value.class: Fenrizbes\FormConstructorBundle\Item\Behavior\Condition\ValueBehaviorCondition
+
+    fc.behavior.action.show_hide.class:         Fenrizbes\FormConstructorBundle\Item\Behavior\Action\ShowHideBehaviorAction
+    fc.behavior.action.enable_disable.class:    Fenrizbes\FormConstructorBundle\Item\Behavior\Action\EnableDisableBehaviorAction
+    fc.behavior.action.copy_value.class:        Fenrizbes\FormConstructorBundle\Item\Behavior\Action\CopyValueBehaviorAction
+    fc.behavior.action.set_value.class:         Fenrizbes\FormConstructorBundle\Item\Behavior\Action\SetValueBehaviorAction
+    fc.behavior.action.on_off_validation.class: Fenrizbes\FormConstructorBundle\Item\Behavior\Action\OnOffValidationBehaviorAction
+    fc.behavior.action.on_off_validator.class:  Fenrizbes\FormConstructorBundle\Item\Behavior\Action\OnOffValidatorBehaviorAction
 
 services:
-#    fc.listener.send_to_email:
-#        class:     %fc.listener.send_to_email.class%
-#        arguments: [ @mailer, @templating ]
-#        tags:      [ { name: fc.listener, alias: send_to_email } ]
+# CONDITIONS
+
+    fc.behavior.condition.state:
+        class: %fc.behavior.condition.state.class%
+        tags:  [ { name: fc.behavior.condition, alias: state } ]
+
+    fc.behavior.condition.value:
+        class: %fc.behavior.condition.value.class%
+        tags:  [ { name: fc.behavior.condition, alias: value } ]
+
+# ACTIONS
+
+    fc.behavior.action.show_hide:
+        class: %fc.behavior.action.show_hide.class%
+        tags:  [ { name: fc.behavior.action, alias: show_hide } ]
+
+    fc.behavior.action.enable_disable:
+        class: %fc.behavior.action.enable_disable.class%
+        tags:  [ { name: fc.behavior.action, alias: enable_disable } ]
+
+    fc.behavior.action.copy_value:
+        class: %fc.behavior.action.copy_value.class%
+        tags:  [ { name: fc.behavior.action, alias: copy_value } ]
+
+    fc.behavior.action.set_value:
+        class: %fc.behavior.action.set_value.class%
+        tags:  [ { name: fc.behavior.action, alias: set_value } ]
+
+    fc.behavior.action.on_off_validation:
+        class: %fc.behavior.action.on_off_validation.class%
+        tags:  [ { name: fc.behavior.action, alias: on_off_validation } ]
+
+    fc.behavior.action.on_off_validator:
+        class:     %fc.behavior.action.on_off_validator.class%
+        arguments: [ @fc.constraint.chain ]
+        tags:      [ { name: fc.behavior.action, alias: on_off_validator } ]

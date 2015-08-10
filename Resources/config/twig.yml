@@ -2,11 +2,12 @@ services:
     twig.extension.fc:
         class: Fenrizbes\FormConstructorBundle\Twig\FcTwigExtension
         calls:
-            - [ setFormService,     [ @fc.form ] ]
-            - [ setFieldChain,      [ @fc.field.chain ] ]
-            - [ setConstraintChain, [ @fc.constraint.chain ] ]
-            - [ setListenerChain,   [ @fc.listener.chain ] ]
-            - [ setTemplateChain,   [ @fc.template.chain ] ]
-            - [ setBehaviorChain,   [ @fc.behavior.chain ] ]
+            - [ setFormService,            [ @fc.form ] ]
+            - [ setFieldChain,             [ @fc.field.chain ] ]
+            - [ setConstraintChain,        [ @fc.constraint.chain ] ]
+            - [ setListenerChain,          [ @fc.listener.chain ] ]
+            - [ setTemplateChain,          [ @fc.template.chain ] ]
+            - [ setBehaviorConditionChain, [ @fc.behavior.condition.chain ] ]
+            - [ setBehaviorActionChain,    [ @fc.behavior.action.chain ] ]
         tags:
             - { name: twig.extension }

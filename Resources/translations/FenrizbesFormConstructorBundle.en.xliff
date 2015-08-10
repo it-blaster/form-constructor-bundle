@@ -765,7 +765,7 @@
 
             <trans-unit id="fc.message.admin.behavior.delete_confirmation">
                 <source>fc.message.admin.behavior.delete_confirmation</source>
-                <target>Please confirm the deletion of the behavior "%name%"</target>
+                <target>Please confirm the behavior deletion</target>
             </trans-unit>
 
             <trans-unit id="fc.label.admin.template">
@@ -808,19 +808,9 @@
                 <target>Delete template</target>
             </trans-unit>
 
-            <trans-unit id="fc.title.admin.behavior.modal.create">
-                <source>fc.title.admin.behavior.modal.create</source>
-                <target>New behavior</target>
-            </trans-unit>
-
             <trans-unit id="fc.title.admin.new_behavior">
                 <source>fc.title.admin.new_behavior</source>
                 <target>Add behavior</target>
-            </trans-unit>
-
-            <trans-unit id="fc.title.admin.behavior.modal.edit">
-                <source>fc.title.admin.behavior.modal.edit</source>
-                <target>Edit behavior</target>
             </trans-unit>
 
             <trans-unit id="fc.title.admin.behavior.modal.delete">
@@ -841,6 +831,276 @@
             <trans-unit id="fc.label.admin.template.info">
                 <source>fc.label.admin.template.info</source>
                 <target>Targets</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior.if">
+                <source>fc.label.admin.behavior.if</source>
+                <target>If</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior.then">
+                <source>fc.label.admin.behavior.then</source>
+                <target>then</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior.else">
+                <source>fc.label.admin.behavior.else</source>
+                <target>else</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_condition">
+                <source>fc.title.admin.new_condition</source>
+                <target>Add condition</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.condition.modal.create">
+                <source>fc.title.admin.condition.modal.create</source>
+                <target>New condition</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.condition.modal.edit">
+                <source>fc.title.admin.condition.modal.edit</source>
+                <target>Edit condition</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.condition.modal.delete">
+                <source>fc.title.admin.condition.modal.delete</source>
+                <target>Delete condition</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_action">
+                <source>fc.title.admin.new_action</source>
+                <target>Add action</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.action.modal.create">
+                <source>fc.title.admin.action.modal.create</source>
+                <target>New action</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.action.modal.edit">
+                <source>fc.title.admin.action.modal.edit</source>
+                <target>Edit action</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.action.modal.delete">
+                <source>fc.title.admin.action.modal.delete</source>
+                <target>Delete action</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior.condition">
+                <source>fc.label.admin.behavior.condition</source>
+                <target>Condition</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior.action">
+                <source>fc.label.admin.behavior.action</source>
+                <target>Action</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.conditions.state">
+                <source>fc.label.behavior.conditions.state</source>
+                <target>Check state</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.condition_operator">
+                <source>fc.label.admin.condition_operator</source>
+                <target>Operator</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.condition_operator.and">
+                <source>fc.label.admin.condition_operator.and</source>
+                <target>and</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.condition_operator.or">
+                <source>fc.label.admin.condition_operator.or</source>
+                <target>or</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_field">
+                <source>fc.label.behavior.condition_field</source>
+                <target>Field</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.behavior.delete_condition_confirmation">
+                <source>fc.message.admin.behavior.delete_condition_confirmation</source>
+                <target>Please confirm the deletion of the condition "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.behavior.delete_action_confirmation">
+                <source>fc.message.admin.behavior.delete_action_confirmation</source>
+                <target>Please confirm the deletion of the action "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_check">
+                <source>fc.label.behavior.condition_check</source>
+                <target>State</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_check.checked">
+                <source>fc.label.behavior.condition_check.checked</source>
+                <target>checked</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_check.unchecked">
+                <source>fc.label.behavior.condition_check.unchecked</source>
+                <target>unchecked</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.condition.successful">
+                <source>fc.title.admin.condition.successful</source>
+                <target>is successful</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.conditions.value">
+                <source>fc.label.behavior.conditions.value</source>
+                <target>Check value</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison">
+                <source>fc.label.behavior.condition_comparison</source>
+                <target>Comparison type</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.equal">
+                <source>fc.label.behavior.condition_comparison.equal</source>
+                <target>is equal to</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.not_equal">
+                <source>fc.label.behavior.condition_comparison.not_equal</source>
+                <target>is not equal to</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.greater">
+                <source>fc.label.behavior.condition_comparison.greater</source>
+                <target>is greater than</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.greater_or_equal">
+                <source>fc.label.behavior.condition_comparison.greater_or_equal</source>
+                <target>is greater than or equal</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.less">
+                <source>fc.label.behavior.condition_comparison.less</source>
+                <target>is less than</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.less_or_equal">
+                <source>fc.label.behavior.condition_comparison.less_or_equal</source>
+                <target>is less than or equal</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action">
+                <source>fc.label.behavior.action_action</source>
+                <target>Do</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.show_hide">
+                <source>fc.label.behavior.actions.show_hide</source>
+                <target>Show/hide</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.show">
+                <source>fc.label.behavior.action_action.show</source>
+                <target>show</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.hide">
+                <source>fc.label.behavior.action_action.hide</source>
+                <target>hide</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.enable_disable">
+                <source>fc.label.behavior.actions.enable_disable</source>
+                <target>Enable/disable</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.enable">
+                <source>fc.label.behavior.action_action.enable</source>
+                <target>enable</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.disable">
+                <source>fc.label.behavior.action_action.disable</source>
+                <target>disable</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.copy_value">
+                <source>fc.label.behavior.actions.copy_value</source>
+                <target>Copy value</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.set_value">
+                <source>fc.label.behavior.actions.set_value</source>
+                <target>Set value</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_source_field">
+                <source>fc.label.behavior.action_source_field</source>
+                <target>Copy value form</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_target_field">
+                <source>fc.label.behavior.action_target_field</source>
+                <target>to</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.copy_from">
+                <source>fc.label.behavior.action_action.copy_from</source>
+                <target>copy value from</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.copy_to">
+                <source>fc.label.behavior.action_action.copy_to</source>
+                <target>to</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.set_to">
+                <source>fc.label.behavior.action_action.set_to</source>
+                <target>set in</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.set_value">
+                <source>fc.label.behavior.action_action.set_value</source>
+                <target>value</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.clear">
+                <source>fc.label.behavior.action_action.clear</source>
+                <target>clear</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.on_off_validation">
+                <source>fc.label.behavior.actions.on_off_validation</source>
+                <target>On/off validation</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.on_off_validator">
+                <source>fc.label.behavior.actions.on_off_validator</source>
+                <target>On/off specific validators</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.validation">
+                <source>fc.label.behavior.action_action.validation</source>
+                <target>validation</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.validator">
+                <source>fc.label.behavior.action_action.validator</source>
+                <target>validator</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.for">
+                <source>fc.label.behavior.action_action.for</source>
+                <target>for</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_validator">
+                <source>fc.label.behavior.action_validator</source>
+                <target>Validator</target>
             </trans-unit>
 
         </body>

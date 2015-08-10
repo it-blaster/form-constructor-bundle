@@ -765,7 +765,7 @@
 
             <trans-unit id="fc.message.admin.behavior.delete_confirmation">
                 <source>fc.message.admin.behavior.delete_confirmation</source>
-                <target>Пожалуйста, подтвердите удаление поведения "%name%"</target>
+                <target>Пожалуйста, подтвердите удаление поведения</target>
             </trans-unit>
 
             <trans-unit id="fc.label.admin.template">
@@ -808,19 +808,9 @@
                 <target>Удаление отображения</target>
             </trans-unit>
 
-            <trans-unit id="fc.title.admin.behavior.modal.create">
-                <source>fc.title.admin.behavior.modal.create</source>
-                <target>Новое поведение</target>
-            </trans-unit>
-
             <trans-unit id="fc.title.admin.new_behavior">
                 <source>fc.title.admin.new_behavior</source>
                 <target>Добавить поведение</target>
-            </trans-unit>
-
-            <trans-unit id="fc.title.admin.behavior.modal.edit">
-                <source>fc.title.admin.behavior.modal.edit</source>
-                <target>Редактирование поведения</target>
             </trans-unit>
 
             <trans-unit id="fc.title.admin.behavior.modal.delete">
@@ -841,6 +831,276 @@
             <trans-unit id="fc.label.admin.template.info">
                 <source>fc.label.admin.template.info</source>
                 <target>Цели</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior.if">
+                <source>fc.label.admin.behavior.if</source>
+                <target>Если</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior.then">
+                <source>fc.label.admin.behavior.then</source>
+                <target>то</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior.else">
+                <source>fc.label.admin.behavior.else</source>
+                <target>иначе</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_condition">
+                <source>fc.title.admin.new_condition</source>
+                <target>Добавить условие</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.condition.modal.create">
+                <source>fc.title.admin.condition.modal.create</source>
+                <target>Новое условие</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.condition.modal.edit">
+                <source>fc.title.admin.condition.modal.edit</source>
+                <target>Редактирование условия</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.condition.modal.delete">
+                <source>fc.title.admin.condition.modal.delete</source>
+                <target>Удаление условия</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.new_action">
+                <source>fc.title.admin.new_action</source>
+                <target>Добавить действие</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.action.modal.create">
+                <source>fc.title.admin.action.modal.create</source>
+                <target>Новое действие</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.action.modal.edit">
+                <source>fc.title.admin.action.modal.edit</source>
+                <target>Редактирование действия</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.action.modal.delete">
+                <source>fc.title.admin.action.modal.delete</source>
+                <target>Удаление действия</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior.condition">
+                <source>fc.label.admin.behavior.condition</source>
+                <target>Условие</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.behavior.action">
+                <source>fc.label.admin.behavior.action</source>
+                <target>Действие</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.conditions.state">
+                <source>fc.label.behavior.conditions.state</source>
+                <target>Проверка состояния</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.condition_operator">
+                <source>fc.label.admin.condition_operator</source>
+                <target>Оператор</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.condition_operator.and">
+                <source>fc.label.admin.condition_operator.and</source>
+                <target>и</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.condition_operator.or">
+                <source>fc.label.admin.condition_operator.or</source>
+                <target>или</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.behavior.delete_condition_confirmation">
+                <source>fc.message.admin.behavior.delete_condition_confirmation</source>
+                <target>Пожалуйста, подтвердите удаление условия "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.message.admin.behavior.delete_action_confirmation">
+                <source>fc.message.admin.behavior.delete_action_confirmation</source>
+                <target>Пожалуйста, подтвердите удаление действия "%name%"</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_field">
+                <source>fc.label.behavior.condition_field</source>
+                <target>Поле</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_check">
+                <source>fc.label.behavior.condition_check</source>
+                <target>Состояние</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_check.checked">
+                <source>fc.label.behavior.condition_check.checked</source>
+                <target>отмечен</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_check.unchecked">
+                <source>fc.label.behavior.condition_check.unchecked</source>
+                <target>не отмечен</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.condition.successful">
+                <source>fc.title.admin.condition.successful</source>
+                <target>успешно</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.conditions.value">
+                <source>fc.label.behavior.conditions.value</source>
+                <target>Проверка значения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison">
+                <source>fc.label.behavior.condition_comparison</source>
+                <target>Тип сравнения</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.equal">
+                <source>fc.label.behavior.condition_comparison.equal</source>
+                <target>равен</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.not_equal">
+                <source>fc.label.behavior.condition_comparison.not_equal</source>
+                <target>не равен</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.greater">
+                <source>fc.label.behavior.condition_comparison.greater</source>
+                <target>больше</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.greater_or_equal">
+                <source>fc.label.behavior.condition_comparison.greater_or_equal</source>
+                <target>больше или равен</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.less">
+                <source>fc.label.behavior.condition_comparison.less</source>
+                <target>меньше</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.condition_comparison.less_or_equal">
+                <source>fc.label.behavior.condition_comparison.less_or_equal</source>
+                <target>меньше или равен</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action">
+                <source>fc.label.behavior.action_action</source>
+                <target>Действие</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.show_hide">
+                <source>fc.label.behavior.actions.show_hide</source>
+                <target>Скрыть/показать</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.show">
+                <source>fc.label.behavior.action_action.show</source>
+                <target>показать</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.hide">
+                <source>fc.label.behavior.action_action.hide</source>
+                <target>скрыть</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.enable_disable">
+                <source>fc.label.behavior.actions.enable_disable</source>
+                <target>Включить/отключить</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.enable">
+                <source>fc.label.behavior.action_action.enable</source>
+                <target>включить</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.disable">
+                <source>fc.label.behavior.action_action.disable</source>
+                <target>отключить</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.copy_value">
+                <source>fc.label.behavior.actions.copy_value</source>
+                <target>Копировать значение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.set_value">
+                <source>fc.label.behavior.actions.set_value</source>
+                <target>Установить значение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_source_field">
+                <source>fc.label.behavior.action_source_field</source>
+                <target>Копировать значение из поля</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_target_field">
+                <source>fc.label.behavior.action_target_field</source>
+                <target>в поле</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.copy_from">
+                <source>fc.label.behavior.action_action.copy_from</source>
+                <target>копировать значение из</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.copy_to">
+                <source>fc.label.behavior.action_action.copy_to</source>
+                <target>в</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.set_to">
+                <source>fc.label.behavior.action_action.set_to</source>
+                <target>установить в</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.set_value">
+                <source>fc.label.behavior.action_action.set_value</source>
+                <target>значение</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.clear">
+                <source>fc.label.behavior.action_action.clear</source>
+                <target>очистить</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.on_off_validation">
+                <source>fc.label.behavior.actions.on_off_validation</source>
+                <target>Управление валидацией</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.actions.on_off_validator">
+                <source>fc.label.behavior.actions.on_off_validator</source>
+                <target>Управление отдельными валидаторами</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.validation">
+                <source>fc.label.behavior.action_action.validation</source>
+                <target>валидацию</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.validator">
+                <source>fc.label.behavior.action_action.validator</source>
+                <target>валидатор</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_action.for">
+                <source>fc.label.behavior.action_action.for</source>
+                <target>для</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.behavior.action_validator">
+                <source>fc.label.behavior.action_validator</source>
+                <target>Валидатор</target>
             </trans-unit>
 
         </body>

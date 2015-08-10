@@ -1,0 +1,21 @@
+{% extends 'FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior/ActionInfo:default.html.twig' %}
+
+{% block info %}
+    {% set class = 'success' %}
+    {% set label = fc_item('action', action.action).action(action.params.action) %}
+    {{ block('item') }}
+
+    {% set class = 'success' %}
+    {% set label = 'fc.label.behavior.action_action.validation' %}
+    {{ block('item') }}
+
+    {% set class = 'success' %}
+    {% set label = 'fc.label.behavior.action_action.for' %}
+    {{ block('item') }}
+
+    {% set class = 'primary' %}
+    {% for field_name in action.params.field %}
+        {% set label = object.fieldByName(field_name) %}
+        {{ block('item') }}
+    {% endfor %}
+{% endblock %}

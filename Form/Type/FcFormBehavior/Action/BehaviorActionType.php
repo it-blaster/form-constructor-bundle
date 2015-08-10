@@ -1,30 +1,30 @@
 <?php
 
-namespace Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior;
+namespace Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior\Action;
 
-use Fenrizbes\FormConstructorBundle\Chain\BehaviorChain;
+use Fenrizbes\FormConstructorBundle\Chain\BehaviorActionChain;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class BehaviorType extends AbstractType
+class BehaviorActionType extends AbstractType
 {
     /**
-     * @var BehaviorChain
+     * @var BehaviorActionChain
      */
-    protected $behavior_chain;
+    protected $action_chain;
 
     protected $action;
 
-    public function __construct(BehaviorChain $behavior_chain, $action = null)
+    public function __construct(BehaviorActionChain $action_chain, $action = null)
     {
-        $this->behavior_chain = $behavior_chain;
-        $this->action         = $action;
+        $this->action_chain = $action_chain;
+        $this->action       = $action;
     }
 
     public function getName()
     {
-        return 'fc_field_behavior';
+        return 'fc_field_action';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -38,9 +38,9 @@ class BehaviorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('behavior', 'choice', array(
-                'label'       => 'fc.label.admin.behavior',
-                'choices'     => $this->buildBehaviorChoices(),
+            ->add('action', 'choice', array(
+                'label'       => 'fc.label.admin.behavior.action',
+                'choices'     => $this->buildTemplateChoices(),
                 'empty_value' => '',
                 'attr'        => array(
                     'class' => 'fc_type_choice'
@@ -51,14 +51,14 @@ class BehaviorType extends AbstractType
         ;
     }
 
-    protected function buildBehaviorChoices()
+    protected function buildTemplateChoices()
     {
-        $behaviors = array();
+        $actions = array();
 
-        foreach ($this->behavior_chain->getBehaviors() as $alias => $behavior) {
-            $behaviors[$alias] = $behavior->getName();
+        foreach ($this->action_chain->getActions() as $alias => $action) {
+            $actions[$alias] = $action->getName();
         }
 
-        return $behaviors;
+        return $actions;
     }
 }

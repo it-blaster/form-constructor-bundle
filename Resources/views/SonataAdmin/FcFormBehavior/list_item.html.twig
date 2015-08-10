@@ -1,43 +1,65 @@
-<tr>
-    <td class="sonata-ba-list-field sonata-ba-list-field-text">
-        {{ item.behavior | fc_behavior | trans({}, 'FenrizbesFormConstructorBundle') }}
-    </td>
+<li class="list-group-item">
+    <div class="row">
+        <div class="col-xs-4">
+            {% for condition in item.fcFormBehaviorConditions %}
+                {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:list_item_condition.html.twig') }}
+            {% endfor %}
 
-    <td class="sonata-ba-list-field sonata-ba-list-field-boolean">
-        {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:state_buttons.html.twig', {
-            item:  item,
-            route: 'set_behavior_state'
-        }) }}
-    </td>
-
-    <td class="sonata-ba-list-field sonata-ba-list-field-actions">
-        <div class="btn-group">
-            <a
-                href="#fc_modal"
-                data-toggle="modal"
-                data-title="{{ 'fc.title.admin.behavior.modal.edit' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ item.behavior | fc_behavior | trans({}, 'FenrizbesFormConstructorBundle') }}"
-                data-url="{{ admin.generateUrl('edit_behavior', { id: object.id, behavior_id: item.id }) }}"
-                data-scope="edit"
-                class="btn btn-sm btn-default edit_link"
-                title="{{ 'action_edit'|trans({}, 'SonataAdminBundle') }}"
-            >
-                <i class="glyphicon glyphicon-edit"></i>
-                {{ 'action_edit'|trans({}, 'SonataAdminBundle') }}
-            </a>
-
-            <a
-                href="#fc_modal"
-                data-toggle="modal"
-                data-title="{{ 'fc.title.admin.behavior.modal.delete' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ item.behavior | fc_behavior | trans({}, 'FenrizbesFormConstructorBundle') }}"
-                data-url="{{ admin.generateUrl('delete_behavior', { id: object.id, behavior_id: item.id }) }}"
-                data-delete-url="{{ admin.generateUrl('do_delete_behavior', { id: object.id, behavior_id: item.id }) }}"
-                data-scope="delete"
-                class="btn btn-sm btn-default delete_link"
-                title="{{ 'action_delete'|trans({}, 'SonataAdminBundle') }}"
-            >
-                <i class="glyphicon glyphicon-remove"></i>
-                {{ 'action_delete'|trans({}, 'SonataAdminBundle') }}
-            </a>
+            <p>
+                <a
+                    href="#fc_modal"
+                    data-toggle="modal"
+                    data-title="{{ 'fc.title.admin.condition.modal.create' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                    data-url="{{ admin.generateUrl('select_behavior_condition', { id: object.id, behavior_id: item.id }) }}"
+                    data-scope="create"
+                    class="btn btn-xs btn-default create_link"
+                    title="{{ 'fc.title.admin.new_condition' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                >
+                    <i class="glyphicon glyphicon-plus-sign"></i>
+                </a>
+            </p>
         </div>
-    </td>
-</tr>
+
+        <div class="col-xs-3">
+            {% for action in item.thenActions %}
+                {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:list_item_action.html.twig') }}
+            {% endfor %}
+
+            <p>
+                <a
+                    href="#fc_modal"
+                    data-toggle="modal"
+                    data-title="{{ 'fc.title.admin.action.modal.create' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                    data-url="{{ admin.generateUrl('select_behavior_action', { id: object.id, behavior_id: item.id, check: 1 }) }}"
+                    data-scope="create"
+                    class="btn btn-xs btn-default create_link"
+                    title="{{ 'fc.title.admin.new_action' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                >
+                    <i class="glyphicon glyphicon-plus-sign"></i>
+                </a>
+            </p>
+        </div>
+
+        <div class="col-xs-3">
+            {% for action in item.elseActions %}
+                {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:list_item_action.html.twig') }}
+            {% endfor %}
+
+            <p>
+                <a
+                    href="#fc_modal"
+                    data-toggle="modal"
+                    data-title="{{ 'fc.title.admin.action.modal.create' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                    data-url="{{ admin.generateUrl('select_behavior_action', { id: object.id, behavior_id: item.id, check: 0 }) }}"
+                    data-scope="create"
+                    class="btn btn-xs btn-default create_link"
+                    title="{{ 'fc.title.admin.new_action' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                >
+                    <i class="glyphicon glyphicon-plus-sign"></i>
+                </a>
+            </p>
+        </div>
+
+        {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:list_item_controls.html.twig') }}
+    </div>
+</li>

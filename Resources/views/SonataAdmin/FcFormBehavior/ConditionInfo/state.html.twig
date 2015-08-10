@@ -1,0 +1,11 @@
+{% extends 'FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior/ConditionInfo:default.html.twig' %}
+
+{% block info %}
+    {% set class = 'primary' %}
+    {% set label = object.fieldByName(condition.params.field) %}
+    {{ block('item') }}
+
+    {% set class = 'success' %}
+    {% set label = fc_item('condition', condition.condition).check(condition.params.check) %}
+    {{ block('item') }}
+{% endblock %}

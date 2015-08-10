@@ -1,0 +1,19 @@
+{% extends 'FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior/ActionInfo:default.html.twig' %}
+
+{% block info %}
+    {% set class = 'success' %}
+    {% set label = 'fc.label.behavior.action_action.copy_from' %}
+    {{ block('item') }}
+
+    {% set class = 'primary' %}
+    {% set label = object.fieldByName(action.params.source_field) %}
+    {{ block('item') }}
+
+    {% set class = 'success' %}
+    {% set label = 'fc.label.behavior.action_action.copy_to' %}
+    {{ block('item') }}
+
+    {% set class = 'primary' %}
+    {% set label = object.fieldByName(action.params.target_field) %}
+    {{ block('item') }}
+{% endblock %}

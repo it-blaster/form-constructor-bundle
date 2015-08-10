@@ -1,6 +1,6 @@
 <?php
 
-namespace Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior\Admin;
+namespace Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior\Action\Admin;
 
 use Fenrizbes\FormConstructorBundle\Item\ParamsBuilder;
 use Symfony\Component\Form\AbstractType;
@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class BehaviorCommonType extends AbstractType
+class BehaviorActionCommonType extends AbstractType
 {
     protected $action;
 
@@ -31,7 +31,7 @@ class BehaviorCommonType extends AbstractType
 
     public function getName()
     {
-        return 'fc_form_behavior';
+        return 'fc_form_behavior_action';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
@@ -39,7 +39,7 @@ class BehaviorCommonType extends AbstractType
         $resolver->setDefaults(array(
             'csrf_protection'    => false,
             'translation_domain' => 'FenrizbesFormConstructorBundle',
-            'data_class'         => 'Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormBehavior'
+            'data_class'         => 'Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehaviorAction'
         ));
     }
 
@@ -48,7 +48,7 @@ class BehaviorCommonType extends AbstractType
         $builder
             ->setAction($this->action)
 
-            ->add('behavior', 'hidden')
+            ->add('action', 'hidden')
 
             ->add('is_active', null, array(
                 'label'    => 'fc.label.admin.is_active',

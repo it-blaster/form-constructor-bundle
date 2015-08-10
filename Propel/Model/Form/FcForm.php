@@ -80,28 +80,29 @@ class FcForm extends BaseFcForm
     }
 
     /**
+     * @param bool $all
      * @return FcField[]
      */
-    public function getFieldsRecursively()
+    public function getFieldsRecursively($all = false)
     {
         if (is_null($this->fields)) {
-            $this->handleFields($this);
+            $this->fields = array();
+
+            $this->handleFields($this, $all);
         }
 
         return $this->fields;
     }
 
-    protected function handleFields(FcForm $fc_form)
+    protected function handleFields(FcForm $fc_form, $all = false)
     {
-        $this->fields = array();
-
         if (is_null($this->steps_count)) {
             $this->steps_count = 1;
         }
 
-        foreach ($fc_form->getFields() as $fc_field) {
+        foreach ($fc_form->getFields($all) as $fc_field) {
             if ($fc_field->isCustom()) {
-                $this->handleFields($fc_field->getCustomWidget());
+                $this->handleFields($fc_field->getCustomWidget(), $all);
             } else {
                 $fc_field->setStep($this->steps_count);
                 $this->fields[$fc_field->getName()] = $fc_field;

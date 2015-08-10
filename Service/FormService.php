@@ -2,7 +2,8 @@
 
 namespace Fenrizbes\FormConstructorBundle\Service;
 
-use Fenrizbes\FormConstructorBundle\Chain\BehaviorChain;
+use Fenrizbes\FormConstructorBundle\Chain\BehaviorActionChain;
+use Fenrizbes\FormConstructorBundle\Chain\BehaviorConditionChain;
 use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
 use Fenrizbes\FormConstructorBundle\Chain\FieldChain;
 use Fenrizbes\FormConstructorBundle\Chain\ListenerChain;
@@ -50,9 +51,14 @@ class FormService
     protected $template_chain;
 
     /**
-     * @var BehaviorChain
+     * @var BehaviorConditionChain
      */
-    protected $behavior_chain;
+    protected $behavior_condition_chain;
+
+    /**
+     * @var BehaviorActionChain
+     */
+    protected $behavior_action_chain;
 
     public function setFormFactory(FormFactoryInterface $form_factory)
     {
@@ -84,9 +90,14 @@ class FormService
         $this->template_chain = $template_chain;
     }
 
-    public function setBehaviorChain(BehaviorChain $behavior_chain)
+    public function setBehaviorConditionChain(BehaviorConditionChain $behavior_condition_chain)
     {
-        $this->behavior_chain = $behavior_chain;
+        $this->behavior_condition_chain = $behavior_condition_chain;
+    }
+
+    public function setBehaviorActionChain(BehaviorActionChain $behavior_action_chain)
+    {
+        $this->behavior_action_chain = $behavior_action_chain;
     }
 
     public function buildOptions($options)
@@ -134,7 +145,8 @@ class FormService
             $type->setConstraintChain($this->constraint_chain);
             $type->setListenerChain($this->listener_chain);
             $type->setTemplateChain($this->template_chain);
-            $type->setBehaviorChain($this->behavior_chain);
+            $type->setBehaviorConditionChain($this->behavior_condition_chain);
+            $type->setBehaviorActionChain($this->behavior_action_chain);
 
             $this->forms[$alias] = $this->form_factory->create($type, $options['data']);
         }

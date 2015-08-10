@@ -11,19 +11,23 @@ services:
     fc.template.chain:
         class: Fenrizbes\FormConstructorBundle\Chain\TemplateChain
 
-    fc.behavior.chain:
-        class: Fenrizbes\FormConstructorBundle\Chain\BehaviorChain
+    fc.behavior.condition.chain:
+        class: Fenrizbes\FormConstructorBundle\Chain\BehaviorConditionChain
+
+    fc.behavior.action.chain:
+        class: Fenrizbes\FormConstructorBundle\Chain\BehaviorActionChain
 
     fc.form:
         class: Fenrizbes\FormConstructorBundle\Service\FormService
         calls:
-            - [ setFormFactory,     [ @form.factory ] ]
-            - [ setRouter,          [ @router ] ]
-            - [ setFieldChain,      [ @fc.field.chain ] ]
-            - [ setConstraintChain, [ @fc.constraint.chain ] ]
-            - [ setListenerChain,   [ @fc.listener.chain ] ]
-            - [ setTemplateChain,   [ @fc.template.chain ] ]
-            - [ setBehaviorChain,   [ @fc.behavior.chain ] ]
+            - [ setFormFactory,            [ @form.factory ] ]
+            - [ setRouter,                 [ @router ] ]
+            - [ setFieldChain,             [ @fc.field.chain ] ]
+            - [ setConstraintChain,        [ @fc.constraint.chain ] ]
+            - [ setListenerChain,          [ @fc.listener.chain ] ]
+            - [ setTemplateChain,          [ @fc.template.chain ] ]
+            - [ setBehaviorConditionChain, [ @fc.behavior.condition.chain ] ]
+            - [ setBehaviorActionChain,    [ @fc.behavior.action.chain ] ]
 
     fc.request_listener:
         class: Fenrizbes\FormConstructorBundle\Listener\RequestListener

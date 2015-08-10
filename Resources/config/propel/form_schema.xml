@@ -48,18 +48,4 @@
         <behavior name="timestampable" />
     </table>
 
-    <table name="fc_form_behavior">
-        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
-        <column name="form_id" type="integer" required="true" />
-        <column name="behavior" type="varchar" size="255" required="true" />
-        <column name="params" type="object" />
-        <column name="is_active" type="boolean" required="true" default="false" />
-
-        <foreign-key foreignTable="fc_form" onDelete="cascade" onUpdate="cascade">
-            <reference local="form_id" foreign="id" />
-        </foreign-key>
-
-        <behavior name="timestampable" />
-    </table>
-
 </database>

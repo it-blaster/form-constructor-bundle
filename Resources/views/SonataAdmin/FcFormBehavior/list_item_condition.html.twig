@@ -1,0 +1,53 @@
+<p>
+    <div class="btn-group">
+        {{ include([
+            'FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior/ConditionInfo:'~ condition.condition ~'.html.twig',
+            'FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior/ConditionInfo:default.html.twig'
+        ]) }}
+
+        <a
+            href="#fc_modal"
+            data-toggle="modal"
+            data-title="{{ 'fc.title.admin.condition.modal.edit' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ condition.condition | fc_condition | trans({}, 'FenrizbesFormConstructorBundle') }}"
+            data-url="{{ admin.generateUrl('edit_behavior_condition', { id: object.id, condition_id: condition.id }) }}"
+            data-scope="edit"
+            class="btn btn-xs btn-default edit_link"
+            title="{{ 'action_edit' | trans({}, 'SonataAdminBundle') }}"
+        >
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+
+        {% if condition.isActive %}
+            <a
+                href="#"
+                data-url="{{ admin.generateUrl('set_behavior_condition_state', { id: object.id, item_id: condition.id, active: 0 }) }}"
+                class="btn btn-xs btn-default set_state_link"
+                title="{{ 'fc.label.admin.unpublish' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+            >
+                <i class="glyphicon glyphicon-ok"></i>
+            </a>
+        {% else %}
+            <a
+                href="#"
+                data-url="{{ admin.generateUrl('set_behavior_condition_state', { id: object.id, item_id: condition.id, active: 1 }) }}"
+                class="btn btn-xs btn-default set_state_link"
+                title="{{ 'fc.label.admin.publish' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+            >
+                <i class="glyphicon glyphicon-ban-circle"></i>
+            </a>
+        {% endif %}
+
+        <a
+            href="#fc_modal"
+            data-toggle="modal"
+            data-title="{{ 'fc.title.admin.condition.modal.delete' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ condition.condition | fc_condition | trans({}, 'FenrizbesFormConstructorBundle') }}"
+            data-url="{{ admin.generateUrl('delete_behavior_condition', { id: object.id, condition_id: condition.id }) }}"
+            data-delete-url="{{ admin.generateUrl('do_delete_behavior_condition', { id: object.id, condition_id: condition.id }) }}"
+            data-scope="delete"
+            class="btn btn-xs btn-default delete_link"
+            title="{{ 'action_delete' | trans({}, 'SonataAdminBundle') }}"
+        >
+            <i class="glyphicon glyphicon-remove"></i>
+        </a>
+    </div>
+</p>

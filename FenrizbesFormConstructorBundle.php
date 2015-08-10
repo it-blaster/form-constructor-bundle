@@ -2,7 +2,8 @@
 
 namespace Fenrizbes\FormConstructorBundle;
 
-use Fenrizbes\FormConstructorBundle\DependencyInjection\Compiler\BehaviorCompilerPass;
+use Fenrizbes\FormConstructorBundle\DependencyInjection\Compiler\BehaviorActionCompilerPass;
+use Fenrizbes\FormConstructorBundle\DependencyInjection\Compiler\BehaviorConditionCompilerPass;
 use Fenrizbes\FormConstructorBundle\DependencyInjection\Compiler\FieldCompilerPass;
 use Fenrizbes\FormConstructorBundle\DependencyInjection\Compiler\ConstraintCompilerPass;
 use Fenrizbes\FormConstructorBundle\DependencyInjection\Compiler\ListenerCompilerPass;
@@ -21,7 +22,8 @@ class FenrizbesFormConstructorBundle extends Bundle
             ->addCompilerPass(new ConstraintCompilerPass())
             ->addCompilerPass(new ListenerCompilerPass())
             ->addCompilerPass(new TemplateCompilerPass())
-            ->addCompilerPass(new BehaviorCompilerPass())
+            ->addCompilerPass(new BehaviorConditionCompilerPass())
+            ->addCompilerPass(new BehaviorActionCompilerPass())
         ;
     }
 }

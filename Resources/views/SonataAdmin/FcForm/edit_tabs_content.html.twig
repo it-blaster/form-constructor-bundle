@@ -11,9 +11,9 @@
         {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_tab_templates.html.twig') }}
     </div>
 
-    {#<div class="tab-pane fade" id="tab_behaviors" data-url="{{ admin.generateUrl('get_behaviors', { id: object.id }) }}">#}
-        {#{{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_tab_behaviors.html.twig') }}#}
-    {#</div>#}
+    <div class="tab-pane fade" id="tab_behaviors" data-url="{{ admin.generateUrl('get_behaviors', { id: object.id }) }}">
+        {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_tab_behaviors.html.twig') }}
+    </div>
 
     <div class="tab-pane fade" id="tab_listeners" data-url="{{ admin.generateUrl('get_listeners', { id: object.id }) }}">
         {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:edit_tab_listeners.html.twig') }}

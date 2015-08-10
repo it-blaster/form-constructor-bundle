@@ -1,23 +1,14 @@
-<tfoot>
-    <tr>
-        <td colspan="2" class="sonata-ba-list-field sonata-ba-list-field-text text-right">
-            {% if not object.fcFormBehaviors | length %}
-                {{ 'fc.message.admin.no_behaviors' | trans({}, 'FenrizbesFormConstructorBundle') }}
-            {% endif %}
-        </td>
-        <td>
-            <a
-                href="#fc_modal"
-                data-toggle="modal"
-                data-title="{{ 'fc.title.admin.behavior.modal.create' | trans({}, 'FenrizbesFormConstructorBundle') }}"
-                data-url="{{ admin.generateUrl('select_behavior', { id: object.id }) }}"
-                data-scope="create"
-                class="btn btn-sm btn-default create_link"
-                title="{{ 'fc.title.admin.new_behavior' | trans({}, 'FenrizbesFormConstructorBundle') }}"
-            >
-                <i class="glyphicon glyphicon-plus-sign"></i>
-                {{ 'fc.title.admin.new_behavior' | trans({}, 'FenrizbesFormConstructorBundle') }}
-            </a>
-        </td>
-    </tr>
-</tfoot>
+<div class="text-right">
+    {% if not object.fcFormBehaviors | length %}
+        {{ 'fc.message.admin.no_behaviors' | trans({}, 'FenrizbesFormConstructorBundle') }}
+    {% endif %}
+
+    <a
+        href="{{ admin.generateUrl('do_create_behavior', { id: object.id }) }}"
+        class="btn btn-sm btn-default new-behavior-link"
+        title="{{ 'fc.title.admin.new_behavior' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+    >
+        <i class="glyphicon glyphicon-plus-sign"></i>
+        {{ 'fc.title.admin.new_behavior' | trans({}, 'FenrizbesFormConstructorBundle') }}
+    </a>
+</div>

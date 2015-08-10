@@ -1,2 +1,17 @@
-<div class="box box-success table-responsive">
+<div class="fc_form_tab_content">
+    {% if object.fcFormBehaviors | length %}
+        <div class="panel panel-default">
+            {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:list_header.html.twig') }}
+
+            <ul class="list-group">
+                {% for item in object.fcFormBehaviors %}
+                    {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:list_item.html.twig') }}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:list_footer.html.twig') }}
 </div>
+
+{{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:tab_loader.html.twig') }}

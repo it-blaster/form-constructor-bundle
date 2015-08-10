@@ -7,24 +7,30 @@ use Fenrizbes\FormConstructorBundle\Form\Type\FcField\Admin\FieldCustomType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcFieldConstraint\Admin\ConstraintCommonType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcFieldConstraint\ConstraintType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcField\WidgetType;
-use Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior\Admin\BehaviorCommonType;
-use Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior\BehaviorType;
+use Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior\Action\Admin\BehaviorActionCommonType;
+use Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior\Action\BehaviorActionType;
+use Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior\Condition\Admin\BehaviorConditionCommonType;
+use Fenrizbes\FormConstructorBundle\Form\Type\FcFormBehavior\Condition\BehaviorConditionType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcFormListener\Admin\ListenerCommonType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcFormListener\ListenerType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcFormTemplate\Admin\TemplateCommonType;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcFormTemplate\TemplateType;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehaviorAction;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehaviorActionQuery;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehaviorCondition;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehaviorConditionQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldConstraint;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldConstraintQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
-use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormBehavior;
-use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormBehaviorQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormEventListener;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormEventListenerQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormTemplate;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormTemplateQuery;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehavior;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehaviorQuery;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 use Sonata\CoreBundle\Exception\InvalidParameterException;
@@ -1523,88 +1529,15 @@ class FcFormAdminController extends CRUDController
     }
 
     /**
-     * Renders behavior's choice
-     *
-     * @param Request $request
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function selectBehaviorAction(Request $request, $id)
-    {
-        if (!$request->isXmlHttpRequest()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $form = $this->createForm(new BehaviorType(
-            $this->container->get('fc.behavior.chain'),
-            $this->admin->generateUrl('create_behavior', array('id' => $id))
-        ));
-
-        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
-            'form' => $form->createView()
-        ));
-    }
-
-    /**
-     * Renders behavior's create form
-     *
-     * @param Request $request
-     * @param $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Sonata\CoreBundle\Exception\InvalidParameterException
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function createBehaviorAction(Request $request, $id)
-    {
-        if (!$request->isXmlHttpRequest()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $chain = $this->container->get('fc.behavior.chain');
-
-        $behavior_form = $this->createForm(new BehaviorType($chain));
-        $behavior_form->handleRequest($request);
-        $behavior_data = $behavior_form->getData();
-        if (!is_array($behavior_data) || !isset($behavior_data['behavior'])) {
-            throw new InvalidParameterException('Behavior\'s name not passed');
-        }
-
-        $alias = $behavior_data['behavior'];
-
-        $fc_behavior = new FcFormBehavior();
-        $fc_behavior->setBehavior($alias);
-
-        $form_action = $this->admin->generateUrl('do_create_behavior', array(
-            'id'       => $id,
-            'behavior' => $alias
-        ));
-
-        $form = $this->createForm(
-            new BehaviorCommonType(
-                $form_action,
-                $this->get('translator'),
-                $chain->getParamsBuilder($alias, $this->admin->getSubject())
-            ),
-            $fc_behavior
-        );
-
-        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
-            'form' => $form->createView()
-        ));
-    }
-
-    /**
      * Creates and saves a behavior
      *
      * @param Request $request
      * @param $id
-     * @param $behavior
      * @return JsonResponse
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
-    public function doCreateBehaviorAction(Request $request, $id, $behavior)
+    public function doCreateBehaviorAction(Request $request, $id)
     {
         try {
             if (!$request->isXmlHttpRequest()) {
@@ -1617,145 +1550,18 @@ class FcFormAdminController extends CRUDController
             }
 
             $fc_behavior = new FcFormBehavior();
-            $fc_behavior->setBehavior($behavior);
             $fc_behavior->setFcForm($fc_form);
+            $fc_behavior->save();
 
-            $form_action = $this->admin->generateUrl('do_create_behavior', array(
-                'id'       => $id,
-                'behavior' => $behavior
+            return new JsonResponse(array(
+                'success' => true
             ));
-
-            $form = $this->createForm(
-                new BehaviorCommonType(
-                    $form_action,
-                    $this->get('translator'),
-                    $this->container->get('fc.behavior.chain')
-                        ->getParamsBuilder($behavior, $this->admin->getSubject())
-                ),
-                $fc_behavior
-            );
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $fc_behavior->save();
-
-                return new JsonResponse(array(
-                    'success' => true
-                ));
-            }
         } catch (\Exception $e) {
             return new JsonResponse(array(
                 'success' => false,
                 'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
             ));
         }
-
-        return new JsonResponse(array(
-            'success' => false,
-            'view'    => $this->renderView('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
-                'form' => $form->createView()
-            ))
-        ));
-    }
-
-    /**
-     * Renders behavior's edit form
-     *
-     * @param Request $request
-     * @param $behavior_id
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function editBehaviorAction(Request $request, $behavior_id)
-    {
-        if (!$request->isXmlHttpRequest()) {
-            throw $this->createAccessDeniedException();
-        }
-
-        $fc_behavior = FcFormBehaviorQuery::create()->findPk($behavior_id);
-        if (!$fc_behavior instanceof FcFormBehavior) {
-            throw $this->createNotFoundException();
-        }
-
-        $form_action = $this->admin->generateUrl('do_edit_behavior', array(
-            'id'          => $fc_behavior->getFormId(),
-            'behavior_id' => $fc_behavior->getId()
-        ));
-
-        $form = $this->createForm(
-            new BehaviorCommonType(
-                $form_action,
-                $this->get('translator'),
-                $this->container->get('fc.behavior.chain')
-                    ->getParamsBuilder($fc_behavior->getBehavior(), $this->admin->getSubject())
-            ),
-            $fc_behavior
-        );
-
-        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
-            'form' => $form->createView()
-        ));
-    }
-
-    /**
-     * Saves behavior's changes
-     *
-     * @param Request $request
-     * @param $behavior_id
-     * @return JsonResponse
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
-     */
-    public function doEditBehaviorAction(Request $request, $behavior_id)
-    {
-        try {
-            if (!$request->isXmlHttpRequest()) {
-                throw $this->createAccessDeniedException();
-            }
-
-            $fc_behavior = FcFormBehaviorQuery::create()->findPk($behavior_id);
-            if (!$fc_behavior instanceof FcFormBehavior) {
-                throw $this->createNotFoundException();
-            }
-
-            $form_action = $this->admin->generateUrl('do_edit_behavior', array(
-                'id'          => $fc_behavior->getFormId(),
-                'behavior_id' => $fc_behavior->getId()
-            ));
-
-            $form = $this->createForm(
-                new BehaviorCommonType(
-                    $form_action,
-                    $this->get('translator'),
-                    $this->container->get('fc.behavior.chain')
-                        ->getParamsBuilder($fc_behavior->getBehavior(), $this->admin->getSubject())
-                ),
-                $fc_behavior
-            );
-            $form->handleRequest($request);
-
-            if ($form->isValid()) {
-                $fc_behavior = $form->getData();
-                $fc_behavior->save();
-
-                return new JsonResponse(array(
-                    'success' => true
-                ));
-            }
-        } catch (\Exception $e) {
-            return new JsonResponse(array(
-                'success' => false,
-                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
-            ));
-        }
-
-        return new JsonResponse(array(
-            'success' => false,
-            'view'    => $this->renderView('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
-                'form' => $form->createView()
-            ))
-        ));
     }
 
     /**
@@ -1840,6 +1646,698 @@ class FcFormAdminController extends CRUDController
 
         $fc_behavior->setIsActive($active);
         $fc_behavior->save();
+
+        return new JsonResponse(array(
+            'success' => true
+        ));
+    }
+
+    /**
+     * Renders condition's choice
+     *
+     * @param Request $request
+     * @param $id
+     * @param $behavior_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function selectBehaviorConditionAction(Request $request, $id, $behavior_id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $form = $this->createForm(new BehaviorConditionType(
+            $this->container->get('fc.behavior.condition.chain'),
+            $this->admin->generateUrl('create_behavior_condition', array(
+                'id'          => $id,
+                'behavior_id' => $behavior_id
+            ))
+        ));
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Renders condition's create form
+     *
+     * @param Request $request
+     * @param $id
+     * @param $behavior_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Sonata\CoreBundle\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function createBehaviorConditionAction(Request $request, $id, $behavior_id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $behavior = FcFormBehaviorQuery::create()->findPk((int) $behavior_id);
+        if (!$behavior instanceof FcFormBehavior) {
+            throw $this->createNotFoundException();
+        }
+
+        $chain = $this->container->get('fc.behavior.condition.chain');
+
+        $condition_form = $this->createForm(new BehaviorConditionType($chain));
+        $condition_form->handleRequest($request);
+        $condition_data = $condition_form->getData();
+        if (!is_array($condition_data) || !isset($condition_data['condition'])) {
+            throw new InvalidParameterException('Condition\'s name not passed');
+        }
+
+        $alias = $condition_data['condition'];
+
+        $fc_condition = new FcFormBehaviorCondition();
+        $fc_condition->setCondition($alias);
+
+        $form_action = $this->admin->generateUrl('do_create_behavior_condition', array(
+            'id'          => $id,
+            'condition'   => $alias,
+            'behavior_id' => $behavior_id
+        ));
+
+        $form = $this->createForm(
+            new BehaviorConditionCommonType(
+                $behavior,
+                $form_action,
+                $this->get('translator'),
+                $chain->getParamsBuilder($alias, $this->admin->getSubject())
+            ),
+            $fc_condition
+        );
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Creates and saves a condition
+     *
+     * @param Request $request
+     * @param $id
+     * @param $behavior_id
+     * @param $condition
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doCreateBehaviorConditionAction(Request $request, $id, $behavior_id, $condition)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_form = FcFormQuery::create()->findPk($id);
+            if (!$fc_form instanceof FcForm) {
+                throw $this->createNotFoundException();
+            }
+
+            $behavior = FcFormBehaviorQuery::create()->findPk((int) $behavior_id);
+            if (!$behavior instanceof FcFormBehavior) {
+                throw $this->createNotFoundException();
+            }
+
+            $fc_condition = new FcFormBehaviorCondition();
+            $fc_condition->setCondition($condition);
+            $fc_condition->setFcFormBehavior($behavior);
+
+            $form_action = $this->admin->generateUrl('do_create_behavior_condition', array(
+                'id'          => $id,
+                'condition'   => $condition,
+                'behavior_id' => $behavior_id
+            ));
+
+            $form = $this->createForm(
+                new BehaviorConditionCommonType(
+                    $behavior,
+                    $form_action,
+                    $this->get('translator'),
+                    $this->container->get('fc.behavior.condition.chain')
+                        ->getParamsBuilder($condition, $this->admin->getSubject())
+                ),
+                $fc_condition
+            );
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $fc_condition->save();
+
+                return new JsonResponse(array(
+                    'success' => true
+                ));
+            }
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => false,
+            'view'    => $this->renderView('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+                'form' => $form->createView()
+            ))
+        ));
+    }
+
+    /**
+     * Renders condition's edit form
+     *
+     * @param Request $request
+     * @param $condition_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function editBehaviorConditionAction(Request $request, $condition_id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_condition = FcFormBehaviorConditionQuery::create()->findPk($condition_id);
+        if (!$fc_condition instanceof FcFormBehaviorCondition) {
+            throw $this->createNotFoundException();
+        }
+
+        $form_action = $this->admin->generateUrl('do_edit_behavior_condition', array(
+            'id'           => $fc_condition->getFcFormBehavior()->getFormId(),
+            'condition_id' => $fc_condition->getId()
+        ));
+
+        $form = $this->createForm(
+            new BehaviorConditionCommonType(
+                $fc_condition->getFcFormBehavior(),
+                $form_action,
+                $this->get('translator'),
+                $this->container->get('fc.behavior.condition.chain')
+                    ->getParamsBuilder($fc_condition->getCondition(), $this->admin->getSubject())
+            ),
+            $fc_condition
+        );
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Saves condition's changes
+     *
+     * @param Request $request
+     * @param $condition_id
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doEditBehaviorConditionAction(Request $request, $condition_id)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_condition = FcFormBehaviorConditionQuery::create()->findPk($condition_id);
+            if (!$fc_condition instanceof FcFormBehaviorCondition) {
+                throw $this->createNotFoundException();
+            }
+
+            $form_action = $this->admin->generateUrl('do_edit_behavior_condition', array(
+                'id'           => $fc_condition->getFcFormBehavior()->getFormId(),
+                'condition_id' => $fc_condition->getId()
+            ));
+
+            $form = $this->createForm(
+                new BehaviorConditionCommonType(
+                    $fc_condition->getFcFormBehavior(),
+                    $form_action,
+                    $this->get('translator'),
+                    $this->container->get('fc.behavior.condition.chain')
+                        ->getParamsBuilder($fc_condition->getCondition(), $this->admin->getSubject())
+                ),
+                $fc_condition
+            );
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $fc_condition = $form->getData();
+                $fc_condition->save();
+
+                return new JsonResponse(array(
+                    'success' => true
+                ));
+            }
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => false,
+            'view'    => $this->renderView('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+                'form' => $form->createView()
+            ))
+        ));
+    }
+
+    /**
+     * Renders condition's delete confirmation
+     *
+     * @param Request $request
+     * @param $condition_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function deleteBehaviorConditionAction(Request $request, $condition_id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_condition = FcFormBehaviorConditionQuery::create()->findPk($condition_id);
+        if (!$fc_condition instanceof FcFormBehaviorCondition) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:delete_condition_confirmation.html.twig', array(
+            'item' => $fc_condition
+        ));
+    }
+
+    /**
+     * Deletes a condition
+     *
+     * @param Request $request
+     * @param $condition_id
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doDeleteBehaviorConditionAction(Request $request, $condition_id)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_condition = FcFormBehaviorConditionQuery::create()->findPk($condition_id);
+            if (!$fc_condition instanceof FcFormBehaviorCondition) {
+                throw $this->createNotFoundException();
+            }
+
+            $fc_condition->delete();
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => true
+        ));
+    }
+
+    /**
+     * Sets condition's active state
+     *
+     * @param Request $request
+     * @param $item_id
+     * @param $active
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function setBehaviorConditionStateAction(Request $request, $item_id, $active)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_condition = FcFormBehaviorConditionQuery::create()->findPk($item_id);
+        if (!$fc_condition instanceof FcFormBehaviorCondition) {
+            throw $this->createNotFoundException();
+        }
+
+        $fc_condition->setIsActive($active);
+        $fc_condition->save();
+
+        return new JsonResponse(array(
+            'success' => true
+        ));
+    }
+
+    /**
+     * Renders action's choice
+     *
+     * @param Request $request
+     * @param $id
+     * @param $behavior_id
+     * @param $check
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function selectBehaviorActionAction(Request $request, $id, $behavior_id, $check)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $form = $this->createForm(new BehaviorActionType(
+            $this->container->get('fc.behavior.action.chain'),
+            $this->admin->generateUrl('create_behavior_action', array(
+                'id'          => $id,
+                'behavior_id' => $behavior_id,
+                'check'       => $check
+            ))
+        ));
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Renders action's create form
+     *
+     * @param Request $request
+     * @param $id
+     * @param $behavior_id
+     * @param $check
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Sonata\CoreBundle\Exception\InvalidParameterException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function createBehaviorActionAction(Request $request, $id, $behavior_id, $check)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $chain = $this->container->get('fc.behavior.action.chain');
+
+        $action_form = $this->createForm(new BehaviorActionType($chain));
+        $action_form->handleRequest($request);
+        $action_data = $action_form->getData();
+        if (!is_array($action_data) || !isset($action_data['action'])) {
+            throw new InvalidParameterException('Action\'s name not passed');
+        }
+
+        $alias = $action_data['action'];
+
+        $fc_action = new FcFormBehaviorAction();
+        $fc_action->setAction($alias);
+
+        $form_action = $this->admin->generateUrl('do_create_behavior_action', array(
+            'id'          => $id,
+            'action'      => $alias,
+            'behavior_id' => $behavior_id,
+            'check'       => $check
+        ));
+
+        $form = $this->createForm(
+            new BehaviorActionCommonType(
+                $form_action,
+                $this->get('translator'),
+                $chain->getParamsBuilder($alias, $this->admin->getSubject())
+            ),
+            $fc_action
+        );
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Creates and saves an action
+     *
+     * @param Request $request
+     * @param $id
+     * @param $behavior_id
+     * @param $check
+     * @param $action
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doCreateBehaviorActionAction(Request $request, $id, $behavior_id, $check, $action)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_form = FcFormQuery::create()->findPk($id);
+            if (!$fc_form instanceof FcForm) {
+                throw $this->createNotFoundException();
+            }
+
+            $behavior = FcFormBehaviorQuery::create()->findPk((int) $behavior_id);
+            if (!$behavior instanceof FcFormBehavior) {
+                throw $this->createNotFoundException();
+            }
+
+            $fc_action = new FcFormBehaviorAction();
+            $fc_action->setAction($action);
+            $fc_action->setFcFormBehavior($behavior);
+            $fc_action->setCheck($check);
+
+            $form_action = $this->admin->generateUrl('do_create_behavior_action', array(
+                'id'          => $id,
+                'action'      => $action,
+                'behavior_id' => $behavior_id,
+                'check'       => $check
+            ));
+
+            $form = $this->createForm(
+                new BehaviorActionCommonType(
+                    $form_action,
+                    $this->get('translator'),
+                    $this->container->get('fc.behavior.action.chain')
+                        ->getParamsBuilder($action, $this->admin->getSubject())
+                ),
+                $fc_action
+            );
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $fc_action->save();
+
+                return new JsonResponse(array(
+                    'success' => true
+                ));
+            }
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => false,
+            'view'    => $this->renderView('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+                'form' => $form->createView()
+            ))
+        ));
+    }
+
+    /**
+     * Renders action's edit form
+     *
+     * @param Request $request
+     * @param $action_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function editBehaviorActionAction(Request $request, $action_id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_action = FcFormBehaviorActionQuery::create()->findPk($action_id);
+        if (!$fc_action instanceof FcFormBehaviorAction) {
+            throw $this->createNotFoundException();
+        }
+
+        $form_action = $this->admin->generateUrl('do_edit_behavior_action', array(
+            'id'        => $fc_action->getFcFormBehavior()->getFormId(),
+            'action_id' => $fc_action->getId()
+        ));
+
+        $form = $this->createForm(
+            new BehaviorActionCommonType(
+                $form_action,
+                $this->get('translator'),
+                $this->container->get('fc.behavior.action.chain')
+                    ->getParamsBuilder($fc_action->getAction(), $this->admin->getSubject())
+            ),
+            $fc_action
+        );
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * Saves action's changes
+     *
+     * @param Request $request
+     * @param $action_id
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doEditBehaviorActionAction(Request $request, $action_id)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_action = FcFormBehaviorActionQuery::create()->findPk($action_id);
+            if (!$fc_action instanceof FcFormBehaviorAction) {
+                throw $this->createNotFoundException();
+            }
+
+            $form_action = $this->admin->generateUrl('do_edit_behavior_action', array(
+                'id'        => $fc_action->getFcFormBehavior()->getFormId(),
+                'action_id' => $fc_action->getId()
+            ));
+
+            $form = $this->createForm(
+                new BehaviorActionCommonType(
+                    $form_action,
+                    $this->get('translator'),
+                    $this->container->get('fc.behavior.action.chain')
+                        ->getParamsBuilder($fc_action->getAction(), $this->admin->getSubject())
+                ),
+                $fc_action
+            );
+            $form->handleRequest($request);
+
+            if ($form->isValid()) {
+                $fc_action = $form->getData();
+                $fc_action->save();
+
+                return new JsonResponse(array(
+                    'success' => true
+                ));
+            }
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => false,
+            'view'    => $this->renderView('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:form.html.twig', array(
+                'form' => $form->createView()
+            ))
+        ));
+    }
+
+    /**
+     * Renders action's delete confirmation
+     *
+     * @param Request $request
+     * @param $action_id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function deleteBehaviorActionAction(Request $request, $action_id)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_action = FcFormBehaviorActionQuery::create()->findPk($action_id);
+        if (!$fc_action instanceof FcFormBehaviorAction) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:delete_action_confirmation.html.twig', array(
+            'item' => $fc_action
+        ));
+    }
+
+    /**
+     * Deletes a action
+     *
+     * @param Request $request
+     * @param $action_id
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function doDeleteBehaviorActionAction(Request $request, $action_id)
+    {
+        try {
+            if (!$request->isXmlHttpRequest()) {
+                throw $this->createAccessDeniedException();
+            }
+
+            $fc_action = FcFormBehaviorActionQuery::create()->findPk($action_id);
+            if (!$fc_action instanceof FcFormBehaviorAction) {
+                throw $this->createNotFoundException();
+            }
+
+            $fc_action->delete();
+        } catch (\Exception $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'view'    => 'Error '. $e->getCode() .': '. $e->getMessage()
+            ));
+        }
+
+        return new JsonResponse(array(
+            'success' => true
+        ));
+    }
+
+    /**
+     * Sets action's active state
+     *
+     * @param Request $request
+     * @param $item_id
+     * @param $active
+     * @return JsonResponse
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
+     */
+    public function setBehaviorActionStateAction(Request $request, $item_id, $active)
+    {
+        if (!$request->isXmlHttpRequest()) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $fc_action = FcFormBehaviorActionQuery::create()->findPk($item_id);
+        if (!$fc_action instanceof FcFormBehaviorAction) {
+            throw $this->createNotFoundException();
+        }
+
+        $fc_action->setIsActive($active);
+        $fc_action->save();
 
         return new JsonResponse(array(
             'success' => true

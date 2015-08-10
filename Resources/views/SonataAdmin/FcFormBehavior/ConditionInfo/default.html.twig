@@ -1,0 +1,43 @@
+{% extends 'FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior/ConditionInfo:base.html.twig' %}
+
+{% block root %}
+    {% if not loop.first %}
+        {{ block('operator') }}
+    {% endif %}
+
+    {{ block('info') }}
+{% endblock %}
+
+{% block operator %}
+    {% set class = 'danger' %}
+    {% set label = 'fc.label.admin.condition_operator.'~ (condition.operator ? 'and' : 'or') %}
+    {{ block('item') }}
+{% endblock %}
+
+{% block info %}
+    {{ block('condition') }}
+
+    {% set class = 'success' %}
+    {% set label = 'fc.title.admin.condition.successful' %}
+    {{ block('item') }}
+{% endblock %}
+
+{% block condition %}
+    {% set class = 'primary' %}
+    {% set label = condition.condition | fc_condition %}
+    {{ block('item') }}
+{% endblock %}
+
+{% block item %}
+    <a
+        href="#fc_modal"
+        data-toggle="modal"
+        data-title="{{ 'fc.title.admin.condition.modal.edit' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ condition.condition | fc_condition | trans({}, 'FenrizbesFormConstructorBundle') }}"
+        data-url="{{ admin.generateUrl('edit_behavior_condition', { id: object.id, condition_id: condition.id }) }}"
+        data-scope="edit"
+        class="btn btn-xs btn-{{ class }} edit_link"
+        title="{{ 'action_edit' | trans({}, 'SonataAdminBundle') }}"
+    >
+        {{ label | trans({}, 'FenrizbesFormConstructorBundle') }}
+    </a>
+{% endblock %}

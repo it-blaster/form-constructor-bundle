@@ -32,7 +32,7 @@ class OtherOptionField extends AbstractField
     {
         $choices = array();
 
-        foreach ($this->getFcForm()->getFields() as $field) {
+        foreach ($this->getFcForm()->getFieldsRecursively(true) as $field) {
             $choices[$field->getName()] = (string) $field;
         }
 

@@ -2,3 +2,5 @@
 /Propel/Model/Field/om/*
 /Propel/Model/Form/map/*
 /Propel/Model/Form/om/*
+/Propel/Model/Behavior/map/*
+/Propel/Model/Behavior/om/*

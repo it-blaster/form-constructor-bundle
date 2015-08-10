@@ -104,8 +104,13 @@ class FcForm extends BaseFcForm
             if ($fc_field->isCustom()) {
                 $this->handleFields($fc_field->getCustomWidget(), $all);
             } else {
-                $fc_field->setStep($this->steps_count);
-                $this->fields[$fc_field->getName()] = $fc_field;
+                if ('hidden' == $fc_field->getType()) {
+                    $fc_field->setStep(1);
+                    $this->fields = array($fc_field->getName() => $fc_field) + $this->fields;
+                } else {
+                    $fc_field->setStep($this->steps_count);
+                    $this->fields[$fc_field->getName()] = $fc_field;
+                }
 
                 if ('step' == $fc_field->getType()) {
                     $this->steps_count++;

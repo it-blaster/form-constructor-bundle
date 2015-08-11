@@ -1,0 +1,12 @@
+{% extends 'SonataAdminBundle:CRUD:base_show_field.html.twig' %}
+
+{% block field %}
+    <table class="table table-bordered table-striped"><tbody>
+        {% for item in value %}
+            {{ include([
+                'FenrizbesFormConstructorBundle:SonataAdmin/FcRequest:show_data_'~ item.type ~'.html.twig',
+                'FenrizbesFormConstructorBundle:SonataAdmin/FcRequest:show_data_default.html.twig'
+            ]) }}
+        {% endfor %}
+    </tbody></table>
+{% endblock %}

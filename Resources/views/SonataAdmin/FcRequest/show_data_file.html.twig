@@ -1,0 +1,9 @@
+{% extends 'FenrizbesFormConstructorBundle:SonataAdmin/FcRequest:show_data_default.html.twig' %}
+
+{% block value %}
+    {% if item.value is not empty %}
+        <a href="{{ item.value }}" target="_blank">
+            {{ item.value }}
+        </a>
+    {% endif %}
+{% endblock %}

@@ -8,11 +8,13 @@ use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
 use Fenrizbes\FormConstructorBundle\Chain\FieldChain;
 use Fenrizbes\FormConstructorBundle\Chain\ListenerChain;
 use Fenrizbes\FormConstructorBundle\Chain\TemplateChain;
+use Fenrizbes\FormConstructorBundle\Form\Type\FcForm\Handler\SaveRequestHandler;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormEventListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -145,6 +147,9 @@ class BaseType extends AbstractType
             ->setMethod($this->fc_form->getMethod())
             ->setAction($action)
         ;
+
+        $save_handler = new SaveRequestHandler($this->field_chain, $this->fc_form);
+        $builder->addEventListener(FormEvents::POST_SUBMIT, array($save_handler, 'handle'));
 
         foreach ($this->fc_form->getListeners() as $fc_listener) {
             $this->addListener($builder, $fc_listener);

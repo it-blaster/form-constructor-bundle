@@ -5,6 +5,7 @@ namespace Fenrizbes\FormConstructorBundle\Propel\Model\Form;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\om\BaseFcForm;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Request\FcRequestQuery;
 
 class FcForm extends BaseFcForm
 {
@@ -317,5 +318,17 @@ class FcForm extends BaseFcForm
         }
 
         return $this->positions[$id][$field_name]['is_last'];
+    }
+
+    public function getCountTodayRequests()
+    {
+        return FcRequestQuery::create()
+            ->filterByFcForm($this)
+            ->filterByCreatedAt(array(
+                'min' => date('Y-m-d 00:00:00'),
+                'max' => date('Y-m-d 23:23:59')
+            ))
+            ->count()
+        ;
     }
 }

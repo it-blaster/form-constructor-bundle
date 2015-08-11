@@ -147,7 +147,7 @@ class FcTwigExtension extends \Twig_Extension
 
     public function getFcValue($value, FcField $fc_field)
     {
-        if (is_null($value) || empty($value)) {
+        if (null === $value || '' === $value) {
             return $value;
         }
 

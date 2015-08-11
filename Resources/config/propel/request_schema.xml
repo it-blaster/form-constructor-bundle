@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database name="default" namespace="Fenrizbes\FormConstructorBundle\Propel\Model\Request" defaultIdMethod="native">
+
+    <table name="fc_request">
+        <column name="id" type="bigint" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="title" type="varchar" size="255" required="true" />
+        <column name="ip" type="varchar" size="16" />
+        <column name="form_id" type="integer" />
+        <column name="data" type="object" />
+
+        <foreign-key foreignTable="fc_form" onDelete="setnull" onUpdate="cascade">
+            <reference local="form_id" foreign="id" />
+        </foreign-key>
+
+        <behavior name="timestampable" />
+    </table>
+
+</database>

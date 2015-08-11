@@ -17,3 +17,19 @@ services:
             - [ setTranslationDomain, [ FenrizbesFormConstructorBundle ] ]
             - [ setTemplate,          [ edit, FenrizbesFormConstructorBundle:SonataAdmin\FcForm:edit.html.twig ] ]
             - [ setTemplate,          [ show, FenrizbesFormConstructorBundle:SonataAdmin\FcForm:show.html.twig ] ]
+
+    fenrizbes_form_constructor.admin.fc_request:
+        class: Fenrizbes\FormConstructorBundle\Admin\SonataAdmin\FcRequestAdmin
+        arguments:
+            - ~
+            - Fenrizbes\FormConstructorBundle\Propel\Model\Request\FcRequest
+            - FenrizbesFormConstructorBundle:SonataAdmin\FcRequestAdmin
+        tags:
+            -
+                name:         sonata.admin
+                manager_type: propel
+                group:        fc.label.admin
+                label:        fc.label.admin.requests
+        calls:
+            - [ setFcDefaults,        [ %fc.defaults% ] ]
+            - [ setTranslationDomain, [ FenrizbesFormConstructorBundle ] ]

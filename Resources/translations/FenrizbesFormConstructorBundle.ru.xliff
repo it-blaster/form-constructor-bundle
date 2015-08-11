@@ -1103,6 +1103,41 @@
                 <target>Валидатор</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.admin.requests">
+                <source>fc.label.admin.requests</source>
+                <target>Сохраненные заявки</target>
+            </trans-unit>
+
+            <trans-unit id="Fc Request List">
+                <source>Fc Request List</source>
+                <target>Сохраненные заявки</target>
+            </trans-unit>
+
+            <trans-unit id="Fc Request Delete">
+                <source>Fc Request Delete</source>
+                <target>Удаление заявки</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.orders_total">
+                <source>fc.label.admin.orders_total</source>
+                <target>Всего заявок</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.orders_today">
+                <source>fc.label.admin.orders_today</source>
+                <target>Заявок сегодня</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.ip_address">
+                <source>fc.label.admin.ip_address</source>
+                <target>IP-адрес</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.request_data">
+                <source>fc.label.admin.request_data</source>
+                <target>Данные заявки</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

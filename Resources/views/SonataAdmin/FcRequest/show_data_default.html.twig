@@ -1,0 +1,36 @@
+{% extends 'FenrizbesFormConstructorBundle:SonataAdmin/FcRequest:show_data_base.html.twig' %}
+
+{% block row %}
+    {% if item.value is not empty %}
+        <tr>
+            {{ block('label_cell') }}
+            {{ block('value_cell') }}
+        </tr>
+    {% endif %}
+{% endblock %}
+
+{% block label_cell %}
+    <td class="text-primary col-md-4">
+        <strong>{{ block('label') }}</strong>
+    </td>
+{% endblock %}
+
+{% block value_cell %}
+    <td class="col-md-8">
+        {{ block('value') }}
+    </td>
+{% endblock %}
+
+{% block label %}
+    {{ item.label is empty ? item.name : item.label }}
+{% endblock %}
+
+{% block value %}
+    {% if item.value is iterable %}
+        {% for val in item.value %}
+            {{ val }}<br />
+        {% endfor %}
+    {% else %}
+        {{ item.value | trans({}, 'FenrizbesFormConstructorBundle') | raw }}
+    {% endif %}
+{% endblock %}

@@ -1103,6 +1103,41 @@
                 <target>Validator</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.admin.requests">
+                <source>fc.label.admin.requests</source>
+                <target>Saved requests</target>
+            </trans-unit>
+
+            <trans-unit id="Fc Request List">
+                <source>Fc Request List</source>
+                <target>Saved requests</target>
+            </trans-unit>
+
+            <trans-unit id="Fc Request Delete">
+                <source>Fc Request Delete</source>
+                <target>Delete request</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.orders_total">
+                <source>fc.label.admin.orders_total</source>
+                <target>Total orders count</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.orders_today">
+                <source>fc.label.admin.orders_today</source>
+                <target>Today orders count</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.ip_address">
+                <source>fc.label.admin.ip_address</source>
+                <target>IP-address</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.request_data">
+                <source>fc.label.admin.request_data</source>
+                <target>Request data</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

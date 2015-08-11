@@ -4,3 +4,5 @@
 /Propel/Model/Form/om/*
 /Propel/Model/Behavior/map/*
 /Propel/Model/Behavior/om/*
+/Propel/Model/Request/map/*
+/Propel/Model/Request/om/*

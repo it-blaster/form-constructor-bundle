@@ -110,9 +110,7 @@ class SaveRequestHandler
 
         @mkdir($directory, 0777, true);
 
-        try {
-            $file->move($directory, $name);
-        } catch (\Exception $e) {
+        if (!@copy($file->getPathname(), $directory .'/'. $name)) {
             return null;
         }
 

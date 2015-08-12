@@ -6,22 +6,50 @@ use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\om\BaseFcFormBehavior;
 
 class FcFormBehavior extends BaseFcFormBehavior
 {
-    public function getThenActions()
+    protected $conditions;
+    protected $actions = array();
+
+    public function getThenActions($all = false)
+    {
+        if (!isset($actions['then'])) {
+            $actions['then'] = $this->getActionsByCheck(true, $all);
+        }
+
+        return $actions['then'];
+    }
+
+    public function getElseActions($all = false)
+    {
+        if (!isset($actions['else'])) {
+            $actions['else'] = $this->getActionsByCheck(false, $all);
+        }
+
+        return $actions['else'];
+    }
+
+    protected function getActionsByCheck($check, $all = false)
     {
         return FcFormBehaviorActionQuery::create()
             ->filterByFcFormBehavior($this)
-            ->filterByCheck(true)
+            ->filterByCheck($check)
+            ->_if(!$all)
+                ->filterByIsActive(true)
+            ->_endif()
             ->find()
         ;
     }
 
-    public function getElseActions()
+    public function getConditions()
     {
-        return FcFormBehaviorActionQuery::create()
-            ->filterByFcFormBehavior($this)
-            ->filterByCheck(false)
-            ->find()
-        ;
+        if (is_null($this->conditions)) {
+            $this->conditions = FcFormBehaviorConditionQuery::create()
+                ->filterByFcFormBehavior($this)
+                ->filterByIsActive(true)
+                ->find()
+            ;
+        }
+
+        return $this->conditions;
     }
 
     public function isFirstCondition($condition = null)

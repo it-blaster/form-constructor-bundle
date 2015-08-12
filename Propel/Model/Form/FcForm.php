@@ -2,6 +2,7 @@
 
 namespace Fenrizbes\FormConstructorBundle\Propel\Model\Form;
 
+use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehaviorQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\om\BaseFcForm;
@@ -14,6 +15,7 @@ class FcForm extends BaseFcForm
     protected $steps_count;
     protected $positions = array();
     protected $fields_templates = array();
+    protected $behaviors;
 
     /**
      * @var FcField[]
@@ -330,5 +332,18 @@ class FcForm extends BaseFcForm
             ))
             ->count()
         ;
+    }
+
+    public function getBehaviors()
+    {
+        if (is_null($this->behaviors)) {
+            $this->behaviors = FcFormBehaviorQuery::create()
+                ->filterByFcForm($this)
+                ->filterByIsActive(true)
+                ->find()
+            ;
+        }
+
+        return $this->behaviors;
     }
 }

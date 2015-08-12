@@ -131,3 +131,11 @@
 {% block steps_list_item_label %}
     {{ item }}
 {% endblock steps_list_item_label %}
+
+{%- block form_end -%}
+    {% if fc_form is defined %}
+        {{ include('FenrizbesFormConstructorBundle:Form:behavior_generator.html.twig') }}
+    {% endif %}
+
+    {{ parent() }}
+{%- endblock form_end -%}

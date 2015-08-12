@@ -1,0 +1,122 @@
+{% extends 'FenrizbesFormConstructorBundle:Form:base_behavior_generator.html.twig' %}
+
+{% block behavior_generator %}
+    {% if fc_form.behaviors | length %}
+        <script>
+            $(function() {
+                var $form = $('form[name="{{ fc_form.alias }}"]');
+
+                {% for behavior in fc_form.behaviors %}
+                    {{ block('behavior_item') }}
+                {% endfor %}
+            });
+        </script>
+    {% endif %}
+{% endblock %}
+
+{% block behavior_item %}
+    $form.on('fc.form.behavior.{{ behavior.id }}', function(event, is_initial) {
+        is_initial = (typeof is_initial === 'undefined' ? false : is_initial);
+
+        if ({{ block('check_conditions') }}) {
+            {% for action in behavior.thenActions %}
+                {{ block('do_'~ action.action ~'_action') }}
+            {% endfor %}
+        } else {
+            {% for action in behavior.elseActions %}
+                {{ block('do_'~ action.action ~'_action') }}
+            {% endfor %}
+        }
+    }).trigger('fc.form.behavior.{{ behavior.id }}', [ true ]);
+
+    {% for condition in behavior.conditions %}
+        {{ block('register_'~ condition.condition ~'_condition') }}
+    {% endfor %}
+{% endblock %}
+
+{# REGISTER CONDITIONS #}
+
+{% block register_default_condition %}
+    {% set fc_field = fc_form.fieldByName(condition.params.field) %}
+
+    {% if event is not defined %}
+        {% set event = 'change' %}
+        {% if fc_field.type == 'checkbox' or fc_field.type == 'choice' and not fc_field.params.collapsed %}
+            {% set event = 'ifChanged' %}
+        {% endif %}
+    {% endif %}
+
+    $form.find('[name="{{ fc_form.alias }}[{{ condition.params.field }}]"]').on('{{ event }}', function() {
+        $form.trigger('fc.form.behavior.{{ condition.behaviorId }}');
+    });
+{% endblock %}
+
+{% block register_state_condition %}
+    {{ block('register_default_condition') }}
+{% endblock %}
+
+{% block register_value_condition %}
+    {{ block('register_default_condition') }}
+{% endblock %}
+
+{# CHECK CONDITIONS #}
+
+{% block check_conditions %}
+    {% for condition in behavior.conditions %}
+        {% if not loop.first %}{{ condition.operator ? ' && ' : ' || ' }}{% endif %}
+        {{ block('check_'~ condition.condition ~'_condition') }}
+    {% endfor %}
+{% endblock %}
+
+{% block check_state_condition %}
+    {% set check = (condition.params.check == 'checked' ? 'true' : 'false') %}
+    $form.find('[name="{{ fc_form.alias }}[{{ condition.params.field }}]"]').prop('checked') == {{ check }}
+{% endblock %}
+
+{% block check_value_condition %}
+    {% set fc_field = fc_form.fieldByName(condition.params.field) %}
+    {% set comparisons = {
+        'equal':            '==',
+        'not_equal':        '!=',
+        'greater':          '>',
+        'greater_or_equal': '>=',
+        'less':             '<',
+        'less_or_equal':    '<='
+    } %}
+    {% set comparison = comparisons[condition.params.comparison] %}
+    {% set value = (condition.params.value matches '/^-?(\\d+\\.)?\\d+$/' ? condition.params.value : "'"~ condition.params.value ~"'") %}
+    {% set selector = '[name="'~ fc_form.alias ~'['~ condition.params.field ~']"]' %}
+    {% if fc_field.type == 'choice' and not fc_field.params.collapsed %}
+        {% set selector = selector ~':checked' %}
+    {% endif %}
+    {{ value | raw }} {{ comparison | raw }} $form.find('{{ selector | raw }}').val()
+{% endblock %}
+
+{# DO ACTIONS #}
+
+{% block do_enable_disable_action %}
+    {% set disabled = (action.params.action == 'disable' ? 'true' : 'false') %}
+    {% for field in action.params.field %}
+        $form.find('[name="{{ fc_form.alias }}[{{ field }}]"]').prop('disabled', {{ disabled }});
+    {% endfor %}
+{% endblock %}
+
+{% block do_copy_value_action %}
+    $form.find('[name="{{ fc_form.alias }}[{{ action.params.target_field }}]"]').val(
+        $form.find('[name="{{ fc_form.alias }}[{{ action.params.source_field }}]"]').val()
+    );
+{% endblock %}
+
+{% block do_set_value_action %}
+    if (!is_initial) {
+        $form.find('[name="{{ fc_form.alias }}[{{ action.params.field }}]"]').val(
+            '{{ action.params.value | raw }}'
+        );
+    }
+{% endblock %}
+
+{% block do_show_hide_action %}
+    {% for field in action.params.field %}
+        $form.find('[name^="{{ fc_form.alias }}[{{ field }}]"]').closest('div.form-group').{{ action.params.action }}();
+    {% endfor %}
+{% endblock %}

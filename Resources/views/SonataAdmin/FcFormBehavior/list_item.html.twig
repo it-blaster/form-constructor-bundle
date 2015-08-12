@@ -21,7 +21,7 @@
         </div>
 
         <div class="col-xs-3">
-            {% for action in item.thenActions %}
+            {% for action in item.thenActions(true) %}
                 {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:list_item_action.html.twig') }}
             {% endfor %}
 
@@ -41,7 +41,7 @@
         </div>
 
         <div class="col-xs-3">
-            {% for action in item.elseActions %}
+            {% for action in item.elseActions(true) %}
                 {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcFormBehavior:list_item_action.html.twig') }}
             {% endfor %}
 

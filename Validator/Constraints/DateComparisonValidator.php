@@ -14,6 +14,10 @@ class DateComparisonValidator extends ConstraintValidator
             $value = \DateTime::createFromFormat($constraint->format, $value);
         }
 
+        if (!$value instanceof \DateTime) {
+            return;
+        }
+
         $class = $constraint->type .'Validator';
 
         /** @var AbstractComparisonValidator $validator */

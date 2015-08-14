@@ -37,6 +37,7 @@ class DateComparisonConstraint extends ComparisonConstraint
         $params = $fc_constraint->getParams();
 
         $options['constraints'][] = new DateComparison(array(
+            'groups'  => $this->getGroups($fc_constraint),
             'value'   => $params['value'],
             'message' => $fc_constraint->getMessage(),
             'type'    => $this->constraints[$params['type']],

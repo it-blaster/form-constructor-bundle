@@ -9,4 +9,11 @@ abstract class AbstractConstraint extends AbstractItem
 {
     public function buildConstraint(&$options, FcFieldConstraint $fc_constraint)
     {}
+
+    public function getGroups(FcFieldConstraint $fc_constraint)
+    {
+        return array(
+            $fc_constraint->getConstraint() .'_'. $fc_constraint->getFieldId()
+        );
+    }
 }

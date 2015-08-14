@@ -8,6 +8,7 @@ use Fenrizbes\FormConstructorBundle\Chain\ConstraintChain;
 use Fenrizbes\FormConstructorBundle\Chain\FieldChain;
 use Fenrizbes\FormConstructorBundle\Chain\ListenerChain;
 use Fenrizbes\FormConstructorBundle\Chain\TemplateChain;
+use Fenrizbes\FormConstructorBundle\Form\Type\FcForm\Handler\BehaviorHandler;
 use Fenrizbes\FormConstructorBundle\Form\Type\FcForm\Handler\SaveRequestHandler;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
@@ -112,8 +113,11 @@ class BaseType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $behavior_handler = new BehaviorHandler($this->behavior_condition_chain, $this->behavior_action_chain, $this->fc_form);
+
         $resolver->setDefaults(array(
             'translation_domain' => 'FenrizbesFormConstructorBundle',
+            'validation_groups'  => array($behavior_handler, 'handle'),
             'attr'               => array(
                 'data-async' => $this->fc_form->getIsAjax()
             )

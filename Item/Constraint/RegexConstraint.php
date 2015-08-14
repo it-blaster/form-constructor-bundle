@@ -18,6 +18,7 @@ class RegexConstraint extends AbstractConstraint
     public function buildConstraint(&$options, FcFieldConstraint $fc_constraint)
     {
         $options['constraints'][] = new Regex(array(
+            'groups'  => $this->getGroups($fc_constraint),
             'pattern' => $this->pattern,
             'match'   => $this->match,
             'message' => $fc_constraint->getMessage()

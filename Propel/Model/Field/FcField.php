@@ -8,6 +8,11 @@ use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormQuery;
 
 class FcField extends BaseFcField
 {
+    /**
+     * @var FcFieldConstraint[]
+     */
+    protected $constraints;
+
     protected $custom_widget = false;
     protected $step = 1;
 
@@ -47,11 +52,17 @@ class FcField extends BaseFcField
 
     public function getConstraints()
     {
-        return FcFieldConstraintQuery::create()
-            ->filterByFcField($this)
-            ->filterByIsActive(true)
-            ->find()
-        ;
+        if (is_null($this->constraints)) {
+            $this->constraints = array();
+
+            foreach ($this->getFcForm()->getConstraints() as $fc_constraint) {
+                if ($fc_constraint->getFieldId() == $this->getId()) {
+                    $this->constraints[] = $fc_constraint;
+                }
+            }
+        }
+
+        return $this->constraints;
     }
 
     public function setStep($step)

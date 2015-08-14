@@ -50,6 +50,7 @@ class LengthConstraint extends AbstractConstraint
     protected function buildConstraintOptions(FcFieldConstraint $fc_constraint)
     {
         $constraint_options = array(
+            'groups'       => $this->getGroups($fc_constraint),
             'minMessage'   => $fc_constraint->getMessage(),
             'maxMessage'   => $fc_constraint->getMessage(),
             'exactMessage' => $fc_constraint->getMessage()

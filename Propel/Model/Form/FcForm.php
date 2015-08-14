@@ -2,8 +2,11 @@
 
 namespace Fenrizbes\FormConstructorBundle\Propel\Model\Form;
 
+use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehavior;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehaviorQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldConstraint;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldConstraintQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\om\BaseFcForm;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Request\FcRequestQuery;
@@ -15,6 +18,15 @@ class FcForm extends BaseFcForm
     protected $steps_count;
     protected $positions = array();
     protected $fields_templates = array();
+
+    /**
+     * @var FcFieldConstraint[]
+     */
+    protected $constraints;
+
+    /**
+     * @var FcFormBehavior[]
+     */
     protected $behaviors;
 
     /**
@@ -71,6 +83,23 @@ class FcForm extends BaseFcForm
                 ->filterByIsActive(true)
             ->_endif()
             ->find();
+    }
+
+    public function getConstraints()
+    {
+        if (is_null($this->constraints)) {
+            $fields = array();
+            foreach ($this->getFieldsRecursively() as $fc_field) {
+                $fields[] = $fc_field->getId();
+            }
+
+            $this->constraints = FcFieldConstraintQuery::create()
+                ->filterByFieldId($fields)
+                ->find()
+            ;
+        }
+
+        return $this->constraints;
     }
 
     public function getStepsCount()

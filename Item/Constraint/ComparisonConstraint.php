@@ -67,6 +67,7 @@ class ComparisonConstraint extends AbstractConstraint
         $params = $fc_constraint->getParams();
 
         $options['constraints'][] = new $this->constraints[$params['type']](array(
+            'groups'  => $this->getGroups($fc_constraint),
             'value'   => $params['value'],
             'message' => $fc_constraint->getMessage()
         ));

@@ -15,6 +15,7 @@ class DateTimeConstraint extends AbstractConstraint
     public function buildConstraint(&$options, FcFieldConstraint $fc_constraint)
     {
         $options['constraints'][] = new Date(array(
+            'groups'  => $this->getGroups($fc_constraint),
             'message' => $fc_constraint->getMessage(),
             'format'  => $options['format']
         ));

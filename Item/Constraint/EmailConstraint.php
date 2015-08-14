@@ -28,6 +28,7 @@ class EmailConstraint extends AbstractConstraint
         $params = $fc_constraint->getParams();
 
         $options['constraints'][] = new Email(array(
+            'groups'    => $this->getGroups($fc_constraint),
             'message'   => $fc_constraint->getMessage(),
             'strict'    => (bool) $params['strict'],
             'checkMX'   => (bool) $params['strict'],

@@ -17,6 +17,7 @@ class NotBlankConstraint extends AbstractConstraint
         $options['required'] = true;
 
         $options['constraints'][] = new NotBlank(array(
+            'groups'  => $this->getGroups($fc_constraint),
             'message' => $fc_constraint->getMessage()
         ));
     }

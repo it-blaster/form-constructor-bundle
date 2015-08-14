@@ -2,6 +2,7 @@
 
 namespace Fenrizbes\FormConstructorBundle\Item\Behavior\Condition;
 
+use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehaviorCondition;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -43,8 +44,30 @@ class ValueBehaviorCondition extends AbstractBehaviorCondition
         ;
     }
 
-    public function getComparison($key)
+    public function getComparisonLabel($key)
     {
         return $this->comparison_choices[$key];
+    }
+
+    public function check(FcFormBehaviorCondition $condition, array $data)
+    {
+        $params      = $condition->getParams();
+        $data_value  = (isset($data[ $params['field'] ]) ? (string) $data[ $params['field'] ] : '');
+        $check_value = (string) $params['value'];
+
+        if (preg_match('/^-?(\d+\.)?\d+$/', $params['value'])) {
+            $data_value  = (float) $data_value;
+            $check_value = (float) $check_value;
+        }
+
+        switch ($params['comparison']) {
+            case 'not_equal':        return $data_value !== $check_value;
+            case 'greater':          return $data_value > $check_value;
+            case 'greater_or_equal': return $data_value >= $check_value;
+            case 'less':             return $data_value < $check_value;
+            case 'less_or_equal':    return $data_value <= $check_value;
+        }
+
+        return $data_value === $check_value;
     }
 }

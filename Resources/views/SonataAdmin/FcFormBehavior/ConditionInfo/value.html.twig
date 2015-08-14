@@ -6,7 +6,7 @@
     {{ block('item') }}
 
     {% set class = 'success' %}
-    {% set label = fc_item('condition', condition.condition).comparison(condition.params.comparison) %}
+    {% set label = fc_item('condition', condition.condition).comparisonLabel(condition.params.comparison) %}
     {{ block('item') }}
 
     {% set class = 'primary' %}

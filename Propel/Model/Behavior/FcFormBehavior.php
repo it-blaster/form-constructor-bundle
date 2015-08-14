@@ -6,7 +6,11 @@ use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\om\BaseFcFormBehavior;
 
 class FcFormBehavior extends BaseFcFormBehavior
 {
+    /**
+     * @var FcFormBehaviorCondition[]
+     */
     protected $conditions;
+
     protected $actions = array();
 
     public function getThenActions($all = false)
@@ -27,11 +31,16 @@ class FcFormBehavior extends BaseFcFormBehavior
         return $actions['else'];
     }
 
-    protected function getActionsByCheck($check, $all = false)
+    /**
+     * @param bool $check
+     * @param bool $all
+     * @return FcFormBehaviorAction[]
+     */
+    public function getActionsByCheck($check, $all = false)
     {
         return FcFormBehaviorActionQuery::create()
             ->filterByFcFormBehavior($this)
-            ->filterByCheck($check)
+            ->filterByCheck((bool) $check)
             ->_if(!$all)
                 ->filterByIsActive(true)
             ->_endif()

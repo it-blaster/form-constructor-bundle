@@ -17,6 +17,7 @@ class UrlConstraint extends AbstractConstraint
     public function buildConstraint(&$options, FcFieldConstraint $fc_constraint)
     {
         $options['constraints'][] = new Url(array(
+            'groups'    => $this->getGroups($fc_constraint),
             'message'   => $fc_constraint->getMessage(),
             'protocols' => $this->protocols
         ));

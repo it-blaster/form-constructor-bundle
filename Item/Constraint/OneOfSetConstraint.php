@@ -61,6 +61,8 @@ class OneOfSetConstraint extends AbstractConstraint
             }
         };
 
-        $options['constraints'][] = new Callback($callback);
+        $options['constraints'][] = new Callback(array(
+            'callback' => $callback
+        ));
     }
 }

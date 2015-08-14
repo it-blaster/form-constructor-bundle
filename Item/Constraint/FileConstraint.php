@@ -53,6 +53,7 @@ class FileConstraint extends AbstractConstraint
     protected function buildConstraintOptions(FcFieldConstraint $fc_constraint)
     {
         $constraint_options = array(
+            'groups'           => $this->getGroups($fc_constraint),
             'maxSizeMessage'   => $fc_constraint->getMessage(),
             'mimeTypesMessage' => $fc_constraint->getMessage()
         );

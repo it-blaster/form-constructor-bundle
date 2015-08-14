@@ -6,6 +6,6 @@
     {{ block('item') }}
 
     {% set class = 'success' %}
-    {% set label = fc_item('condition', condition.condition).check(condition.params.check) %}
+    {% set label = fc_item('condition', condition.condition).checkLabel(condition.params.check) %}
     {{ block('item') }}
 {% endblock %}

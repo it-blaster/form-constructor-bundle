@@ -2,6 +2,7 @@
 
 namespace Fenrizbes\FormConstructorBundle\Item\Behavior\Condition;
 
+use Fenrizbes\FormConstructorBundle\Propel\Model\Behavior\FcFormBehaviorCondition;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -33,8 +34,16 @@ class StateBehaviorCondition extends AbstractBehaviorCondition
         ));
     }
 
-    public function getCheck($key)
+    public function getCheckLabel($key)
     {
         return $this->check_choices[$key];
+    }
+
+    public function check(FcFormBehaviorCondition $condition, array $data)
+    {
+        $params = $condition->getParams();
+        $state  = (isset($data[ $params['field'] ]) ? (bool) $data[ $params['field'] ] : false);
+
+        return ($params['check'] == 'checked' ? $state : !$state);
     }
 }

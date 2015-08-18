@@ -106,7 +106,7 @@ class SaveRequestHandler
     {
         $web_path  = '/uploads/fc_request/'. date('Y/m/d');
         $directory = rtrim(__DIR__, '/') .'/../../../../../../../../../web'. $web_path;
-        $name      = $file->getClientOriginalName() .'.'. $file->getClientOriginalExtension();
+        $name      = $file->getClientOriginalName();
 
         @mkdir($directory, 0777, true);
 

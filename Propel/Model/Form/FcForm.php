@@ -95,6 +95,7 @@ class FcForm extends BaseFcForm
 
             $this->constraints = FcFieldConstraintQuery::create()
                 ->filterByFieldId($fields)
+                ->filterByIsActive(true)
                 ->find()
             ;
         }

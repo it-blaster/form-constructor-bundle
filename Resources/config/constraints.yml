@@ -70,6 +70,3 @@ services:
     fc.constraint.date_comparison:
         class: %fc.constraint.date_comparison.class%
         tags:  [ { name: fc.constraint, alias: date_comparison } ]
-
-# TODO:
-# Сравнение даты/времени с выражениями "today", "-18 years" и т. п.

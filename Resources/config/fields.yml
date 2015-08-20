@@ -55,9 +55,3 @@ services:
     fc.field.other_option:
         class: %fc.field.other_option.class%
         tags:  [ { name: fc.field, alias: other_option } ]
-
-# TODO:
-#
-# Возможность добавления пользователем сайта полей или групп полей (еще один телефон/еще контакнтные данные и т. п.) - чекбокс "коллекция"
-# Программирование поведений
-# Шаблоны вывода

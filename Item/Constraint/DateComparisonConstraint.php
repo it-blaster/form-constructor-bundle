@@ -23,10 +23,6 @@ class DateComparisonConstraint extends ComparisonConstraint
             'constraints' => array(
                 new NotBlank(array(
                     'message' => 'fc.constraint.admin.blank'
-                )),
-                new Date(array(
-                    'format'  => 'Y-m-d',
-                    'message' => 'fc.constraint.admin.invalid_date'
                 ))
             )
         ));
@@ -36,12 +32,42 @@ class DateComparisonConstraint extends ComparisonConstraint
     {
         $params = $fc_constraint->getParams();
 
+        try {
+            $value = new \DateTime($params['value']);
+            $limit = clone $value;
+        } catch (\Exception $e) {
+            return;
+        }
+
         $options['constraints'][] = new DateComparison(array(
             'groups'  => $this->getGroups($fc_constraint),
-            'value'   => $params['value'],
+            'value'   => $value,
             'message' => $fc_constraint->getMessage(),
             'type'    => $this->constraints[$params['type']],
             'format'  => $options['format']
         ));
+
+        switch ($params['type']) {
+            case 'greater':
+                $limit->modify('+1 day');
+            case 'greater_or_equal':
+                $attr = 'data-min-date';
+                break;
+
+            case 'less':
+                $limit->modify('-1 day');
+            case 'less_or_equal':
+                $attr = 'data-max-date';
+                break;
+
+            default:
+                return;
+        }
+
+        if (!isset($options['attr'])) {
+            $options['attr'] = array();
+        }
+
+        $options['attr'][$attr] = $limit->format($options['format']);
     }
 }

@@ -222,7 +222,7 @@ class FcForm extends BaseFcForm
         return $this->fields_templates[$field_name];
     }
 
-    protected function getFieldTemplateId($template, $field_name)
+    public function getFieldTemplateId($template, $field_name)
     {
         foreach ($this->getFieldTemplates($field_name) as $id => $name) {
             if ($name == $template) {

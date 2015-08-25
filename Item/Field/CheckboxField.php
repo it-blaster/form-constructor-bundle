@@ -28,11 +28,12 @@ class CheckboxField extends AbstractField
         $params  = $fc_field->getParams();
 
         if ($params['is_checked']) {
-            if (!isset($options['attr'])) {
-                $options['attr'] = array();
-            }
-
-            $options['attr']['checked'] = 'checked';
+            $options['data'] = true;
+//            if (!isset($options['attr'])) {
+//                $options['attr'] = array();
+//            }
+//
+//            $options['attr']['checked'] = 'checked';
         }
 
         return $options;

@@ -62,6 +62,7 @@ class OneOfSetConstraint extends AbstractConstraint
         };
 
         $options['constraints'][] = new Callback(array(
+            'groups'   => $this->getGroups($fc_constraint),
             'callback' => $callback
         ));
     }

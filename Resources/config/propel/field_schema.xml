@@ -6,7 +6,7 @@
         <column name="form_id" type="integer" required="true" />
         <column name="type" type="varchar" size="255" required="true" />
         <column name="name" type="varchar" size="255" />
-        <column name="label" type="varchar" size="255" />
+        <column name="label" type="varchar" size="1000" />
         <column name="hint" type="longvarchar" />
         <column name="params" type="object" />
         <column name="is_active" type="boolean" required="true" default="false" />

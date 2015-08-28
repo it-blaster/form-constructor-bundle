@@ -52,6 +52,14 @@ class SendToEmailHandler
         $data   = $this->handleData($this->event->getData());
         $params = $this->handleParams($this->fc_listener->getParams());
 
+        if (!is_array($params['email_to'])) {
+            if (strpos($params['email_to'], ',') === false) {
+                $params['email_to'] = array($params['email_to']);
+            } else {
+                $params['email_to'] = explode(',', $params['email_to']);
+            }
+        }
+
         $message = $this->mailer
             ->createMessage()
             ->setSubject($params['subject'])

@@ -34,49 +34,72 @@ class SendToEmailListener extends AbstractListener
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('subject', 'text', array(
-                'label'       => 'fc.label.admin.listener.email_subject',
-                'required'    => true,
-                'constraints' => array(
-                    new NotBlank(array(
-                        'message' => 'fc.constraint.admin.blank'
-                    ))
-                )
-            ))
-            ->add('email_from', 'text', array(
-                'label'       => 'fc.label.admin.listener.email_from',
-                'required'    => true,
-                'constraints' => array(
-                    new NotBlank(array(
-                        'message' => 'fc.constraint.admin.blank'
-                    )),
-                    new Email(array(
-                        'message' => 'fc.constraint.admin.invalid_email'
-                    ))
-                )
-            ))
-            ->add('email_to', 'text', array(
-                'label'       => 'fc.label.admin.listener.email_to',
-                'required'    => true,
-                'constraints' => array(
-                    new NotBlank(array(
-                        'message' => 'fc.constraint.admin.blank'
-                    )),
-                    new Email(array(
-                        'message' => 'fc.constraint.admin.invalid_email'
-                    ))
-                )
-            ))
-            ->add('header', 'textarea', array(
-                'label'    => 'fc.label.admin.listener.email_header',
-                'required' => false
-            ))
-            ->add('footer', 'textarea', array(
-                'label'    => 'fc.label.admin.listener.email_footer',
-                'required' => false
-            ))
-        ;
+        $this->buildFormSubjectField($builder);
+        $this->buildFormEmailFromField($builder);
+        $this->buildFormEmailToField($builder);
+        $this->buildFormHeaderField($builder);
+        $this->buildFormFooterField($builder);
+    }
+
+    protected function buildFormSubjectField(FormBuilderInterface $builder)
+    {
+        $builder->add('subject', 'text', array(
+            'label'       => 'fc.label.admin.listener.email_subject',
+            'required'    => true,
+            'constraints' => array(
+                new NotBlank(array(
+                    'message' => 'fc.constraint.admin.blank'
+                ))
+            )
+        ));
+    }
+
+    protected function buildFormEmailFromField(FormBuilderInterface $builder)
+    {
+        $builder->add('email_from', 'text', array(
+            'label'       => 'fc.label.admin.listener.email_from',
+            'required'    => true,
+            'constraints' => array(
+                new NotBlank(array(
+                    'message' => 'fc.constraint.admin.blank'
+                )),
+                new Email(array(
+                    'message' => 'fc.constraint.admin.invalid_email'
+                ))
+            )
+        ));
+    }
+
+    protected function buildFormEmailToField(FormBuilderInterface $builder)
+    {
+        $builder->add('email_to', 'text', array(
+            'label'       => 'fc.label.admin.listener.email_to',
+            'required'    => true,
+            'constraints' => array(
+                new NotBlank(array(
+                    'message' => 'fc.constraint.admin.blank'
+                )),
+                new Email(array(
+                    'message' => 'fc.constraint.admin.invalid_email'
+                ))
+            )
+        ));
+    }
+
+    protected function buildFormHeaderField(FormBuilderInterface $builder)
+    {
+        $builder->add('header', 'textarea', array(
+            'label'    => 'fc.label.admin.listener.email_header',
+            'required' => false
+        ));
+    }
+
+    protected function buildFormFooterField(FormBuilderInterface $builder)
+    {
+        $builder->add('footer', 'textarea', array(
+            'label'    => 'fc.label.admin.listener.email_footer',
+            'required' => false
+        ));
     }
 
     protected function buildEventHandler(FcFormEventListener $fc_listener)

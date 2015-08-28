@@ -10,11 +10,13 @@ use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldConstraintQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\om\BaseFcForm;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Request\FcRequestQuery;
+use PropelPDO;
 
 class FcForm extends BaseFcForm
 {
     protected $entrances;
     protected $is_used_as_widget;
+    protected $old_alias;
     protected $steps_count;
     protected $positions = array();
     protected $fields_templates = array();
@@ -73,6 +75,15 @@ class FcForm extends BaseFcForm
         }
 
         return $this->is_used_as_widget;
+    }
+
+    public function setAlias($v)
+    {
+        if (is_null($this->old_alias)) {
+            $this->old_alias = $this->getAlias();
+        }
+
+        return parent::setAlias($v);
     }
 
     public function getListeners($all = false)
@@ -375,5 +386,23 @@ class FcForm extends BaseFcForm
         }
 
         return $this->behaviors;
+    }
+
+    public function postSave(PropelPDO $con = null)
+    {
+        if (!is_null($this->old_alias) && $this->old_alias != $this->getAlias()) {
+            /** @var FcField[] $fields */
+            $fields = FcFieldQuery::create()
+                ->filterByType($this->old_alias)
+                ->find()
+            ;
+
+            foreach ($fields as $field) {
+                $field->setType($this->getAlias());
+                $field->save();
+            }
+
+            $this->old_alias = null;
+        }
     }
 }

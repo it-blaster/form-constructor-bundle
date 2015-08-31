@@ -1,5 +1,11 @@
 {% extends 'SonataAdminBundle:CRUD:base_list.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/fenrizbesformconstructor/sonata_admin/js/modal.js') }}"></script>
+{% endblock %}
+
 {% block list_table %}
     <div class="box box-primary">
         <div class="box-body table-responsive no-padding">
@@ -48,6 +54,19 @@
                                         <i class="glyphicon glyphicon-zoom-in"></i>
                                         {{ 'action_show'|trans({}, 'SonataAdminBundle') }}
                                     </a>
+
+                                    <a
+                                        href="#fc_modal"
+                                        data-toggle="modal"
+                                        data-title="{{ 'fc.title.admin.field.modal.configure_request' | trans({}, 'FenrizbesFormConstructorBundle') }}: {{ form.title }}"
+                                        data-url="{{ admin.generateUrl('configure', { form_id: form.id }) }}"
+                                        data-scope="edit"
+                                        class="btn btn-sm btn-default configure_link"
+                                        title="{{ 'fc.label.admin.configure' | trans({}, 'FenrizbesFormConstructorBundle') }}"
+                                    >
+                                        <i class="glyphicon glyphicon-cog"></i>
+                                        {{ 'fc.label.admin.configure' | trans({}, 'FenrizbesFormConstructorBundle') }}
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -56,6 +75,8 @@
             </table>
         </div>
     </div>
+
+    {{ include('FenrizbesFormConstructorBundle:SonataAdmin/FcForm:modal.html.twig') }}
 {% endblock %}
 
 {% block list_filters %}{% endblock %}

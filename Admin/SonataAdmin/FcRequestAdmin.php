@@ -2,9 +2,13 @@
 
 namespace Fenrizbes\FormConstructorBundle\Admin\SonataAdmin;
 
+use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcField;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Field\FcFieldQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcForm;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Request\FcRequestQuery;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Request\FcRequestSetting;
+use Fenrizbes\FormConstructorBundle\Propel\Model\Request\FcRequestSettingQuery;
 use Knp\Menu\MenuItem;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -53,6 +57,9 @@ class FcRequestAdmin extends Admin
         $collection
             ->remove('create')
             ->remove('edit')
+
+            ->add('configure')
+            ->add('do_configure')
         ;
     }
 
@@ -106,6 +113,9 @@ class FcRequestAdmin extends Admin
             ->add('Ip', null, array(
                 'label' => 'fc.label.admin.ip_address'
             ))
+            ->add('Data', null, array(
+                'label' => 'fc.label.admin.request.data'
+            ))
         ;
     }
 
@@ -124,16 +134,44 @@ class FcRequestAdmin extends Admin
             ->add('CreatedAt', null, array(
                 'label'  => 'fc.label.admin.created_at',
                 'format' => $this->fc_defaults['datetime_format']
-            ))
-            ->add('_action', 'actions', array(
-                'label'    => 'fc.label.admin.actions',
+            ));
+
+        $this->addCustomColumns($listMapper);
+
+        $listMapper->add('_action', 'actions', array(
+            'label'    => 'fc.label.admin.actions',
+            'sortable' => false,
+            'actions'  => array(
+                'show'   => array(),
+                'delete' => array()
+            )
+        ));
+    }
+
+    protected function addCustomColumns(ListMapper $listMapper)
+    {
+        $setting = FcRequestSettingQuery::create()->findOneByFormId($this->getFcForm()->getId());
+        if (!$setting instanceof FcRequestSetting) {
+            return;
+        }
+
+        $settings = $setting->getSettings();
+        if (!is_array($settings) || !isset($settings['columns']) || !is_array($settings['columns'])) {
+            return;
+        }
+
+        foreach ($settings['columns'] as $fc_field_id) {
+            $fc_field = FcFieldQuery::create()->findPk($fc_field_id);
+            if (!$fc_field instanceof FcField) {
+                continue;
+            }
+
+            $listMapper->add('Data_'. $fc_field->getName(), null, array(
+                'label'    => (string) $fc_field,
                 'sortable' => false,
-                'actions'  => array(
-                    'show'   => array(),
-                    'delete' => array()
-                )
-            ))
-        ;
+                'template' => 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_custom_column.html.twig'
+            ));
+        }
     }
 
     /**

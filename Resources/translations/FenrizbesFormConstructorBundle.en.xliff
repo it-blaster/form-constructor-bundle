@@ -1138,6 +1138,26 @@
                 <target>Request data</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.admin.configure">
+                <source>fc.label.admin.configure</source>
+                <target>Configure</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.field.modal.configure_request">
+                <source>fc.title.admin.field.modal.configure_request</source>
+                <target>Saved requests' configuration</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.request_settings.columns">
+                <source>fc.label.admin.request_settings.columns</source>
+                <target>Additional columns</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.request.data">
+                <source>fc.label.admin.request.data</source>
+                <target>Request's data</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

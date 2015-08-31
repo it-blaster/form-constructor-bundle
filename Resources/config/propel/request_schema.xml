@@ -15,4 +15,16 @@
         <behavior name="timestampable" />
     </table>
 
+    <table name="fc_request_setting">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="form_id" type="integer" />
+        <column name="settings" type="object" />
+
+        <foreign-key foreignTable="fc_form" onDelete="cascade" onUpdate="cascade">
+            <reference local="form_id" foreign="id" />
+        </foreign-key>
+
+        <behavior name="timestampable" />
+    </table>
+
 </database>

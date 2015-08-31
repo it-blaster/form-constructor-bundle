@@ -1138,6 +1138,26 @@
                 <target>Данные заявки</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.admin.configure">
+                <source>fc.label.admin.configure</source>
+                <target>Настроить</target>
+            </trans-unit>
+
+            <trans-unit id="fc.title.admin.field.modal.configure_request">
+                <source>fc.title.admin.field.modal.configure_request</source>
+                <target>Настройка сохраненных заявок</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.request_settings.columns">
+                <source>fc.label.admin.request_settings.columns</source>
+                <target>Дополнительные колонки</target>
+            </trans-unit>
+
+            <trans-unit id="fc.label.admin.request.data">
+                <source>fc.label.admin.request.data</source>
+                <target>Данные заявки</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

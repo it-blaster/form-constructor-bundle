@@ -88,8 +88,10 @@ var fcModal = {
             _this.$cancel.addClass('disabled');
             _this.$save.addClass('disabled');
 
-            for (var i in CKEDITOR.instances) {
-                CKEDITOR.instances[i].updateElement();
+            if (typeof CKEDITOR !== 'undefined') {
+                for (var i in CKEDITOR.instances) {
+                    CKEDITOR.instances[i].updateElement();
+                }
             }
 
             $.post($form.attr('action'), $form.serializeArray(), function(response) {

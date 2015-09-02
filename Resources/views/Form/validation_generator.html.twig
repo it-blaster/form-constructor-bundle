@@ -7,14 +7,14 @@
 
     {% for fc_field in fc_form.fieldsRecursively %}
         {% for fc_constraint in fc_field.constraints %}
-            {{ fc_form.alias }}FCValidation.addConstraint({
-                id:      {{ fc_constraint.id }},
-                type:    '{{ fc_constraint.constraint }}',
-                field:   '{{ fc_field.name }}',
-                message: '{{ fc_constraint.message }}',
-                params:  {{ fc_constraint.params | json_encode | raw }},
+            {{ fc_form.alias }}FCValidation.addConstraint({{ {
+                id:      fc_constraint.id,
+                type:    fc_constraint.constraint,
+                field:   fc_field.name,
+                message: fc_constraint.message,
+                params:  fc_constraint.params,
                 active:  true
-            });
+            } | json_encode | raw }});
         {% endfor %}
     {% endfor %}
 </script>

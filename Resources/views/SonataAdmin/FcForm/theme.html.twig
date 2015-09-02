@@ -82,12 +82,12 @@
 
 {% block step_widget %}
     {% if form.parent.vars.fc_form.stepNumber(name) > 1 %}
-        <button type="button" class="change-step" data-step="{{ form.parent.vars.fc_form.stepNumber(name) - 1 }}">
+        <button type="button" class="change-step change-step-by-prev-button" data-step="{{ form.parent.vars.fc_form.stepNumber(name) - 1 }}">
             {{ button_prev | default('fc.label.admin.field.step.prev_default') | trans({}, translation_domain) }}
         </button>
     {% endif %}
 
-    <button type="button" class="change-step" data-step="{{ form.parent.vars.fc_form.stepNumber(name) + 1 }}">
+    <button type="button" class="change-step change-step-by-next-button" data-step="{{ form.parent.vars.fc_form.stepNumber(name) + 1 }}">
         {{ button_next | default('fc.label.admin.field.step.next_default') | trans({}, translation_domain) }}
     </button>
 {% endblock %}
@@ -96,7 +96,7 @@
     <div>
         {% if form.parent.vars.fc_form.stepsCount > 1 %}
             {% set button_prev = form.parent.vars.fc_form.stepField(1).params.prev %}
-            <button type="button" class="change-step" data-step="{{ form.parent.vars.fc_form.stepsCount - 1 }}">
+            <button type="button" class="change-step change-step-by-prev-button" data-step="{{ form.parent.vars.fc_form.stepsCount - 1 }}">
                 {{ button_prev | default('fc.label.admin.field.step.prev_default') | trans({}, translation_domain) }}
             </button>
         {% endif %}
@@ -122,7 +122,7 @@
 
 {% block steps_list_item %}
     <li{{ not loop.index0 ? ' class="active"' }} data-step="{{ item }}">
-        <a href="#" class="change-step" data-step="{{ item }}">
+        <a href="#" class="change-step change-step-by-list" data-step="{{ item }}">
             {{ block('steps_list_item_label') }}
         </a>
     </li>

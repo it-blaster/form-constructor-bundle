@@ -1,0 +1,22 @@
+{% extends 'FenrizbesFormConstructorBundle:Form:base_validation_generator.html.twig' %}
+
+{% block validation_generator %}
+{% spaceless %}
+<script>
+    var {{ fc_form.alias }}FCValidation = new FCValidationClass('{{ fc_form.alias }}');
+
+    {% for fc_field in fc_form.fieldsRecursively %}
+        {% for fc_constraint in fc_field.constraints %}
+            {{ fc_form.alias }}FCValidation.addConstraint({
+                id:      {{ fc_constraint.id }},
+                type:    '{{ fc_constraint.constraint }}',
+                field:   '{{ fc_field.name }}',
+                message: '{{ fc_constraint.message }}',
+                params:  {{ fc_constraint.params | json_encode | raw }},
+                active:  true
+            });
+        {% endfor %}
+    {% endfor %}
+</script>
+{% endspaceless %}
+{% endblock %}

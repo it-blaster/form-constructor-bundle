@@ -120,3 +120,19 @@
         $form.find('[name^="{{ fc_form.alias }}[{{ field }}]"]').closest('div.form-group').{{ action.params.action }}();
     {% endfor %}
 {% endblock %}
+
+{% block do_on_off_validation_action %}
+    if (typeof {{ fc_form.alias }}FCValidation === 'object') {
+    {% for field in action.params.field %}
+        {{ fc_form.alias }}FCValidation.{{ action.params.action }}Constraints('{{ field }}');
+    {% endfor %}
+    }
+{% endblock %}
+
+{% block do_on_off_validator_action %}
+    if (typeof {{ fc_form.alias }}FCValidation === 'object') {
+    {% for validator in action.params.validator %}
+        {{ fc_form.alias }}FCValidation.{{ action.params.action }}Constraint('{{ action.params.field }}', '{{ validator }}');
+    {% endfor %}
+    }
+{% endblock %}

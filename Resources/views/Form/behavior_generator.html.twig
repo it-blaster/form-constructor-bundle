@@ -34,6 +34,16 @@
     {% endfor %}
 {% endblock %}
 
+{% block condition_selector %}
+{% spaceless %}
+    {% set selector = '[name="'~ fc_form.alias ~'['~ condition.params.field ~']' %}
+    {% if fc_field.type == 'choice' and fc_field.params.multiple %}
+        {% set selector = selector ~'[]' %}
+    {% endif %}
+    {{ (selector ~'"]') | raw }}
+{% endspaceless %}
+{% endblock %}
+
 {# REGISTER CONDITIONS #}
 
 {% block register_default_condition %}
@@ -46,7 +56,7 @@
         {% endif %}
     {% endif %}
 
-    $form.find('[name="{{ fc_form.alias }}[{{ condition.params.field }}]"]').on('{{ event }}', function() {
+    $form.find('{{ block('condition_selector') }}').on('{{ event }}', function() {
         $form.trigger('fc.form.behavior.{{ condition.behaviorId }}');
     });
 {% endblock %}
@@ -85,11 +95,20 @@
     } %}
     {% set comparison = comparisons[condition.params.comparison] %}
     {% set value = (condition.params.value matches '/^-?(\\d+\\.)?\\d+$/' ? condition.params.value : "'"~ condition.params.value ~"'") %}
-    {% set selector = '[name="'~ fc_form.alias ~'['~ condition.params.field ~']"]' %}
+    {% set selector = block('condition_selector') %}
     {% if fc_field.type == 'choice' and not fc_field.params.collapsed %}
         {% set selector = selector ~':checked' %}
     {% endif %}
-    {{ value | raw }} {{ comparison | raw }} $form.find('{{ selector | raw }}').val()
+    {% if fc_field.type == 'choice' and fc_field.params.multiple and condition.params.comparison in ['equal', 'not_equal'] %}
+        {% set comparison = (condition.params.comparison == 'equal' ? '>' : '===') %}
+        {% if fc_field.params.collapsed %}
+            $.inArray({{ value | raw }}, $form.find('{{ selector | raw }}').val()) {{ comparison | raw }} -1
+        {% else %}
+            $form.find('{{ selector | raw }}').filter("[value={{ value | raw }}]").length {{ comparison | raw }} 0
+        {% endif %}
+    {% else %}
+        {{ value | raw }} {{ comparison | raw }} $form.find('{{ selector | raw }}').val()
+    {% endif %}
 {% endblock %}
 
 {# DO ACTIONS #}

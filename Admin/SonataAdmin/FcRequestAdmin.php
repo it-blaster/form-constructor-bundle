@@ -126,7 +126,8 @@ class FcRequestAdmin extends Admin
     {
         $listMapper
             ->add('Id', 'text', array(
-                'label' => '#'
+                'label'    => '#',
+                'template' => 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_id_column.html.twig'
             ))
             ->add('Ip', null, array(
                 'label' => 'fc.label.admin.ip_address'

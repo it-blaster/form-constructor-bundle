@@ -1,0 +1,7 @@
+{% extends admin.getTemplate('base_list_field') %}
+
+{% block field %}
+    <a class="sonata-link-identifier" href="{{ admin.generateUrl('show', { id: object.id }) }}">
+        {{ value }}
+    </a>
+{% endblock %}

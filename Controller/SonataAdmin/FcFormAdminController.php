@@ -193,6 +193,11 @@ class FcFormAdminController extends CRUDController
             throw $this->createAccessDeniedException();
         }
 
+        $fc_form = FcFormQuery::create()->findPk($id);
+        if (!$fc_form instanceof FcForm) {
+            throw $this->createNotFoundException();
+        }
+
         $widget_form = $this->createForm(new WidgetType($this->container->get('fc.field.chain')));
         $widget_form->handleRequest($request);
         $widget_data = $widget_form->getData();
@@ -202,6 +207,7 @@ class FcFormAdminController extends CRUDController
 
         $field = new FcField();
         $field->setType($widget_data['type']);
+        $field->setFcForm($fc_form);
 
         $form_action = $this->admin->generateUrl('do_create_field', array(
             'id'   => $id,
@@ -250,6 +256,10 @@ class FcFormAdminController extends CRUDController
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+                if (null !== $field->getInsertRank()) {
+                    $field->insertAtRank( $field->getInsertRank() );
+                }
+
                 $field->save();
 
                 return new JsonResponse(array(

@@ -87,6 +87,33 @@ class FieldCommonType extends AbstractType
 
             ->addEventListener(FormEvents::POST_SUBMIT, array($this, 'validate'))
         ;
+
+        $this->buildFormRankField($builder);
+    }
+
+    protected function buildFormRankField(FormBuilderInterface $builder)
+    {
+        /** @var FcField $fc_field */
+        $fc_field = $builder->getData();
+
+        if ($fc_field->isNew()) {
+            $builder->add('insert_rank', 'choice', array(
+                'label'    => 'fc.label.admin.field.insert_rank',
+                'required' => false,
+                'choices'  => $this->getRankChoices($fc_field)
+            ));
+        }
+    }
+
+    protected function getRankChoices(FcField $fc_field)
+    {
+        $choices = array();
+
+        foreach ($fc_field->getFcForm()->getFieldsRecursively(true) as $field) {
+            $choices[ $field->getRank() ] = (string) $field;
+        }
+
+        return $choices;
     }
 
     public function validate(FormEvent $event)

@@ -1158,6 +1158,11 @@
                 <target>Данные заявки</target>
             </trans-unit>
 
+            <trans-unit id="fc.label.admin.field.insert_rank">
+                <source>fc.label.admin.field.insert_rank</source>
+                <target>Вставить перед полем</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>

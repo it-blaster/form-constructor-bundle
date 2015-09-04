@@ -14,7 +14,8 @@ class FcField extends BaseFcField
     protected $constraints;
 
     protected $custom_widget = false;
-    protected $step = 1;
+    protected $insert_rank   = null;
+    protected $step          = 1;
 
     public function __toString()
     {
@@ -73,5 +74,15 @@ class FcField extends BaseFcField
     public function getStep()
     {
         return $this->step;
+    }
+
+    public function setInsertRank($insert_rank)
+    {
+        $this->insert_rank = $insert_rank;
+    }
+
+    public function getInsertRank()
+    {
+        return $this->insert_rank;
     }
 }

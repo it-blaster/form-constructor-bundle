@@ -21,5 +21,7 @@ class FieldCustomType extends FieldCommonType
 
             ->addEventListener(FormEvents::POST_SUBMIT, array($this, 'validate'))
         ;
+
+        $this->buildFormRankField($builder);
     }
 }

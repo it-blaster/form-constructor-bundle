@@ -52,22 +52,41 @@ class ValueBehaviorCondition extends AbstractBehaviorCondition
     public function check(FcFormBehaviorCondition $condition, array $data)
     {
         $params      = $condition->getParams();
-        $data_value  = (isset($data[ $params['field'] ]) ? (string) $data[ $params['field'] ] : '');
+        $data_value  = (isset($data[ $params['field'] ]) ? $data[ $params['field'] ] : '');
         $check_value = (string) $params['value'];
+
+        if (is_array($data_value)) {
+            return $this->checkEntrance($check_value, $data_value, $params['comparison']);
+        }
 
         if (preg_match('/^-?(\d+\.)?\d+$/', $params['value'])) {
             $data_value  = (float) $data_value;
             $check_value = (float) $check_value;
         }
 
-        switch ($params['comparison']) {
-            case 'not_equal':        return $data_value !== $check_value;
-            case 'greater':          return $data_value > $check_value;
-            case 'greater_or_equal': return $data_value >= $check_value;
-            case 'less':             return $data_value < $check_value;
-            case 'less_or_equal':    return $data_value <= $check_value;
+        return $this->compare($data_value, $check_value, $params['comparison']);
+    }
+
+    protected function checkEntrance($needle, $haystack, $comparison)
+    {
+        switch ($comparison) {
+            case 'equal':     return in_array($needle, $haystack);
+            case 'not_equal': return !in_array($needle, $haystack);
         }
 
-        return $data_value === $check_value;
+        return $this->compare(reset($haystack), $needle, $comparison);
+    }
+
+    protected function compare($left, $right, $comparison)
+    {
+        switch ($comparison) {
+            case 'not_equal':        return $left !== $right;
+            case 'greater':          return $left >   $right;
+            case 'greater_or_equal': return $left >=  $right;
+            case 'less':             return $left <   $right;
+            case 'less_or_equal':    return $left <=  $right;
+        }
+
+        return $left === $right;
     }
 }

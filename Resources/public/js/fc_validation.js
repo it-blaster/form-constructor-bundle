@@ -1,5 +1,6 @@
 var FCValidationClass = function(form) {
-    this.form = form;
+    this.form  = form;
+    this.$form = $('form[name="'+ this.form +'"]');
 
     this.constraints = {};
 };
@@ -44,15 +45,15 @@ FCValidationClass.prototype._setConstraintsActive = function(active, field, type
 
 FCValidationClass.prototype.formIsValid = function($scope) {
     if (typeof $scope !== 'object' || !$scope.length) {
-        $scope = $('form[name="'+ this.form +'"]');
+        $scope = this.$form;
     }
 
     var fields = this._findFields($scope);
+    var errors = this._validateFields(fields);
 
-    // TODO: Получаем значение поля и валидируем его
-    // TODO: Если все ок - убираем ошибки, если нет - вешаем
+    this._showErrors(errors);
 
-    return true;
+    return !errors.length;
 };
 
 FCValidationClass.prototype._findFields = function($scope) {
@@ -70,4 +71,22 @@ FCValidationClass.prototype._findFields = function($scope) {
     }
 
     return fields;
+};
+
+FCValidationClass.prototype._validateFields = function(fields) {
+    var errors = {};
+
+    // TODO: Получаем значение поля, валидируем его, возвращаем список ошибок и селекторов
+
+    return errors;
+};
+
+FCValidationClass.prototype._showErrors = function(errors) {
+    this.$form
+        .trigger('fc.beforeShowErrors')
+        .trigger('fc.showErrors', [ errors ])
+        .trigger('fc.afterShowErrors')
+    ;
+
+    return this;
 };

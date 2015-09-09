@@ -192,7 +192,7 @@ FCValidationClass.prototype._checkConstraint_not_blank = function(value) {
         return false;
     }
 
-    if (typeof value === 'object' && !value.length) {
+    if (typeof value === 'object' && (value === null || !value.length)) {
         return false;
     }
 

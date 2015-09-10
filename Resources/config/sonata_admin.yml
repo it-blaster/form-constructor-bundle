@@ -33,3 +33,4 @@ services:
         calls:
             - [ setFcDefaults,        [ %fc.defaults% ] ]
             - [ setTranslationDomain, [ FenrizbesFormConstructorBundle ] ]
+            - [ setTemplate,          [ list, FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:inner_list.html.twig ] ]

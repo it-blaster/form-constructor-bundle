@@ -4,7 +4,7 @@ namespace Fenrizbes\FormConstructorBundle\Item\Listener;
 
 use Fenrizbes\FormConstructorBundle\Item\Listener\Handler\SendToEmailHandler;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormEventListener;
-use Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine;
+use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -17,11 +17,11 @@ class SendToEmailListener extends AbstractListener
     protected $mailer;
 
     /**
-     * @var DelegatingEngine
+     * @var EngineInterface
      */
     protected $templating;
 
-    public function __construct(\Swift_Mailer $mailer, DelegatingEngine $templating)
+    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating)
     {
         $this->mailer     = $mailer;
         $this->templating = $templating;

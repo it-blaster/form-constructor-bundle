@@ -28,6 +28,8 @@ class FcRequestAdmin extends Admin
         '_sort_by'    => 'CreatedAt'
     );
 
+    protected $maxPerPage = 9999;
+
     /**
      * @var FcForm
      */

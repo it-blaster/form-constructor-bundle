@@ -5,7 +5,7 @@ namespace Fenrizbes\FormConstructorBundle\Item\Listener\Handler;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormEventListener;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Templating\DelegatingEngine;
+use Symfony\Component\Templating\EngineInterface;
 
 class SendToEmailHandler
 {
@@ -15,7 +15,7 @@ class SendToEmailHandler
     protected $mailer;
 
     /**
-     * @var DelegatingEngine
+     * @var EngineInterface
      */
     protected $templating;
 
@@ -29,7 +29,7 @@ class SendToEmailHandler
      */
     protected $event;
 
-    public function __construct(\Swift_Mailer $mailer, DelegatingEngine $templating, FcFormEventListener $fc_listener)
+    public function __construct(\Swift_Mailer $mailer, EngineInterface $templating, FcFormEventListener $fc_listener)
     {
         $this->mailer      = $mailer;
         $this->templating  = $templating;

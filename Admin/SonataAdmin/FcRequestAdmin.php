@@ -156,12 +156,14 @@ class FcRequestAdmin extends Admin
     {
         $columns = $this->getCustomColumns();
 
-        foreach ($columns as $fc_field_name => $fc_field_label) {
-            $listMapper->add($fc_field_name, null, array(
-                'label'    => $fc_field_label,
-                'sortable' => false,
-                'template' => 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_custom_column.html.twig'
-            ));
+        if(count($columns)){
+            foreach ($columns as $fc_field_name => $fc_field_label) {
+                $listMapper->add($fc_field_name, null, array(
+                    'label'    => $fc_field_label,
+                    'sortable' => false,
+                    'template' => 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_custom_column.html.twig'
+                ));
+            }
         }
     }
 
@@ -229,10 +231,13 @@ class FcRequestAdmin extends Admin
         foreach($results AS $result){
             unset($result['Data']);
 
-            $fcrequest     = FcRequestQuery::create()->findPk($result['Id']);
-            $custom_result = $this->getCustomResult($fcrequest, $cuctom_columns);
-
-            $new_results[] = array_merge($result,$custom_result);
+            if(count($cuctom_columns)){
+                $fcrequest     = FcRequestQuery::create()->findPk($result['Id']);
+                $custom_result = $this->getCustomResult($fcrequest, $cuctom_columns);
+                $new_results[] = array_merge($result,$custom_result);
+            }else{
+                $new_results[] = $result
+            }
         }
 
         return new CustomColumnsSourceIterator($new_results);

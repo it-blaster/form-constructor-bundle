@@ -236,7 +236,7 @@ class FcRequestAdmin extends Admin
                 $custom_result = $this->getCustomResult($fcrequest, $cuctom_columns);
                 $new_results[] = array_merge($result,$custom_result);
             }else{
-                $new_results[] = $result
+                $new_results[] = $result;
             }
         }
 

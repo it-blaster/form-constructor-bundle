@@ -157,7 +157,7 @@ class FcRequestAdmin extends Admin
         $columns = $this->getCustomColumns();
 
         foreach ($columns as $fc_field_name => $fc_field_label) {
-            $listMapper->add('Data_'. $fc_field_name, null, array(
+            $listMapper->add($fc_field_name, null, array(
                 'label'    => $fc_field_label,
                 'sortable' => false,
                 'template' => 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_custom_column.html.twig'

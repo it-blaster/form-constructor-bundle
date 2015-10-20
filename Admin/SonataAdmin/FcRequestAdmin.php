@@ -9,6 +9,7 @@ use Fenrizbes\FormConstructorBundle\Propel\Model\Form\FcFormQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Request\FcRequestQuery;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Request\FcRequestSetting;
 use Fenrizbes\FormConstructorBundle\Propel\Model\Request\FcRequestSettingQuery;
+use Fenrizbes\FormConstructorBundle\Model\CustomColumnsSourceIterator;
 use Knp\Menu\MenuItem;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -153,6 +154,21 @@ class FcRequestAdmin extends Admin
 
     protected function addCustomColumns(ListMapper $listMapper)
     {
+        $columns = $this->getCustomColumns();
+
+        foreach ($columns as $fc_field_name => $fc_field_label) {
+            $listMapper->add('Data_'. $fc_field_name, null, array(
+                'label'    => $fc_field_label,
+                'sortable' => false,
+                'template' => 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_custom_column.html.twig'
+            ));
+        }
+    }
+
+    protected function getCustomColumns()
+    {
+        $out_columns = array();
+
         $setting = FcRequestSettingQuery::create()->findOneByFormId($this->getFcForm()->getId());
         if (!$setting instanceof FcRequestSetting) {
             return;
@@ -169,12 +185,10 @@ class FcRequestAdmin extends Admin
                 continue;
             }
 
-            $listMapper->add('Data_'. $fc_field->getName(), null, array(
-                'label'    => (string) $fc_field,
-                'sortable' => false,
-                'template' => 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_custom_column.html.twig'
-            ));
+            $out_columns['Data_'. $fc_field->getName()] = (string) $fc_field;
         }
+
+        return $out_columns;
     }
 
     /**
@@ -196,4 +210,51 @@ class FcRequestAdmin extends Admin
             ))
         ;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDataSourceIterator()
+    {
+        $datagrid = $this->getDatagrid();
+        $datagrid->buildPager();
+
+        return $this->exportDataRestruct($this->getModelManager()->getDataSourceIterator($datagrid, $this->getExportFields()));
+    }
+
+    private function exportDataRestruct($results){
+        $cuctom_columns = $this->getCustomColumns();
+        $new_results    = array();
+
+        foreach($results AS $result){
+            unset($result['Data']);
+
+            $fcrequest     = FcRequestQuery::create()->findPk($result['Id']);
+            $custom_result = $this->getCustomResult($fcrequest, $cuctom_columns);
+
+            $new_results[] = array_merge($result,$custom_result);
+        }
+
+        return new CustomColumnsSourceIterator($new_results);
+    }
+
+    private function getCustomResult($fcrequest, $cuctom_columns){
+        $custom_results = array();
+
+        foreach($cuctom_columns AS $cid => $label){
+            $saved_data  = $fcrequest->getData();
+            $print_value = '';
+
+            foreach($saved_data AS $key => $data) {
+                if ('Data_'.$saved_data[$key]['name'] == $cid) {
+                    $print_value = $fcrequest->{$cid};
+                }
+            }
+
+            $custom_results[$label] = $print_value;
+        }
+
+        return $custom_results;
+    }
+
 }

@@ -158,10 +158,18 @@ class FcRequestAdmin extends Admin
 
         if(count($columns)){
             foreach ($columns as $fc_field_name => $fc_field_label) {
+                switch($fc_field_label->getType()) {
+                    case 'agreement':
+                        $template = 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_'.$fc_field_label->getType().'_custom_column.html.twig';
+                        break;
+                    default:
+                        $template = 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_custom_column.html.twig';
+                }
+
                 $listMapper->add($fc_field_name, null, array(
-                    'label'    => $fc_field_label,
+                    'label'    => (string) $fc_field_label,
                     'sortable' => false,
-                    'template' => 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_custom_column.html.twig'
+                    'template' => $template
                 ));
             }
         }
@@ -187,7 +195,7 @@ class FcRequestAdmin extends Admin
                 continue;
             }
 
-            $out_columns['Data_'. $fc_field->getName()] = (string) $fc_field;
+            $out_columns['Data_'. $fc_field->getName()] = $fc_field;
         }
 
         return $out_columns;
@@ -214,7 +222,8 @@ class FcRequestAdmin extends Admin
     }
 
     /**
-     * {@inheritdoc}
+     * Modified getDataSourceIterator for
+     * correctly JSON form data export
      */
     public function getDataSourceIterator()
     {
@@ -224,7 +233,12 @@ class FcRequestAdmin extends Admin
         return $this->exportDataRestruct($this->getModelManager()->getDataSourceIterator($datagrid, $this->getExportFields()));
     }
 
-    private function exportDataRestruct($results){
+    /**
+     * Method for restructure Data
+     * with JSON values
+     */
+    private function exportDataRestruct($results)
+    {
         $cuctom_columns = $this->getCustomColumns();
         $new_results    = array();
 
@@ -243,7 +257,8 @@ class FcRequestAdmin extends Admin
         return new CustomColumnsSourceIterator($new_results);
     }
 
-    private function getCustomResult($fcrequest, $cuctom_columns){
+    private function getCustomResult($fcrequest, $cuctom_columns)
+    {
         $custom_results = array();
 
         foreach($cuctom_columns AS $cid => $label){
@@ -256,10 +271,23 @@ class FcRequestAdmin extends Admin
                 }
             }
 
-            $custom_results[$label] = $print_value;
+            $print_value = $this->rewriteExportValue($label, $print_value);
+
+            $custom_results[(string) $label] = $print_value;
         }
 
         return $custom_results;
+    }
+
+    private function rewriteExportValue($field, $value)
+    {
+        switch($field->getType()) {
+            case 'agreement':
+                $label = empty($value)?'label_type_no':'label_type_yes';
+                return $this->trans($label, array(), 'SonataAdminBundle');
+            default:
+                return $value;
+        }
     }
 
 }

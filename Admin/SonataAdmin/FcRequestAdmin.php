@@ -23,6 +23,7 @@ class FcRequestAdmin extends Admin
     protected $baseRouteName    = 'fenrizbes_fc_request';
     protected $baseRoutePattern = '/fenrizbes/fc/request/{form_id}';
     protected $fc_defaults;
+    protected $templating;
 
     protected $datagridValues = array(
         '_sort_order' => 'DESC',
@@ -39,6 +40,11 @@ class FcRequestAdmin extends Admin
     public function setFcDefaults($fc_defaults)
     {
         $this->fc_defaults = $fc_defaults;
+    }
+
+    public function setTemplating($templating)
+    {
+        $this->templating = $templating;
     }
 
     protected function getFcForm()
@@ -158,13 +164,10 @@ class FcRequestAdmin extends Admin
 
         if(count($columns)){
             foreach ($columns as $fc_field_name => $fc_field_label) {
-                switch($fc_field_label->getType()) {
-                    case 'agreement':
-                    case 'checkbox':
-                        $template = 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_'.$fc_field_label->getType().'_custom_column.html.twig';
-                        break;
-                    default:
-                        $template = 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_custom_column.html.twig';
+                $template = 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_custom_column.html.twig';
+
+                if($this->templating->exists('FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_'.$fc_field_label->getType().'_custom_column.html.twig')){
+                    $template ='FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_'.$fc_field_label->getType().'_custom_column.html.twig';
                 }
 
                 $listMapper->add($fc_field_name, null, array(
@@ -282,14 +285,12 @@ class FcRequestAdmin extends Admin
 
     private function rewriteExportValue($field, $value)
     {
-        switch($field->getType()) {
-            case 'agreement':
-            case 'checkbox':
-                $label = empty($value)?'label_type_no':'label_type_yes';
-                return $this->trans($label, array(), 'SonataAdminBundle');
-            default:
-                return $value;
+        //Yes/No temlating
+        if($this->templating->exists('FenrizbesFormConstructorBundle:SonataAdmin\FcRequest\Export:list_'.$field->getType().'_custom_column.html.twig')){
+            $value = $this->templating->render('FenrizbesFormConstructorBundle:SonataAdmin\FcRequest\Export:list_'.$field->getType().'_custom_column.html.twig', array('value'=>$value));
         }
+
+        return $value;
     }
 
 }

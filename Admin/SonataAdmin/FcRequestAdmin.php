@@ -160,6 +160,7 @@ class FcRequestAdmin extends Admin
             foreach ($columns as $fc_field_name => $fc_field_label) {
                 switch($fc_field_label->getType()) {
                     case 'agreement':
+                    case 'checkbox':
                         $template = 'FenrizbesFormConstructorBundle:SonataAdmin\FcRequest:list_'.$fc_field_label->getType().'_custom_column.html.twig';
                         break;
                     default:
@@ -283,6 +284,7 @@ class FcRequestAdmin extends Admin
     {
         switch($field->getType()) {
             case 'agreement':
+            case 'checkbox':
                 $label = empty($value)?'label_type_no':'label_type_yes';
                 return $this->trans($label, array(), 'SonataAdminBundle');
             default:

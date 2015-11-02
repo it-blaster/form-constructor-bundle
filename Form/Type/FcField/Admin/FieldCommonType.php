@@ -113,6 +113,8 @@ class FieldCommonType extends AbstractType
             $choices[ $field->getRank() ] = (string) $field;
         }
 
+        ksort($choices);
+
         return $choices;
     }
 

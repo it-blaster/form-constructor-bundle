@@ -52,7 +52,7 @@ class FcForm extends BaseFcForm
             ->_if(!$all)
                 ->filterByIsActive(true)
             ->_endif()
-            ->orderByRank()
+            ->orderBySortableRank()
             ->find()
         ;
     }
@@ -145,7 +145,13 @@ class FcForm extends BaseFcForm
         }
 
         foreach ($fc_form->getFields($all) as $fc_field) {
-            if ($fc_field->isCustom()) {
+            if($fc_field->getCustomWidget()){
+                $custom_widget  = $fc_field->getCustomWidget();
+                $not_for_handle = $custom_widget->getIsWidget();
+            }else{
+                $not_for_handle = 0;
+            }
+            if ($fc_field->isCustom() && !$not_for_handle) {
                 $this->handleFields($fc_field->getCustomWidget(), $all);
             } else {
                 if ('hidden' == $fc_field->getType()) {

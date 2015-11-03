@@ -109,7 +109,7 @@ class FieldCommonType extends AbstractType
     {
         $choices = array();
 
-        foreach ($fc_field->getFcForm()->getFieldsRecursively(true) as $field) {
+        foreach ($fc_field->getFcForm()->getFieldsRecursively(true, true) as $field) {
             $choices[ $field->getRank() ] = (string) $field;
         }
 

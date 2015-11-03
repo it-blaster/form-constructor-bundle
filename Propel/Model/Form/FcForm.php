@@ -127,32 +127,32 @@ class FcForm extends BaseFcForm
      * @param bool $all
      * @return FcField[]
      */
-    public function getFieldsRecursively($all = false)
+    public function getFieldsRecursively($all = false, $list = false)
     {
         if (is_null($this->fields)) {
             $this->fields = array();
 
-            $this->handleFields($this, $all);
+            $this->handleFields($this, $all, $list);
         }
 
         return $this->fields;
     }
 
-    protected function handleFields(FcForm $fc_form, $all = false)
+    protected function handleFields(FcForm $fc_form, $all = false, $list = false)
     {
         if (is_null($this->steps_count)) {
             $this->steps_count = 1;
         }
 
         foreach ($fc_form->getFields($all) as $fc_field) {
-            if($fc_field->getCustomWidget()){
-                $custom_widget  = $fc_field->getCustomWidget();
+            $custom_widget = $fc_field->getCustomWidget();
+            if($custom_widget AND $list){
                 $not_for_handle = $custom_widget->getIsWidget();
             }else{
                 $not_for_handle = 0;
             }
             if ($fc_field->isCustom() && !$not_for_handle) {
-                $this->handleFields($fc_field->getCustomWidget(), $all);
+                $this->handleFields($custom_widget, $all);
             } else {
                 if ('hidden' == $fc_field->getType()) {
                     $fc_field->setStep(1);

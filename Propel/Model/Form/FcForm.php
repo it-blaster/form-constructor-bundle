@@ -277,6 +277,8 @@ class FcForm extends BaseFcForm
         $params = $this->templates[$id]->getParams();
         $index  = 1;
         $prev   = null;
+        $fields = $params['fields'];
+        $last   = array_pop($fields);
 
         foreach ($this->getFieldsRecursively() as $name => $fc_field) {
             if (in_array($name, $params['fields'])) {
@@ -288,6 +290,8 @@ class FcForm extends BaseFcForm
 
                 if (1 == $index) {
                     $this->positions[$id][$name]['is_first'] = true;
+                } elseif ($name == $last) {
+                    $this->positions[$id][$name]['is_last']  = true;
                 }
 
                 $this->positions[$id][$name]['position'] = $index++;

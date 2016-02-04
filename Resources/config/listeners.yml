@@ -5,4 +5,4 @@ services:
     fc.listener.send_to_email:
         class:     %fc.listener.send_to_email.class%
         arguments: [ @mailer, @templating ]
-        tags:      [ { name: fc.listener, alias: send_to_email } ]
+#        tags:      [ { name: fc.listener, alias: send_to_email } ]

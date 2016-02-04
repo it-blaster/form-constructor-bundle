@@ -11,8 +11,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\CoreBundle\Validator\ErrorElement;
 use Symfony\Component\Validator\Constraints\Regex;
-use Sonata\AdminBundle\Validator\ErrorElement;
 
 class FcFormAdmin extends Admin
 {

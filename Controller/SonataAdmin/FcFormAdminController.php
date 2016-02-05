@@ -44,9 +44,10 @@ class FcFormAdminController extends CRUDController
      * Deletes form
      *
      * @param int|null|string $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction($id)
+    public function deleteAction($id, Request $request = null)
     {
         if ($this->getRestMethod() == 'DELETE') {
             /** @var FcForm $object */
@@ -70,9 +71,10 @@ class FcFormAdminController extends CRUDController
      * Batch forms deletion
      *
      * @param ProxyQueryInterface $query
+     * @param Request $request
      * @return RedirectResponse
      */
-    public function batchActionDelete(ProxyQueryInterface $query)
+    public function batchActionDelete(ProxyQueryInterface $query, Request $request = null)
     {
         /** @var FcForm $fc_form */
         foreach ($query->find() as $fc_form) {

@@ -21,7 +21,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class FcRequestAdmin extends Admin
 {
     protected $baseRouteName    = 'fenrizbes_fc_request';
-    protected $baseRoutePattern = '/fenrizbes/fc/request/{form_id}';
+    protected $baseRoutePattern = '/fenrizbes/fc/request';
     protected $fc_defaults;
     protected $templating;
 
@@ -54,7 +54,7 @@ class FcRequestAdmin extends Admin
 
             $this->fc_form = FcFormQuery::create()->findPk((int) $form_id);
             if (!$this->fc_form instanceof FcForm) {
-                throw new NotFoundHttpException('Form #'. $form_id .' does not exist');
+                $this->fc_form = new FcForm();
             }
         }
 
@@ -67,8 +67,13 @@ class FcRequestAdmin extends Admin
             ->remove('create')
             ->remove('edit')
 
-            ->add('configure')
-            ->add('do_configure')
+            ->add('list',          '{form_id}/list', ['form_id' => 0])
+            ->add('batch',         '{form_id}/batch')
+            ->add('delete',        '{form_id}/'.$this->getRouterIdParameter().'/delete')
+            ->add('show',          '{form_id}/'.$this->getRouterIdParameter().'/show')
+            ->add('export',        '{form_id}/export')
+            ->add('configure',     '{form_id}/configure')
+            ->add('do_configure',  '{form_id}/do_configure')
         ;
     }
 

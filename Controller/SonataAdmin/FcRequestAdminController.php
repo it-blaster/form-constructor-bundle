@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FcRequestAdminController extends CRUDController
 {
-    public function listAction()
+    public function listAction(Request $request = null)
     {
         if (!$this->admin->getRequest()->get('form_id')) {
             return $this->formsListAction();

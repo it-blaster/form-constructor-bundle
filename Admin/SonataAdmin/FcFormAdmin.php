@@ -215,7 +215,9 @@ class FcFormAdmin extends Admin
     {
         $errorElement->addConstraint(new UniqueObject(array(
             'fields'  => 'alias',
-            'message' => 'fc.constraint.admin.not_unique'
+            'message' =>
+                $this->trans('fc.label.admin.alias', array(), $this->getTranslationDomain()).': '.
+                $this->trans('fc.constraint.admin.not_unique', array(), 'validators')
         )));
 
         /** @var FcForm $object */

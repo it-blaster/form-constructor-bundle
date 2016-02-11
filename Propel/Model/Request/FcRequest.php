@@ -45,4 +45,19 @@ class FcRequest extends BaseFcRequest
 
         return isset($this->handled_data[$name]);
     }
+
+    public function __call($name, $params)
+    {
+        $result = null;
+
+        try {
+            $result = parent::__call($name, $params);
+        } catch (\Exception $e) {
+            if (preg_match('/Data_(\w+)/', $name, $matches)) {
+                $result = $this->__get($name);
+            }
+        }
+
+        return $result;
+    }
 }

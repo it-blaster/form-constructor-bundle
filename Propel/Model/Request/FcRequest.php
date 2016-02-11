@@ -27,6 +27,8 @@ class FcRequest extends BaseFcRequest
         if (preg_match('/^Data_([\w\-]+)$/', $name, $matches)) {
             if ($this->issetInData($matches[1])) {
                 return $this->handled_data[ $matches[1] ]['value'];
+            } else {
+                return null;
             }
         }
 

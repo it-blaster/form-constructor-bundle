@@ -51,9 +51,6 @@
 
     {% if event is not defined %}
         {% set event = 'change' %}
-        {% if fc_field.type == 'checkbox' or fc_field.type == 'choice' and not fc_field.params.collapsed %}
-            {% set event = 'ifChanged' %}
-        {% endif %}
     {% endif %}
 
     $form.find('{{ block('condition_selector') }}').on('{{ event }}', function() {

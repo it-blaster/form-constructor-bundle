@@ -31,6 +31,6 @@
             {{ val }}<br />
         {% endfor %}
     {% else %}
-        {{ item.value | trans({}, 'FenrizbesFormConstructorBundle') | raw }}
+        {{ item.value | trans({}, 'FenrizbesFormConstructorBundle') }}
     {% endif %}
 {% endblock %}

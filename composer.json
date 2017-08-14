@@ -9,14 +9,19 @@
         {
             "name": "Yaroslav Gashuk",
             "email": "fenrizbes@yandex.ru"
+        },
+        {
+            "name": "Daniil Myasnikov",
+            "email": "daniil@66.ru"
         }
     ],
     "require": {
-        "php": ">=5.3.2",
-        "symfony/framework-bundle": "~2.1",
+        "php": ">=5.6",
+        "symfony/framework-bundle": "~2.8",
         "sonata-project/admin-bundle": "~2.3",
         "sonata-project/propel-admin-bundle": "dev-master",
-        "egulias/email-validator": "~1.2"
+        "egulias/email-validator": "~2.1",
+        "stof/doctrine-extensions-bundle": "^1.2"
     },
     "autoload": {
         "psr-0": {

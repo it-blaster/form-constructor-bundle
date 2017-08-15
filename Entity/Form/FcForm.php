@@ -111,29 +111,46 @@ class FcForm
 //====== Back assets ======//
 
     /**
-     * @var FcFormEventListener
+     * @var FcFormEventListener[]
+     *
+     * @ORM\OneToMany(targetEntity="FcFormEventListener", mappedBy="form", fetch="EAGER")
      */
     protected $events;
 
     /**
      * @var FcFormTemplate[]
+     *
+     * @ORM\OneToMany(targetEntity="FcFormTemplate", mappedBy="form", fetch="EAGER")
      */
     protected $templates;
 
     /**
      * @var \Fenrizbes\FormConstructorBundle\Entity\Field\FcField[]
+     *
+     * @ORM\OneToMany(targetEntity="\Fenrizbes\FormConstructorBundle\Entity\Field\FcField", mappedBy="form", fetch="EAGER")
      */
     protected $fields;
 
     /**
      * @var \Fenrizbes\FormConstructorBundle\Entity\Request\FcRequest[]
+     *
+     * @ORM\OneToMany(targetEntity="\Fenrizbes\FormConstructorBundle\Entity\Request\FcRequest", mappedBy="form", fetch="EAGER")
      */
     protected $requests;
 
     /**
      * @var \Fenrizbes\FormConstructorBundle\Entity\Request\FcRequestSetting[]
+     *
+     * @ORM\OneToMany(targetEntity="\Fenrizbes\FormConstructorBundle\Entity\Request\FcRequestSetting", mappedBy="form", fetch="EAGER")
      */
     protected $requestsSettings;
+
+    /**
+     * @var \Fenrizbes\FormConstructorBundle\Entity\Behavior\FcFormBehavior[]
+     *
+     * @ORM\OneToMany(targetEntity="\Fenrizbes\FormConstructorBundle\Entity\Behavior\FcFormBehavior", mappedBy="form", fetch="EAGER")
+     */
+    protected $formBehavoiurs;
 
     /**
      * @return int

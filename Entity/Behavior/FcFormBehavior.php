@@ -60,6 +60,22 @@ class FcFormBehavior
      */
     protected $updatedAt;
 
+//====== Back assets ======//
+
+    /**
+     * @var FcFormBehaviorAction
+     *
+     * @ORM\OneToMany(targetEntity="FcFormBehaviorAction", mappedBy="behavior", fetch="EAGER")
+     */
+    protected $actions;
+
+    /**
+     * @var FcFormBehaviorCondition
+     *
+     * @ORM\OneToMany(targetEntity="FcFormBehaviorCondition", mappedBy="behavior", fetch="EAGER")
+     */
+    protected $conditions;
+
     /**
      * @return int
      */

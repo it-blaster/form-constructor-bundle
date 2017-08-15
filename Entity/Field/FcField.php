@@ -16,7 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Field
  *
  * @ORM\Table(name="fc_field")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Gedmo\Sortable\Entity\Repository\SortableRepository")
  */
 class FcField
 {
@@ -71,6 +71,14 @@ class FcField
      * @var array
      */
     protected $params;
+
+    /**
+     * @var int
+     *
+     * @Gedmo\Sortable(groups={"form"})
+     * @ORM\Column(name="position", type="integer")
+     */
+    protected $position;
 
     /**
      * @var int
